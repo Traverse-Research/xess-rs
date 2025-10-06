@@ -23,7 +23,7 @@ windows = { version = "0.61", default-features = false, features = ["Win32_Graph
 bindgen = { version = "0.72", optional = true }
 
 [features]
-default = ["dx11", "dx12", "vk", "xell", "xess", "xess_fg"]
+default = ["vk", "xess"]
 generate-bindings = ["dep:bindgen"]
 dx11 = ["dep:windows", "windows?/Win32_Graphics_Direct3D11"]
 dx12 = ["dep:windows", "windows?/Win32_Graphics_Direct3D12"]
