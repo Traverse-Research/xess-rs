@@ -1,13 +1,33 @@
 [package]
-name = "rust-template"
-version = "0.0.0"
+name = "xess"
+version = "0.1.0"
 authors = ["Traverse Research <support@traverseresearch.nl>"]
 edition = "2021"
 license = "MIT"
 homepage = "https://traverseresearch.nl"
-repository = "https://github.com/Traverse-Research/rust-template"
-description = "A useful description"
+repository = "https://github.com/Traverse-Research/xess-rs"
+description = "Raw bindings to XeSS"
 include = ["src", "LICENSE"]
 categories = [] # https://crates.io/category_slugs
 keywords = []
 rust-version = "1.74"
+
+[dependencies]
+ash = { version = "0.38", default-features = false, optional = true }
+libloading = {version = "0.8", default-features = false}
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.61", default-features = false, features = ["Win32_Graphics_Dxgi_Common"], optional = true }
+
+[build-dependencies]
+bindgen = { version = "0.72", optional = true }
+
+[features]
+default = ["dx11", "dx12", "vk", "xell", "xess", "xess_fg"]
+generate-bindings = ["dep:bindgen"]
+dx11 = ["dep:windows", "windows?/Win32_Graphics_Direct3D11"]
+dx12 = ["dep:windows", "windows?/Win32_Graphics_Direct3D12"]
+vk = ["dep:ash"]
+xell = []
+xess = []
+xess_fg = []
