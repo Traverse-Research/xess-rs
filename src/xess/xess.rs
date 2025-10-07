@@ -6,31 +6,39 @@ pub struct _xess_context_handle_t {
     _unused: [u8; 0],
 }
 pub type xess_context_handle_t = *mut _xess_context_handle_t;
-#[doc = " @brief XeSS version.\n\n XeSS uses major.minor.patch version format and Numeric 90+ scheme for development stage builds."]
+/** @brief XeSS version.
+
+ XeSS uses major.minor.patch version format and Numeric 90+ scheme for development stage builds.*/
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xess_version_t {
-    #[doc = " A major version increment indicates a new API and potentially a\n break in functionality."]
+    /** A major version increment indicates a new API and potentially a
+ break in functionality.*/
     pub major: u16,
-    #[doc = " A minor version increment indicates incremental changes such as\n optional inputs or flags. This does not break existing functionality."]
+    /** A minor version increment indicates incremental changes such as
+ optional inputs or flags. This does not break existing functionality.*/
     pub minor: u16,
-    #[doc = " A patch version increment may include performance or quality tweaks or fixes for known issues.\n There's no change in the interfaces.\n Versions beyond 90 used for development builds to change the interface for the next release."]
+    /** A patch version increment may include performance or quality tweaks or fixes for known issues.
+ There's no change in the interfaces.
+ Versions beyond 90 used for development builds to change the interface for the next release.*/
     pub patch: u16,
-    #[doc = " Reserved for future use."]
+    /// Reserved for future use.
     pub reserved: u16,
 }
-#[doc = " @brief XeSS version.\n\n XeSS uses major.minor.patch version format and Numeric 90+ scheme for development stage builds."]
+/** @brief XeSS version.
+
+ XeSS uses major.minor.patch version format and Numeric 90+ scheme for development stage builds.*/
 pub type xess_version_t = _xess_version_t;
-#[doc = " @brief 2D variable."]
+/// @brief 2D variable.
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xess_2d_t {
     pub x: u32,
     pub y: u32,
 }
-#[doc = " @brief 2D variable."]
+/// @brief 2D variable.
 pub type xess_2d_t = _xess_2d_t;
-#[doc = " @brief 2D coordinates."]
+/// @brief 2D coordinates.
 pub type xess_coord_t = xess_2d_t;
 pub const XESS_QUALITY_SETTING_ULTRA_PERFORMANCE: _xess_quality_settings_t = 100;
 pub const XESS_QUALITY_SETTING_PERFORMANCE: _xess_quality_settings_t = 101;
@@ -39,91 +47,93 @@ pub const XESS_QUALITY_SETTING_QUALITY: _xess_quality_settings_t = 103;
 pub const XESS_QUALITY_SETTING_ULTRA_QUALITY: _xess_quality_settings_t = 104;
 pub const XESS_QUALITY_SETTING_ULTRA_QUALITY_PLUS: _xess_quality_settings_t = 105;
 pub const XESS_QUALITY_SETTING_AA: _xess_quality_settings_t = 106;
-#[doc = " @brief XeSS quality settings."]
+/// @brief XeSS quality settings.
 pub type _xess_quality_settings_t = ::std::os::raw::c_int;
-#[doc = " @brief XeSS quality settings."]
+/// @brief XeSS quality settings.
 pub use self::_xess_quality_settings_t as xess_quality_settings_t;
 pub const XESS_INIT_FLAG_NONE: _xess_init_flags_t = 0;
-#[doc = " Use motion vectors at target resolution."]
+/// Use motion vectors at target resolution.
 pub const XESS_INIT_FLAG_HIGH_RES_MV: _xess_init_flags_t = 1;
-#[doc = " Use inverted (increased precision) depth encoding"]
+/// Use inverted (increased precision) depth encoding
 pub const XESS_INIT_FLAG_INVERTED_DEPTH: _xess_init_flags_t = 2;
-#[doc = " Use exposure texture to scale input color."]
+/// Use exposure texture to scale input color.
 pub const XESS_INIT_FLAG_EXPOSURE_SCALE_TEXTURE: _xess_init_flags_t = 4;
-#[doc = " Use responsive pixel mask texture."]
+/// Use responsive pixel mask texture.
 pub const XESS_INIT_FLAG_RESPONSIVE_PIXEL_MASK: _xess_init_flags_t = 8;
-#[doc = " Use velocity in NDC"]
+/// Use velocity in NDC
 pub const XESS_INIT_FLAG_USE_NDC_VELOCITY: _xess_init_flags_t = 16;
-#[doc = " Use external descriptor heap"]
+/// Use external descriptor heap
 pub const XESS_INIT_FLAG_EXTERNAL_DESCRIPTOR_HEAP: _xess_init_flags_t = 32;
-#[doc = " Disable tonemapping for input and output"]
+/// Disable tonemapping for input and output
 pub const XESS_INIT_FLAG_LDR_INPUT_COLOR: _xess_init_flags_t = 64;
-#[doc = " Remove jitter from input velocity"]
+/// Remove jitter from input velocity
 pub const XESS_INIT_FLAG_JITTERED_MV: _xess_init_flags_t = 128;
-#[doc = " Enable automatic exposure calculation."]
+/// Enable automatic exposure calculation.
 pub const XESS_INIT_FLAG_ENABLE_AUTOEXPOSURE: _xess_init_flags_t = 256;
-#[doc = " @brief XeSS initialization flags."]
+/// @brief XeSS initialization flags.
 pub type _xess_init_flags_t = ::std::os::raw::c_int;
-#[doc = " @brief XeSS initialization flags."]
+/// @brief XeSS initialization flags.
 pub use self::_xess_init_flags_t as xess_init_flags_t;
-#[doc = " @brief Properties for internal XeSS resources."]
+/// @brief Properties for internal XeSS resources.
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xess_properties_t {
-    #[doc = " Required amount of descriptors for XeSS"]
+    /// Required amount of descriptors for XeSS
     pub requiredDescriptorCount: u32,
-    #[doc = " The heap size required by XeSS for temporary buffer storage."]
+    /// The heap size required by XeSS for temporary buffer storage.
     pub tempBufferHeapSize: u64,
-    #[doc = " The heap size required by XeSS for temporary texture storage."]
+    /// The heap size required by XeSS for temporary texture storage.
     pub tempTextureHeapSize: u64,
 }
-#[doc = " @brief Properties for internal XeSS resources."]
+/// @brief Properties for internal XeSS resources.
 pub type xess_properties_t = _xess_properties_t;
-#[doc = " Warning. Folder to store dump data doesn't exist. Write operation skipped."]
+/// Warning. Folder to store dump data doesn't exist. Write operation skipped.
 pub const XESS_RESULT_WARNING_NONEXISTING_FOLDER: _xess_result_t = 1;
-#[doc = " An old or outdated driver."]
+/// An old or outdated driver.
 pub const XESS_RESULT_WARNING_OLD_DRIVER: _xess_result_t = 2;
-#[doc = " XeSS operation was successful."]
+/// XeSS operation was successful.
 pub const XESS_RESULT_SUCCESS: _xess_result_t = 0;
-#[doc = " XeSS not supported on the GPU. An SM 6.4 capable GPU is required."]
+/// XeSS not supported on the GPU. An SM 6.4 capable GPU is required.
 pub const XESS_RESULT_ERROR_UNSUPPORTED_DEVICE: _xess_result_t = -1;
-#[doc = " An unsupported driver."]
+/// An unsupported driver.
 pub const XESS_RESULT_ERROR_UNSUPPORTED_DRIVER: _xess_result_t = -2;
-#[doc = " Execute called without initialization."]
+/// Execute called without initialization.
 pub const XESS_RESULT_ERROR_UNINITIALIZED: _xess_result_t = -3;
-#[doc = " Invalid argument such as descriptor handles."]
+/// Invalid argument such as descriptor handles.
 pub const XESS_RESULT_ERROR_INVALID_ARGUMENT: _xess_result_t = -4;
-#[doc = " Not enough available GPU memory."]
+/// Not enough available GPU memory.
 pub const XESS_RESULT_ERROR_DEVICE_OUT_OF_MEMORY: _xess_result_t = -5;
-#[doc = " Device function such as resource or descriptor creation."]
+/// Device function such as resource or descriptor creation.
 pub const XESS_RESULT_ERROR_DEVICE: _xess_result_t = -6;
-#[doc = " The function is not implemented"]
+/// The function is not implemented
 pub const XESS_RESULT_ERROR_NOT_IMPLEMENTED: _xess_result_t = -7;
-#[doc = " Invalid context."]
+/// Invalid context.
 pub const XESS_RESULT_ERROR_INVALID_CONTEXT: _xess_result_t = -8;
-#[doc = " Operation not finished yet."]
+/// Operation not finished yet.
 pub const XESS_RESULT_ERROR_OPERATION_IN_PROGRESS: _xess_result_t = -9;
-#[doc = " Operation not supported in current configuration."]
+/// Operation not supported in current configuration.
 pub const XESS_RESULT_ERROR_UNSUPPORTED: _xess_result_t = -10;
-#[doc = " The library cannot be loaded."]
+/// The library cannot be loaded.
 pub const XESS_RESULT_ERROR_CANT_LOAD_LIBRARY: _xess_result_t = -11;
-#[doc = " Call to function done in invalid order."]
+/// Call to function done in invalid order.
 pub const XESS_RESULT_ERROR_WRONG_CALL_ORDER: _xess_result_t = -12;
-#[doc = " Unknown internal failure"]
+/// Unknown internal failure
 pub const XESS_RESULT_ERROR_UNKNOWN: _xess_result_t = -1000;
-#[doc = " @brief  XeSS return codes."]
+/// @brief  XeSS return codes.
 pub type _xess_result_t = ::std::os::raw::c_int;
-#[doc = " @brief  XeSS return codes."]
+/// @brief  XeSS return codes.
 pub use self::_xess_result_t as xess_result_t;
 pub const XESS_LOGGING_LEVEL_DEBUG: _xess_logging_level_t = 0;
 pub const XESS_LOGGING_LEVEL_INFO: _xess_logging_level_t = 1;
 pub const XESS_LOGGING_LEVEL_WARNING: _xess_logging_level_t = 2;
 pub const XESS_LOGGING_LEVEL_ERROR: _xess_logging_level_t = 3;
-#[doc = " @brief XeSS logging level"]
+/// @brief XeSS logging level
 pub type _xess_logging_level_t = ::std::os::raw::c_int;
-#[doc = " @brief XeSS logging level"]
+/// @brief XeSS logging level
 pub use self::_xess_logging_level_t as xess_logging_level_t;
-#[doc = " A logging callback provided by the application. This callback can be called from other threads.\n Message pointer are only valid inside function and may be invalid right after return call.\n Message is a null-terminated utf-8 string"]
+/** A logging callback provided by the application. This callback can be called from other threads.
+ Message pointer are only valid inside function and may be invalid right after return call.
+ Message is a null-terminated utf-8 string*/
 pub type xess_app_log_callback_t = ::std::option::Option<
     unsafe extern "C" fn(
         message: *const ::std::os::raw::c_char,
@@ -137,9 +147,9 @@ pub const XESS_NETWORK_MODEL_4: _xess_network_model_t = 3;
 pub const XESS_NETWORK_MODEL_5: _xess_network_model_t = 4;
 pub const XESS_NETWORK_MODEL_6: _xess_network_model_t = 5;
 pub const XESS_NETWORK_MODEL_UNKNOWN: _xess_network_model_t = 2147483647;
-#[doc = " @brief XeSS network type."]
+/// @brief XeSS network type.
 pub type _xess_network_model_t = ::std::os::raw::c_int;
-#[doc = " @brief XeSS network type."]
+/// @brief XeSS network type.
 pub use self::_xess_network_model_t as xess_network_model_t;
 pub const XESS_DUMP_INPUT_COLOR: _xess_dump_element_bits_t = 1;
 pub const XESS_DUMP_INPUT_VELOCITY: _xess_dump_element_bits_t = 2;
@@ -148,7 +158,7 @@ pub const XESS_DUMP_INPUT_EXPOSURE_SCALE: _xess_dump_element_bits_t = 8;
 pub const XESS_DUMP_INPUT_RESPONSIVE_PIXEL_MASK: _xess_dump_element_bits_t = 16;
 pub const XESS_DUMP_OUTPUT: _xess_dump_element_bits_t = 32;
 pub const XESS_DUMP_HISTORY: _xess_dump_element_bits_t = 64;
-#[doc = "< All parameters passed to xessExecute"]
+///< All parameters passed to xessExecute
 pub const XESS_DUMP_EXECUTION_PARAMETERS: _xess_dump_element_bits_t = 128;
 pub const XESS_DUMP_ALL_INPUTS: _xess_dump_element_bits_t = 159;
 pub const XESS_DUMP_ALL: _xess_dump_element_bits_t = 2147483647;
@@ -158,13 +168,18 @@ pub type xess_dump_elements_mask_t = u32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _xess_dump_parameters_t {
-    #[doc = " NULL-terminated ASCII string to *existing folder* where dump files should be written.\n Library do not create the folder.\n Files in provided folder will be overwritten."]
+    /** NULL-terminated ASCII string to *existing folder* where dump files should be written.
+ Library do not create the folder.
+ Files in provided folder will be overwritten.*/
     pub path: *const ::std::os::raw::c_char,
-    #[doc = " Frame index. Will be used as start for frame sequence."]
+    /// Frame index. Will be used as start for frame sequence.
     pub frame_idx: u32,
-    #[doc = " Frame count to dump. Few frames less may be dumped due to possible frames in flight in\n application"]
+    /** Frame count to dump. Few frames less may be dumped due to possible frames in flight in
+ application*/
     pub frame_count: u32,
-    #[doc = " Bitset showing set of elements that must be dumped. Element will be dumped if it exists\n and corresponding bit is not 0.\n Since it's meaningless to call Dump with empty set value of 0 will mean DUMP_ALL_INPUTS"]
+    /** Bitset showing set of elements that must be dumped. Element will be dumped if it exists
+ and corresponding bit is not 0.
+ Since it's meaningless to call Dump with empty set value of 0 will mean DUMP_ALL_INPUTS*/
     pub dump_elements_mask: xess_dump_elements_mask_t,
 }
 impl Default for _xess_dump_parameters_t {
@@ -180,13 +195,13 @@ pub type xess_dump_parameters_t = _xess_dump_parameters_t;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _xess_profiled_frame_data_t {
-    #[doc = " Execution index in context's instance."]
+    /// Execution index in context's instance.
     pub frame_index: u64,
-    #[doc = " Total labeled gpu duration records stored in gpu_duration* arrays."]
+    /// Total labeled gpu duration records stored in gpu_duration* arrays.
     pub gpu_duration_record_count: u64,
-    #[doc = " Pointer to an internal array of duration names."]
+    /// Pointer to an internal array of duration names.
     pub gpu_duration_names: *const *const ::std::os::raw::c_char,
-    #[doc = " Pointer to an internal array of duration values. [seconds]"]
+    /// Pointer to an internal array of duration values. [seconds]
     pub gpu_duration_values: *const f64,
 }
 impl Default for _xess_profiled_frame_data_t {
@@ -202,11 +217,14 @@ pub type xess_profiled_frame_data_t = _xess_profiled_frame_data_t;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _xess_profiling_data_t {
-    #[doc = " Total profiled frame records storage in frames/executions array."]
+    /// Total profiled frame records storage in frames/executions array.
     pub frame_count: u64,
-    #[doc = " Pointers to an internal storage with per frame/execution data."]
+    /// Pointers to an internal storage with per frame/execution data.
     pub frames: *mut xess_profiled_frame_data_t,
-    #[doc = " Flag indicating if more profiling data will be available when GPU finishes\n executing submitted frames.\n Useful to collect profiling data without forcing full CPU-GPU sync.\n Zero value indicates no pending profiling data."]
+    /** Flag indicating if more profiling data will be available when GPU finishes
+ executing submitted frames.
+ Useful to collect profiling data without forcing full CPU-GPU sync.
+ Zero value indicates no pending profiling data.*/
     pub any_profiling_data_in_flight: u32,
 }
 impl Default for _xess_profiling_data_t {
@@ -221,7 +239,9 @@ impl Default for _xess_profiling_data_t {
 pub type xess_profiling_data_t = _xess_profiling_data_t;
 pub struct XessLoaded {
     __library: ::libloading::Library,
-    pub xessGetVersion: unsafe extern "C" fn(pVersion: *mut xess_version_t) -> xess_result_t,
+    pub xessGetVersion: unsafe extern "C" fn(
+        pVersion: *mut xess_version_t,
+    ) -> xess_result_t,
     pub xessGetIntelXeFXVersion: unsafe extern "C" fn(
         hContext: xess_context_handle_t,
         pVersion: *mut xess_version_t,
@@ -255,29 +275,50 @@ pub struct XessLoaded {
         pX: *mut f32,
         pY: *mut f32,
     ) -> xess_result_t,
-    pub xessDestroyContext: unsafe extern "C" fn(hContext: xess_context_handle_t) -> xess_result_t,
-    pub xessSetJitterScale:
-        unsafe extern "C" fn(hContext: xess_context_handle_t, x: f32, y: f32) -> xess_result_t,
-    pub xessSetVelocityScale:
-        unsafe extern "C" fn(hContext: xess_context_handle_t, x: f32, y: f32) -> xess_result_t,
-    pub xessSetExposureMultiplier:
-        unsafe extern "C" fn(hContext: xess_context_handle_t, scale: f32) -> xess_result_t,
-    pub xessGetExposureMultiplier:
-        unsafe extern "C" fn(hContext: xess_context_handle_t, pScale: *mut f32) -> xess_result_t,
-    pub xessSetMaxResponsiveMaskValue:
-        unsafe extern "C" fn(hContext: xess_context_handle_t, value: f32) -> xess_result_t,
-    pub xessGetMaxResponsiveMaskValue:
-        unsafe extern "C" fn(hContext: xess_context_handle_t, pValue: *mut f32) -> xess_result_t,
+    pub xessDestroyContext: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+    ) -> xess_result_t,
+    pub xessSetJitterScale: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+        x: f32,
+        y: f32,
+    ) -> xess_result_t,
+    pub xessSetVelocityScale: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+        x: f32,
+        y: f32,
+    ) -> xess_result_t,
+    pub xessSetExposureMultiplier: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+        scale: f32,
+    ) -> xess_result_t,
+    pub xessGetExposureMultiplier: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+        pScale: *mut f32,
+    ) -> xess_result_t,
+    pub xessSetMaxResponsiveMaskValue: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+        value: f32,
+    ) -> xess_result_t,
+    pub xessGetMaxResponsiveMaskValue: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+        pValue: *mut f32,
+    ) -> xess_result_t,
     pub xessSetLoggingCallback: unsafe extern "C" fn(
         hContext: xess_context_handle_t,
         loggingLevel: xess_logging_level_t,
         loggingCallback: xess_app_log_callback_t,
     ) -> xess_result_t,
-    pub xessIsOptimalDriver: unsafe extern "C" fn(hContext: xess_context_handle_t) -> xess_result_t,
-    pub xessForceLegacyScaleFactors:
-        unsafe extern "C" fn(hContext: xess_context_handle_t, force: bool) -> xess_result_t,
-    pub xessGetPipelineBuildStatus:
-        unsafe extern "C" fn(hContext: xess_context_handle_t) -> xess_result_t,
+    pub xessIsOptimalDriver: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+    ) -> xess_result_t,
+    pub xessForceLegacyScaleFactors: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+        force: bool,
+    ) -> xess_result_t,
+    pub xessGetPipelineBuildStatus: unsafe extern "C" fn(
+        hContext: xess_context_handle_t,
+    ) -> xess_result_t,
     pub xessSelectNetworkModel: unsafe extern "C" fn(
         hContext: xess_context_handle_t,
         network: xess_network_model_t,
@@ -309,15 +350,21 @@ impl XessLoaded {
             .get(b"xessGetIntelXeFXVersion\0")
             .map(|sym| *sym)?;
         let xessGetProperties = __library.get(b"xessGetProperties\0").map(|sym| *sym)?;
-        let xessGetInputResolution = __library.get(b"xessGetInputResolution\0").map(|sym| *sym)?;
+        let xessGetInputResolution = __library
+            .get(b"xessGetInputResolution\0")
+            .map(|sym| *sym)?;
         let xessGetOptimalInputResolution = __library
             .get(b"xessGetOptimalInputResolution\0")
             .map(|sym| *sym)?;
         let xessGetJitterScale = __library.get(b"xessGetJitterScale\0").map(|sym| *sym)?;
-        let xessGetVelocityScale = __library.get(b"xessGetVelocityScale\0").map(|sym| *sym)?;
+        let xessGetVelocityScale = __library
+            .get(b"xessGetVelocityScale\0")
+            .map(|sym| *sym)?;
         let xessDestroyContext = __library.get(b"xessDestroyContext\0").map(|sym| *sym)?;
         let xessSetJitterScale = __library.get(b"xessSetJitterScale\0").map(|sym| *sym)?;
-        let xessSetVelocityScale = __library.get(b"xessSetVelocityScale\0").map(|sym| *sym)?;
+        let xessSetVelocityScale = __library
+            .get(b"xessSetVelocityScale\0")
+            .map(|sym| *sym)?;
         let xessSetExposureMultiplier = __library
             .get(b"xessSetExposureMultiplier\0")
             .map(|sym| *sym)?;
@@ -330,17 +377,25 @@ impl XessLoaded {
         let xessGetMaxResponsiveMaskValue = __library
             .get(b"xessGetMaxResponsiveMaskValue\0")
             .map(|sym| *sym)?;
-        let xessSetLoggingCallback = __library.get(b"xessSetLoggingCallback\0").map(|sym| *sym)?;
-        let xessIsOptimalDriver = __library.get(b"xessIsOptimalDriver\0").map(|sym| *sym)?;
+        let xessSetLoggingCallback = __library
+            .get(b"xessSetLoggingCallback\0")
+            .map(|sym| *sym)?;
+        let xessIsOptimalDriver = __library
+            .get(b"xessIsOptimalDriver\0")
+            .map(|sym| *sym)?;
         let xessForceLegacyScaleFactors = __library
             .get(b"xessForceLegacyScaleFactors\0")
             .map(|sym| *sym)?;
         let xessGetPipelineBuildStatus = __library
             .get(b"xessGetPipelineBuildStatus\0")
             .map(|sym| *sym)?;
-        let xessSelectNetworkModel = __library.get(b"xessSelectNetworkModel\0").map(|sym| *sym)?;
+        let xessSelectNetworkModel = __library
+            .get(b"xessSelectNetworkModel\0")
+            .map(|sym| *sym)?;
         let xessStartDump = __library.get(b"xessStartDump\0").map(|sym| *sym)?;
-        let xessGetProfilingData = __library.get(b"xessGetProfilingData\0").map(|sym| *sym)?;
+        let xessGetProfilingData = __library
+            .get(b"xessGetProfilingData\0")
+            .map(|sym| *sym)?;
         Ok(XessLoaded {
             __library,
             xessGetVersion,
@@ -366,11 +421,18 @@ impl XessLoaded {
             xessGetProfilingData,
         })
     }
-    #[doc = " @brief Gets the XeSS version. This is baked into the XeSS SDK release.\n @param[out] pVersion Returned XeSS version.\n @return XeSS return status code."]
+    /** @brief Gets the XeSS version. This is baked into the XeSS SDK release.
+ @param[out] pVersion Returned XeSS version.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetVersion(&self, pVersion: *mut xess_version_t) -> xess_result_t {
         (self.xessGetVersion)(pVersion)
     }
-    #[doc = " @brief Gets the version of the loaded Intel XeFX library. When running on Intel platforms\n this function will return the version of the loaded Intel XeFX library, for other\n platforms 0.0.0 will be returned.\n @param hContext The XeSS context handle.\n @param[out] pVersion Returned Intel XeFX library version.\n @return XeSS return status code."]
+    /** @brief Gets the version of the loaded Intel XeFX library. When running on Intel platforms
+ this function will return the version of the loaded Intel XeFX library, for other
+ platforms 0.0.0 will be returned.
+ @param hContext The XeSS context handle.
+ @param[out] pVersion Returned Intel XeFX library version.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetIntelXeFXVersion(
         &self,
         hContext: xess_context_handle_t,
@@ -378,7 +440,11 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessGetIntelXeFXVersion)(hContext, pVersion)
     }
-    #[doc = " @brief Gets XeSS internal resources properties.\n @param hContext The XeSS context handle.\n @param pOutputResolution Output resolution to calculate properties for.\n @param[out] pBindingProperties Returned properties.\n @return XeSS return status code."]
+    /** @brief Gets XeSS internal resources properties.
+ @param hContext The XeSS context handle.
+ @param pOutputResolution Output resolution to calculate properties for.
+ @param[out] pBindingProperties Returned properties.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetProperties(
         &self,
         hContext: xess_context_handle_t,
@@ -387,7 +453,16 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessGetProperties)(hContext, pOutputResolution, pBindingProperties)
     }
-    #[doc = " @brief Get the input resolution for a specified output resolution for a given quality setting.\n XeSS expects all the input buffers except motion vectors to be in the returned resolution.\n Motion vectors can be either in output resolution (XESS_INIT_FLAG_HIGH_RES_MV) or\n returned resolution (default).\n\n @param hContext The XeSS context handle.\n @param pOutputResolution Output resolution to calculate input resolution for.\n @param qualitySettings Desired quality setting.\n @param[out] pInputResolution Required input resolution.\n @return XeSS return status code."]
+    /** @brief Get the input resolution for a specified output resolution for a given quality setting.
+ XeSS expects all the input buffers except motion vectors to be in the returned resolution.
+ Motion vectors can be either in output resolution (XESS_INIT_FLAG_HIGH_RES_MV) or
+ returned resolution (default).
+
+ @param hContext The XeSS context handle.
+ @param pOutputResolution Output resolution to calculate input resolution for.
+ @param qualitySettings Desired quality setting.
+ @param[out] pInputResolution Required input resolution.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetInputResolution(
         &self,
         hContext: xess_context_handle_t,
@@ -395,14 +470,29 @@ impl XessLoaded {
         qualitySettings: xess_quality_settings_t,
         pInputResolution: *mut xess_2d_t,
     ) -> xess_result_t {
-        (self.xessGetInputResolution)(
+        (self
+            .xessGetInputResolution)(
             hContext,
             pOutputResolution,
             qualitySettings,
             pInputResolution,
         )
     }
-    #[doc = " @brief Get the optimal input resolution and possible range for a specified output resolution for a given quality setting.\n XeSS expects all the input buffers except motion vectors to be in the returned resolution range\n and all input buffers to be in the same resolution.\n Motion vectors can be either in output resolution (XESS_INIT_FLAG_HIGH_RES_MV) or\n in the same resolution as other input buffers (by default).\n\n @note Aspect ratio of the input resolution must be the same as for the output resolution.\n\n @param hContext The XeSS context handle.\n @param pOutputResolution Output resolution to calculate input resolution for.\n @param qualitySettings Desired quality setting.\n @param[out] pInputResolutionOptimal Optimal input resolution.\n @param[out] pInputResolutionMin Required minimal input resolution.\n @param[out] pInputResolutionMax Required maximal input resolution.\n @return XeSS return status code."]
+    /** @brief Get the optimal input resolution and possible range for a specified output resolution for a given quality setting.
+ XeSS expects all the input buffers except motion vectors to be in the returned resolution range
+ and all input buffers to be in the same resolution.
+ Motion vectors can be either in output resolution (XESS_INIT_FLAG_HIGH_RES_MV) or
+ in the same resolution as other input buffers (by default).
+
+ @note Aspect ratio of the input resolution must be the same as for the output resolution.
+
+ @param hContext The XeSS context handle.
+ @param pOutputResolution Output resolution to calculate input resolution for.
+ @param qualitySettings Desired quality setting.
+ @param[out] pInputResolutionOptimal Optimal input resolution.
+ @param[out] pInputResolutionMin Required minimal input resolution.
+ @param[out] pInputResolutionMax Required maximal input resolution.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetOptimalInputResolution(
         &self,
         hContext: xess_context_handle_t,
@@ -412,7 +502,8 @@ impl XessLoaded {
         pInputResolutionMin: *mut xess_2d_t,
         pInputResolutionMax: *mut xess_2d_t,
     ) -> xess_result_t {
-        (self.xessGetOptimalInputResolution)(
+        (self
+            .xessGetOptimalInputResolution)(
             hContext,
             pOutputResolution,
             qualitySettings,
@@ -421,7 +512,11 @@ impl XessLoaded {
             pInputResolutionMax,
         )
     }
-    #[doc = " @brief Gets jitter scale value.\n @param hContext The XeSS context handle.\n @param[out] pX Jitter scale pointer for the X axis.\n @param[out] pY Jitter scale pointer for the Y axis.\n @return XeSS return status code."]
+    /** @brief Gets jitter scale value.
+ @param hContext The XeSS context handle.
+ @param[out] pX Jitter scale pointer for the X axis.
+ @param[out] pY Jitter scale pointer for the Y axis.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetJitterScale(
         &self,
         hContext: xess_context_handle_t,
@@ -430,7 +525,11 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessGetJitterScale)(hContext, pX, pY)
     }
-    #[doc = " @brief Gets velocity scale value.\n @param hContext The XeSS context handle.\n @param[out] pX Velocity scale pointer for the X axis.\n @param[out] pY Velocity scale pointer for the Y axis.\n @return XeSS return status code."]
+    /** @brief Gets velocity scale value.
+ @param hContext The XeSS context handle.
+ @param[out] pX Velocity scale pointer for the X axis.
+ @param[out] pY Velocity scale pointer for the Y axis.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetVelocityScale(
         &self,
         hContext: xess_context_handle_t,
@@ -439,11 +538,22 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessGetVelocityScale)(hContext, pX, pY)
     }
-    #[doc = " @brief Destroys the XeSS context.\n The user must ensure that any pending command lists are completed before destroying the context.\n @param hContext: The XeSS context handle.\n @return XeSS return status code."]
-    pub unsafe fn xessDestroyContext(&self, hContext: xess_context_handle_t) -> xess_result_t {
+    /** @brief Destroys the XeSS context.
+ The user must ensure that any pending command lists are completed before destroying the context.
+ @param hContext: The XeSS context handle.
+ @return XeSS return status code.*/
+    pub unsafe fn xessDestroyContext(
+        &self,
+        hContext: xess_context_handle_t,
+    ) -> xess_result_t {
         (self.xessDestroyContext)(hContext)
     }
-    #[doc = " @brief Sets jitter scale value\n\n @param hContext The XeSS context handle.\n @param x scale for the X axis\n @param y scale for the Y axis\n @return XeSS return status code."]
+    /** @brief Sets jitter scale value
+
+ @param hContext The XeSS context handle.
+ @param x scale for the X axis
+ @param y scale for the Y axis
+ @return XeSS return status code.*/
     pub unsafe fn xessSetJitterScale(
         &self,
         hContext: xess_context_handle_t,
@@ -452,7 +562,12 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessSetJitterScale)(hContext, x, y)
     }
-    #[doc = " @brief Sets velocity scale value\n\n @param hContext The XeSS context handle.\n @param x scale for the X axis\n @param y scale for the Y axis\n @return XeSS return status code."]
+    /** @brief Sets velocity scale value
+
+ @param hContext The XeSS context handle.
+ @param x scale for the X axis
+ @param y scale for the Y axis
+ @return XeSS return status code.*/
     pub unsafe fn xessSetVelocityScale(
         &self,
         hContext: xess_context_handle_t,
@@ -461,7 +576,13 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessSetVelocityScale)(hContext, x, y)
     }
-    #[doc = " @brief Sets exposure scale value\n\n This value will be applied on top of any passed exposure value or automatically calculated exposure.\n\n @param hContext The XeSS context handle.\n @param scale scale value.\n @return XeSS return status code."]
+    /** @brief Sets exposure scale value
+
+ This value will be applied on top of any passed exposure value or automatically calculated exposure.
+
+ @param hContext The XeSS context handle.
+ @param scale scale value.
+ @return XeSS return status code.*/
     pub unsafe fn xessSetExposureMultiplier(
         &self,
         hContext: xess_context_handle_t,
@@ -469,7 +590,11 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessSetExposureMultiplier)(hContext, scale)
     }
-    #[doc = " @brief Gets exposure scale value\n\n @param hContext The XeSS context handle.\n @param[out] pScale Exposure scale pointer.\n @return XeSS return status code."]
+    /** @brief Gets exposure scale value
+
+ @param hContext The XeSS context handle.
+ @param[out] pScale Exposure scale pointer.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetExposureMultiplier(
         &self,
         hContext: xess_context_handle_t,
@@ -477,7 +602,14 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessGetExposureMultiplier)(hContext, pScale)
     }
-    #[doc = " @brief Sets maximum value for responsive mask\n\n This value used to clip responsive mask values. Final responsive mask value calculated as\n clip(responsive_mask, 0.0, max_value). Value must be within range [0.0; 1.0]\n\n @param hContext The XeSS context handle.\n @param value maximum clip value.\n @return XeSS return status code."]
+    /** @brief Sets maximum value for responsive mask
+
+ This value used to clip responsive mask values. Final responsive mask value calculated as
+ clip(responsive_mask, 0.0, max_value). Value must be within range [0.0; 1.0]
+
+ @param hContext The XeSS context handle.
+ @param value maximum clip value.
+ @return XeSS return status code.*/
     pub unsafe fn xessSetMaxResponsiveMaskValue(
         &self,
         hContext: xess_context_handle_t,
@@ -485,7 +617,11 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessSetMaxResponsiveMaskValue)(hContext, value)
     }
-    #[doc = " @brief Gets maximum value for responsive mask\n\n @param hContext The XeSS context handle.\n @param[out] pValue maximum clip value pointer.\n @return XeSS return status code."]
+    /** @brief Gets maximum value for responsive mask
+
+ @param hContext The XeSS context handle.
+ @param[out] pValue maximum clip value pointer.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetMaxResponsiveMaskValue(
         &self,
         hContext: xess_context_handle_t,
@@ -493,7 +629,12 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessGetMaxResponsiveMaskValue)(hContext, pValue)
     }
-    #[doc = " @brief Sets logging callback\n\n @param hContext The XeSS context handle.\n @param loggingLevel Minimum logging level for logging callback.\n @param loggingCallback Logging callback\n @return XeSS return status code."]
+    /** @brief Sets logging callback
+
+ @param hContext The XeSS context handle.
+ @param loggingLevel Minimum logging level for logging callback.
+ @param loggingCallback Logging callback
+ @return XeSS return status code.*/
     pub unsafe fn xessSetLoggingCallback(
         &self,
         hContext: xess_context_handle_t,
@@ -502,11 +643,36 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessSetLoggingCallback)(hContext, loggingLevel, loggingCallback)
     }
-    #[doc = " @brief Indicates if the installed driver supports best XeSS experience.\n\n @param hContext The XeSS context handle.\n @return xessIsOptimalDriver returns XESS_RESULT_SUCCESS, or XESS_RESULT_WARNING_OLD_DRIVER\n if installed driver may result in degraded performance or visual quality.\n xessD3D12CreateContext(..) will return XESS_RESULT_ERROR_UNSUPPORTED_DRIVER if driver does\n not support XeSS  at all."]
-    pub unsafe fn xessIsOptimalDriver(&self, hContext: xess_context_handle_t) -> xess_result_t {
+    /** @brief Indicates if the installed driver supports best XeSS experience.
+
+ @param hContext The XeSS context handle.
+ @return xessIsOptimalDriver returns XESS_RESULT_SUCCESS, or XESS_RESULT_WARNING_OLD_DRIVER
+ if installed driver may result in degraded performance or visual quality.
+ xessD3D12CreateContext(..) will return XESS_RESULT_ERROR_UNSUPPORTED_DRIVER if driver does
+ not support XeSS  at all.*/
+    pub unsafe fn xessIsOptimalDriver(
+        &self,
+        hContext: xess_context_handle_t,
+    ) -> xess_result_t {
         (self.xessIsOptimalDriver)(hContext)
     }
-    #[doc = " @brief Forces usage of legacy (pre 1.3.0) scale factors\n\n Following scale factors will be applied:\n @li XESS_QUALITY_SETTING_ULTRA_PERFORMANCE: 3.0\n @li XESS_QUALITY_SETTING_PERFORMANCE: 2.0\n @li XESS_QUALITY_SETTING_BALANCED: 1.7\n @li XESS_QUALITY_SETTING_QUALITY: 1.5\n @li XESS_QUALITY_SETTING_ULTRA_QUALITY: 1.3\n @li XESS_QUALITY_SETTING_AA: 1.0\n In order to apply new scale factors application should call xessGetOptimalInputResolution and\n initialization function (xess*Init)\n\n @param hContext The XeSS context handle.\n @param force if set to true legacy scale factors will be forced, if set to false - scale factors\n will be selected by XeSS\n\n @return XeSS return status code."]
+    /** @brief Forces usage of legacy (pre 1.3.0) scale factors
+
+ Following scale factors will be applied:
+ @li XESS_QUALITY_SETTING_ULTRA_PERFORMANCE: 3.0
+ @li XESS_QUALITY_SETTING_PERFORMANCE: 2.0
+ @li XESS_QUALITY_SETTING_BALANCED: 1.7
+ @li XESS_QUALITY_SETTING_QUALITY: 1.5
+ @li XESS_QUALITY_SETTING_ULTRA_QUALITY: 1.3
+ @li XESS_QUALITY_SETTING_AA: 1.0
+ In order to apply new scale factors application should call xessGetOptimalInputResolution and
+ initialization function (xess*Init)
+
+ @param hContext The XeSS context handle.
+ @param force if set to true legacy scale factors will be forced, if set to false - scale factors
+ will be selected by XeSS
+
+ @return XeSS return status code.*/
     pub unsafe fn xessForceLegacyScaleFactors(
         &self,
         hContext: xess_context_handle_t,
@@ -514,14 +680,28 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessForceLegacyScaleFactors)(hContext, force)
     }
-    #[doc = " @brief Returns current state of pipeline build\n This function can only be called after xess*BuildPipelines and\n before corresponding xess*Init.\n This call returns XESS_RESULT_SUCCESS if pipelines already built, and\n XESS_RESULT_ERROR_OPERATION_IN_PROGRESS if pipline build is in progress.\n If function called before @ref xess*BuildPipelines or after @ref xess*Init -\n XESS_RESULT_ERROR_WRONG_CALL_ORDER will be returned.\n\n @param hContext The XeSS context handle.\n @return XESS_RESULT_SUCCESS if pipelines already built.\n         XESS_RESULT_ERROR_OPERATION_IN_PROGRESS if pipeline build are in progress.\n         XESS_RESULT_ERROR_WRONG_CALL_ORDER if the function is called out of order."]
+    /** @brief Returns current state of pipeline build
+ This function can only be called after xess*BuildPipelines and
+ before corresponding xess*Init.
+ This call returns XESS_RESULT_SUCCESS if pipelines already built, and
+ XESS_RESULT_ERROR_OPERATION_IN_PROGRESS if pipline build is in progress.
+ If function called before @ref xess*BuildPipelines or after @ref xess*Init -
+ XESS_RESULT_ERROR_WRONG_CALL_ORDER will be returned.
+
+ @param hContext The XeSS context handle.
+ @return XESS_RESULT_SUCCESS if pipelines already built.
+         XESS_RESULT_ERROR_OPERATION_IN_PROGRESS if pipeline build are in progress.
+         XESS_RESULT_ERROR_WRONG_CALL_ORDER if the function is called out of order.*/
     pub unsafe fn xessGetPipelineBuildStatus(
         &self,
         hContext: xess_context_handle_t,
     ) -> xess_result_t {
         (self.xessGetPipelineBuildStatus)(hContext)
     }
-    #[doc = " @brief Select network to be used by XeSS\n\n Selects network model to use by XeSS.\n After call to this function - XeSS init function *must* be called"]
+    /** @brief Select network to be used by XeSS
+
+ Selects network model to use by XeSS.
+ After call to this function - XeSS init function *must* be called*/
     pub unsafe fn xessSelectNetworkModel(
         &self,
         hContext: xess_context_handle_t,
@@ -529,7 +709,24 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessSelectNetworkModel)(hContext, network)
     }
-    #[doc = " @brief Dumps sequence of frames to the provided folder\n\n Call to this function initiates a dump for selected elements.\n XeSS SDK uses RAM cache to reduce dump overhead. Application should provide reasonable\n value for @ref xess_dump_parameters_t::frame_count frames (about 50 megs needed per cached frame).\n To enable several dumps per run application should provide correct\n @ref xess_dump_parameters_t::frame_idx value. This value used as a start index for frame\n dumping.\n After call to this function - each call to @ref xessD3D12Execute will result in new frame dumped to\n RAM cache.\n After @ref xess_dump_parameters_t::frame_count frames application will be blocked on call to\n @ref xessD3D12Execute in order to save cached frames to disk. This operation can take long time.\n Repetitive calls to this function can result in XESS_RESULT_ERROR_OPERATION_IN_PROGRESS which means that\n frame dump is in progress.\n\n @param hContext XeSS context\n @param dump_parameters dump configuration\n @return operation status"]
+    /** @brief Dumps sequence of frames to the provided folder
+
+ Call to this function initiates a dump for selected elements.
+ XeSS SDK uses RAM cache to reduce dump overhead. Application should provide reasonable
+ value for @ref xess_dump_parameters_t::frame_count frames (about 50 megs needed per cached frame).
+ To enable several dumps per run application should provide correct
+ @ref xess_dump_parameters_t::frame_idx value. This value used as a start index for frame
+ dumping.
+ After call to this function - each call to @ref xessD3D12Execute will result in new frame dumped to
+ RAM cache.
+ After @ref xess_dump_parameters_t::frame_count frames application will be blocked on call to
+ @ref xessD3D12Execute in order to save cached frames to disk. This operation can take long time.
+ Repetitive calls to this function can result in XESS_RESULT_ERROR_OPERATION_IN_PROGRESS which means that
+ frame dump is in progress.
+
+ @param hContext XeSS context
+ @param dump_parameters dump configuration
+ @return operation status*/
     pub unsafe fn xessStartDump(
         &self,
         hContext: xess_context_handle_t,
@@ -537,7 +734,19 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessStartDump)(hContext, dump_parameters)
     }
-    #[doc = " @brief Query XeSS model performance data for past executions. To enable performance collection,\n context must be initialized with XESS_DEBUG_ENABLE_PROFILING flag added to xess_d3d12_init_params_t::initFlags\n or xess_vk_init_params_t::initFlags.\n If profiling is enabled, user must poll for profiling data after executing one or more command lists, otherwise\n implementation will keep growing internal CPU buffers to accommodate all profiling data available.\n Due to async nature of execution on GPU, data may not be available after submitting command lists to device queue.\n It is advised to check `any_profiling_data_in_flight` flag in case all workloads has been submitted, but profiling\n data for some frames is still not available.\n Data pointed to by pProfilingData item(s) belongs to context instance and\n is valid until next call to xessD3D12GetProfilingData or xessGetProfilingData for owning context.\n @param hContext: The XeSS context handle.\n @param pProfilingData: pointer to profiling data structure to be filled by implementation.\n @return XeSS return status code."]
+    /** @brief Query XeSS model performance data for past executions. To enable performance collection,
+ context must be initialized with XESS_DEBUG_ENABLE_PROFILING flag added to xess_d3d12_init_params_t::initFlags
+ or xess_vk_init_params_t::initFlags.
+ If profiling is enabled, user must poll for profiling data after executing one or more command lists, otherwise
+ implementation will keep growing internal CPU buffers to accommodate all profiling data available.
+ Due to async nature of execution on GPU, data may not be available after submitting command lists to device queue.
+ It is advised to check `any_profiling_data_in_flight` flag in case all workloads has been submitted, but profiling
+ data for some frames is still not available.
+ Data pointed to by pProfilingData item(s) belongs to context instance and
+ is valid until next call to xessD3D12GetProfilingData or xessGetProfilingData for owning context.
+ @param hContext: The XeSS context handle.
+ @param pProfilingData: pointer to profiling data structure to be filled by implementation.
+ @return XeSS return status code.*/
     pub unsafe fn xessGetProfilingData(
         &self,
         hContext: xess_context_handle_t,

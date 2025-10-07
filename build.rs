@@ -28,6 +28,7 @@ fn generate_bindings() {
             .clang_args(["-x", "c++"])
             .prepend_enum_name(false)
             .layout_tests(false)
+            .formatter(bindgen::Formatter::Prettyplease)
             .dynamic_link_require_all(true)
             .dynamic_library_name("XessLoaded");
         if let Some(vulkan_sdk) = vulkan_sdk() {
@@ -102,19 +103,4 @@ fn generate_bindings() {
 fn main() {
     #[cfg(feature = "generate-bindings")]
     generate_bindings();
-    // // #[cfg(not(feature = "loaded"))]
-    // {
-    //     let xess_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("xess/");
-    //     #[cfg(feature = "xell")]
-    //     println!("cargo:rustc-link-lib=static={}", "libxell");
-    //     #[cfg(all(feature = "xess", feature = "dx11"))]
-    //     println!("cargo:rustc-link-lib=static={}", "libxess_dx11");
-    //     #[cfg(feature = "xess")]
-    //     println!("cargo:rustc-link-lib=static={}", "libxess");
-    //     #[cfg(feature = "xess_fg")]
-    //     println!("cargo:rustc-link-lib=static={}", "libxess_fg");
-
-    //     let lib_path = xess_path.join("lib");
-    //     println!("cargo:rustc-link-search=native={}", lib_path.display());
-    // }
 }

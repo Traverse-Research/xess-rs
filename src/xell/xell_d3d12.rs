@@ -20,13 +20,18 @@ impl XessLoaded {
         L: Into<::libloading::Library>,
     {
         let __library = library.into();
-        let xellD3D12CreateContext = __library.get(b"xellD3D12CreateContext\0").map(|sym| *sym)?;
+        let xellD3D12CreateContext = __library
+            .get(b"xellD3D12CreateContext\0")
+            .map(|sym| *sym)?;
         Ok(XessLoaded {
             __library,
             xellD3D12CreateContext,
         })
     }
-    #[doc = " @brief Create the XeLL DX12 context .\n @param[in] device: DX12 device\n @param[out] out_context: Returned XeLL context handle.\n @return XeLL return status code."]
+    /** @brief Create the XeLL DX12 context .
+ @param[in] device: DX12 device
+ @param[out] out_context: Returned XeLL context handle.
+ @return XeLL return status code.*/
     pub unsafe fn xellD3D12CreateContext(
         &self,
         device: *mut ID3D12Device,
