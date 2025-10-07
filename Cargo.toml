@@ -12,6 +12,10 @@ categories = [] # https://crates.io/category_slugs
 keywords = []
 rust-version = "1.74"
 
+# Headers contain a sequence of characters which are incorrectly interpreted as a doctest, these obviously fail 
+[lib]
+doctest = false
+
 [dependencies]
 ash = { version = "0.38", default-features = false, optional = true }
 libloading = {version = "0.8", default-features = false}
