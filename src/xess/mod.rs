@@ -1,16 +1,14 @@
-pub mod xess {
-    include!("xess.rs");
-}
+include!("xess.rs");
 
 #[cfg(feature = "dx11")]
 pub mod xess_d3d11 {
-    use super::xess::*;
+    use super::*;
     use windows::Win32::Graphics::Direct3D11::{ID3D11Device, ID3D11Resource};
     include!("xess_d3d11.rs");
 }
 #[cfg(feature = "dx12")]
 pub mod xess_d3d12 {
-    use super::xess::*;
+    use super::*;
     use windows::Win32::Graphics::Direct3D12::{
         ID3D12DescriptorHeap, ID3D12Device, ID3D12GraphicsCommandList, ID3D12Heap,
         ID3D12PipelineLibrary, ID3D12Resource,
@@ -19,7 +17,7 @@ pub mod xess_d3d12 {
 }
 #[cfg(feature = "vk")]
 pub mod xess_vk {
-    use super::xess::*;
+    use super::*;
     use ash::vk::{
         Buffer, CommandBuffer, Device, DeviceMemory, Format, Image, ImageLayout,
         ImageSubresourceRange, ImageView, Instance, PhysicalDevice, PipelineCache,

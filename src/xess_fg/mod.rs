@@ -1,10 +1,8 @@
-pub mod xess_fg_swapchain {
-    include!("xefg_swapchain.rs");
-}
+include!("xefg_swapchain.rs");
 
 #[cfg(feature = "dx12")]
 pub mod xess_fg_d3d12 {
-    use super::xess_fg_swapchain::*;
+    use super::*;
     use windows::{
         core::GUID,
         Win32::{
