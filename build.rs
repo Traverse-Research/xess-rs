@@ -20,11 +20,11 @@ fn generate_bindings() {
     let compile = |input_file, output_file, allowlist_function, allowlist_type| {
         let mut bindings = bindgen::Builder::default()
             .header(input_file)
+            .allowlist_recursively(false)
             .allowlist_function(allowlist_function)
             .allowlist_type(allowlist_type)
             .allowlist_var(".*xess.*")
             .derive_default(true)
-            .allowlist_recursively(false)
             .clang_args(["-x", "c++"])
             .prepend_enum_name(false)
             .layout_tests(false)
