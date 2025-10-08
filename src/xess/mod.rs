@@ -3,16 +3,21 @@ include!("xess.rs");
 #[cfg(all(windows, feature = "dx11"))]
 pub mod d3d11 {
     use super::*;
-    use windows::Win32::Graphics::Direct3D11::{ID3D11Device, ID3D11Resource};
+    use std::ffi::c_void;
+    type ID3D11Device = c_void;
+    type ID3D11Resource = c_void;
     include!("dx11.rs");
 }
 #[cfg(all(windows, feature = "dx12"))]
 pub mod d3d12 {
     use super::*;
-    use windows::Win32::Graphics::Direct3D12::{
-        ID3D12DescriptorHeap, ID3D12Device, ID3D12GraphicsCommandList, ID3D12Heap,
-        ID3D12PipelineLibrary, ID3D12Resource,
-    };
+    use std::ffi::c_void;
+    type ID3D12DescriptorHeap = c_void;
+    type ID3D12Device = c_void;
+    type ID3D12GraphicsCommandList = c_void;
+    type ID3D12Heap = c_void;
+    type ID3D12PipelineLibrary = c_void;
+    type ID3D12Resource = c_void;
     include!("dx12.rs");
 }
 #[cfg(feature = "vk")]
