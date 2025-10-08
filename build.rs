@@ -66,7 +66,7 @@ fn generate_bindings() {
         "./src/xess/xess_d3d12_include.h",
         "./src/xess/xess_d3d12.rs",
         ".*xessD3D12.*",
-        "(.*xess_d3d12.*|.*xess_resources_to_dump_t.*)", // Inconsistent naming yuck
+        ".*xess_(d3d12|resources_to_dump_t).*)", // Inconsistent naming yuck
     );
 
     compile(
