@@ -18,9 +18,5 @@ Add this to your Cargo.toml:
 
 ```toml
 [dependencies]
-xess-sys = "0.0.0"
-```
-
-```rust
-// A code example
+xess-sys = "0.1.0"
 ```
