@@ -1,12 +1,19 @@
 #[cfg(feature = "generate-bindings")]
-fn vulkan_sdk() -> Option<std::path::PathBuf> {
+fn vulkan_sdk_include_directory() -> Option<std::path::PathBuf> {
+    let target_os = std::env::var("CARGO_CFG_TARGET_OS").unwrap();
+    let is_windows = target_os.as_str() == "windows";
+
     // Mostly on Windows, the Vulkan headers don't exist in a common location but can be found based
     // on VULKAN_SDK, set by the Vulkan SDK installer.
     match std::env::var("VULKAN_SDK") {
-        Ok(v) => Some(std::path::PathBuf::from(v)),
+        Ok(v) => Some(std::path::PathBuf::from(v).join(
+            // On the Windows SDK the `Include` directory is capitalized
+            if is_windows { "Include" } else { "include" },
+        )),
         // TODO: On Windows, perhaps this should be an error with a link to the SDK installation?
-        Err(std::env::VarError::NotPresent) if cfg!(windows) => {
-            panic!("On Windows, the VULKAN_SDK environment variable must be set")
+        Err(std::env::VarError::NotPresent) if is_windows => {
+            // On Windows there's no common include directory like `/usr/include` where Vulkan headers can be found
+            panic!("When targeting Windows, the VULKAN_SDK environment variable must be set")
         }
         Err(std::env::VarError::NotPresent) => None,
         Err(std::env::VarError::NotUnicode(e)) => {
@@ -30,8 +37,8 @@ fn generate_bindings() {
             .layout_tests(false)
             .dynamic_link_require_all(true)
             .dynamic_library_name("XessLoaded");
-        if let Some(vulkan_sdk) = vulkan_sdk() {
-            bindings = bindings.clang_arg(format!("-I{}", vulkan_sdk.join("include").display()))
+        if let Some(vulkan_sdk_include_dir) = vulkan_sdk_include_directory() {
+            bindings = bindings.clang_arg(format!("-I{}", vulkan_sdk_include_dir.display()))
         }
         bindings
             .generate()
