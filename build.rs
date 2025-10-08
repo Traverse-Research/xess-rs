@@ -28,7 +28,6 @@ fn generate_bindings() {
             .clang_args(["-x", "c++"])
             .prepend_enum_name(false)
             .layout_tests(false)
-            .formatter(bindgen::Formatter::Prettyplease)
             .dynamic_link_require_all(true)
             .dynamic_library_name("XessLoaded");
         if let Some(vulkan_sdk) = vulkan_sdk() {
@@ -50,23 +49,23 @@ fn generate_bindings() {
 
     compile(
         "./xess/inc/xell/xell_d3d12.h",
-        "./src/xell/xell_d3d12.rs",
+        "./src/xell/dx12.rs",
         ".*xellD3D12.*",
         ".*xess_d3d12.*",
     );
 
     compile(
         "./xess/inc/xess/xess_d3d11.h",
-        "./src/xess/xess_d3d11.rs",
+        "./src/xess/dx11.rs",
         ".*xessD3D11.*",
         ".*xess_d3d11.*",
     );
 
     compile(
-        "./src/xess/xess_d3d12_include.h",
-        "./src/xess/xess_d3d12.rs",
+        "./src/xess/dx12_include.h",
+        "./src/xess/dx12.rs",
         ".*xessD3D12.*",
-        ".*xess_(d3d12|resources_to_dump_t).*)", // Inconsistent naming yuck
+        "(.*xess_d3d12.*|.*xess_resources_to_dump_t.*)", // Inconsistent naming yuck
     );
 
     compile(
@@ -78,21 +77,21 @@ fn generate_bindings() {
 
     compile(
         "./xess/inc/xess/xess_vk_debug.h",
-        "./src/xess/xess_vk.rs",
+        "./src/xess/vk.rs",
         ".*xessVK.*",
         ".*xess_vk.*",
     );
 
     compile(
         "./xess/inc/xess_fg/xefg_swapchain_d3d12.h",
-        "./src/xess_fg/xefg_swapchain_d3d12.rs",
+        "./src/xess_fg/dx12.rs",
         ".*xefgSwapChainD3D12.*",
         ".*xefg_swapchain_d3d12.*",
     );
 
     compile(
         "./xess/inc/xess_fg/xefg_swapchain_debug.h",
-        "./src/xess_fg/xefg_swapchain.rs",
+        "./src/xess_fg/swapchain.rs",
         ".*xefgSwapChain.*",
         ".*xefg_swapchain.*",
     );

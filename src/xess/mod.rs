@@ -1,22 +1,22 @@
 include!("xess.rs");
 
 #[cfg(feature = "dx11")]
-pub mod xess_d3d11 {
+pub mod d3d11 {
     use super::*;
     use windows::Win32::Graphics::Direct3D11::{ID3D11Device, ID3D11Resource};
-    include!("xess_d3d11.rs");
+    include!("dx11.rs");
 }
 #[cfg(feature = "dx12")]
-pub mod xess_d3d12 {
+pub mod d3d12 {
     use super::*;
     use windows::Win32::Graphics::Direct3D12::{
         ID3D12DescriptorHeap, ID3D12Device, ID3D12GraphicsCommandList, ID3D12Heap,
         ID3D12PipelineLibrary, ID3D12Resource,
     };
-    include!("xess_d3d12.rs");
+    include!("dx12.rs");
 }
 #[cfg(feature = "vk")]
-pub mod xess_vk {
+pub mod vk {
     use super::*;
     use ash::vk::{
         Buffer, CommandBuffer, Device, DeviceMemory, Format, Image, ImageLayout,
@@ -34,5 +34,5 @@ pub mod xess_vk {
     type VkInstance = Instance;
     type VkPhysicalDevice = PhysicalDevice;
     type VkPipelineCache = PipelineCache;
-    include!("xess_vk.rs");
+    include!("vk.rs");
 }

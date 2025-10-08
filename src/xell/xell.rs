@@ -37,8 +37,7 @@ where
         debug_assert!(index / 8 < core::mem::size_of::<Storage>());
         let byte_index = index / 8;
         let byte = unsafe {
-            *(core::ptr::addr_of!((*this).storage) as *const u8)
-                .offset(byte_index as isize)
+            *(core::ptr::addr_of!((*this).storage) as *const u8).offset(byte_index as isize)
         };
         Self::extract_bit(byte, index)
     }
@@ -64,8 +63,7 @@ where
         debug_assert!(index / 8 < core::mem::size_of::<Storage>());
         let byte_index = index / 8;
         let byte = unsafe {
-            (core::ptr::addr_of_mut!((*this).storage) as *mut u8)
-                .offset(byte_index as isize)
+            (core::ptr::addr_of_mut!((*this).storage) as *mut u8).offset(byte_index as isize)
         };
         unsafe { *byte = Self::change_bit(*byte, index, val) };
     }
@@ -73,9 +71,7 @@ where
     pub fn get(&self, bit_offset: usize, bit_width: u8) -> u64 {
         debug_assert!(bit_width <= 64);
         debug_assert!(bit_offset / 8 < self.storage.as_ref().len());
-        debug_assert!(
-            (bit_offset + (bit_width as usize)) / 8 <= self.storage.as_ref().len(),
-        );
+        debug_assert!((bit_offset + (bit_width as usize)) / 8 <= self.storage.as_ref().len());
         let mut val = 0;
         for i in 0..(bit_width as usize) {
             if self.get_bit(i + bit_offset) {
@@ -93,9 +89,7 @@ where
     pub unsafe fn raw_get(this: *const Self, bit_offset: usize, bit_width: u8) -> u64 {
         debug_assert!(bit_width <= 64);
         debug_assert!(bit_offset / 8 < core::mem::size_of::<Storage>());
-        debug_assert!(
-            (bit_offset + (bit_width as usize)) / 8 <= core::mem::size_of::<Storage>(),
-        );
+        debug_assert!((bit_offset + (bit_width as usize)) / 8 <= core::mem::size_of::<Storage>());
         let mut val = 0;
         for i in 0..(bit_width as usize) {
             if unsafe { Self::raw_get_bit(this, i + bit_offset) } {
@@ -113,9 +107,7 @@ where
     pub fn set(&mut self, bit_offset: usize, bit_width: u8, val: u64) {
         debug_assert!(bit_width <= 64);
         debug_assert!(bit_offset / 8 < self.storage.as_ref().len());
-        debug_assert!(
-            (bit_offset + (bit_width as usize)) / 8 <= self.storage.as_ref().len(),
-        );
+        debug_assert!((bit_offset + (bit_width as usize)) / 8 <= self.storage.as_ref().len());
         for i in 0..(bit_width as usize) {
             let mask = 1 << i;
             let val_bit_is_set = val & mask == mask;
@@ -131,9 +123,7 @@ where
     pub unsafe fn raw_set(this: *mut Self, bit_offset: usize, bit_width: u8, val: u64) {
         debug_assert!(bit_width <= 64);
         debug_assert!(bit_offset / 8 < core::mem::size_of::<Storage>());
-        debug_assert!(
-            (bit_offset + (bit_width as usize)) / 8 <= core::mem::size_of::<Storage>(),
-        );
+        debug_assert!((bit_offset + (bit_width as usize)) / 8 <= core::mem::size_of::<Storage>());
         for i in 0..(bit_width as usize) {
             let mask = 1 << i;
             let val_bit_is_set = val & mask == mask;
@@ -146,29 +136,29 @@ where
         }
     }
 }
-/// XeLL operation was successful.
+#[doc = " XeLL operation was successful."]
 pub const XELL_RESULT_SUCCESS: _xell_result_t = 0;
-/// XeLL not supported on the GPU.
+#[doc = " XeLL not supported on the GPU."]
 pub const XELL_RESULT_ERROR_UNSUPPORTED_DEVICE: _xell_result_t = -1;
-/// An unsupported driver.
+#[doc = " An unsupported driver."]
 pub const XELL_RESULT_ERROR_UNSUPPORTED_DRIVER: _xell_result_t = -2;
-/// Execute called without initialization.
+#[doc = " Execute called without initialization."]
 pub const XELL_RESULT_ERROR_UNINITIALIZED: _xell_result_t = -3;
-/// Invalid argument.
+#[doc = " Invalid argument."]
 pub const XELL_RESULT_ERROR_INVALID_ARGUMENT: _xell_result_t = -4;
-/// Device function.
+#[doc = " Device function."]
 pub const XELL_RESULT_ERROR_DEVICE: _xell_result_t = -6;
-/// The function is not implemented.
+#[doc = " The function is not implemented."]
 pub const XELL_RESULT_ERROR_NOT_IMPLEMENTED: _xell_result_t = -7;
-/// Invalid context.
+#[doc = " Invalid context."]
 pub const XELL_RESULT_ERROR_INVALID_CONTEXT: _xell_result_t = -8;
-/// Operation not supported in current configuration.
+#[doc = " Operation not supported in current configuration."]
 pub const XELL_RESULT_ERROR_UNSUPPORTED: _xell_result_t = -10;
-/// Unknown internal failure.
+#[doc = " Unknown internal failure."]
 pub const XELL_RESULT_ERROR_UNKNOWN: _xell_result_t = -1000;
-/// @brief  XeLL return codes.
+#[doc = " @brief  XeLL return codes."]
 pub type _xell_result_t = ::std::os::raw::c_int;
-/// @brief  XeLL return codes.
+#[doc = " @brief  XeLL return codes."]
 pub use self::_xell_result_t as xell_result_t;
 pub const XELL_SIMULATION_START: _xell_latency_marker_type_t = 0;
 pub const XELL_SIMULATION_END: _xell_latency_marker_type_t = 1;
@@ -178,19 +168,14 @@ pub const XELL_PRESENT_START: _xell_latency_marker_type_t = 4;
 pub const XELL_PRESENT_END: _xell_latency_marker_type_t = 5;
 pub const XELL_INPUT_SAMPLE: _xell_latency_marker_type_t = 6;
 pub const XELL_MARKER_COUNT: _xell_latency_marker_type_t = 7;
-/** @brief XeLL markers.
-
- XeLL markers for game instrumentation.*/
+#[doc = " @brief XeLL markers.\n\n XeLL markers for game instrumentation."]
 pub type _xell_latency_marker_type_t = ::std::os::raw::c_int;
-/** @brief XeLL markers.
-
- XeLL markers for game instrumentation.*/
+#[doc = " @brief XeLL markers.\n\n XeLL markers for game instrumentation."]
 pub use self::_xell_latency_marker_type_t as xell_latency_marker_type_t;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xell_sleep_params_t {
-    /** Minimum interval expressed in microseconds.
- If != 0 it will enable fps capping to that value.*/
+    #[doc = " Minimum interval expressed in microseconds.\n If != 0 it will enable fps capping to that value."]
     pub minimumIntervalUs: u32,
     pub _bitfield_align_1: [u32; 0],
     pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
@@ -210,21 +195,18 @@ impl _xell_sleep_params_t {
     #[inline]
     pub unsafe fn bLowLatencyMode_raw(this: *const Self) -> u32 {
         unsafe {
-            ::std::mem::transmute(
-                <__BindgenBitfieldUnit<
-                    [u8; 4usize],
-                >>::raw_get(::std::ptr::addr_of!((*this)._bitfield_1), 0usize, 1u8)
-                    as u32,
-            )
+            ::std::mem::transmute(<__BindgenBitfieldUnit<[u8; 4usize]>>::raw_get(
+                ::std::ptr::addr_of!((*this)._bitfield_1),
+                0usize,
+                1u8,
+            ) as u32)
         }
     }
     #[inline]
     pub unsafe fn set_bLowLatencyMode_raw(this: *mut Self, val: u32) {
         unsafe {
             let val: u32 = ::std::mem::transmute(val);
-            <__BindgenBitfieldUnit<
-                [u8; 4usize],
-            >>::raw_set(
+            <__BindgenBitfieldUnit<[u8; 4usize]>>::raw_set(
                 ::std::ptr::addr_of_mut!((*this)._bitfield_1),
                 0usize,
                 1u8,
@@ -246,21 +228,18 @@ impl _xell_sleep_params_t {
     #[inline]
     pub unsafe fn bLowLatencyBoost_raw(this: *const Self) -> u32 {
         unsafe {
-            ::std::mem::transmute(
-                <__BindgenBitfieldUnit<
-                    [u8; 4usize],
-                >>::raw_get(::std::ptr::addr_of!((*this)._bitfield_1), 1usize, 1u8)
-                    as u32,
-            )
+            ::std::mem::transmute(<__BindgenBitfieldUnit<[u8; 4usize]>>::raw_get(
+                ::std::ptr::addr_of!((*this)._bitfield_1),
+                1usize,
+                1u8,
+            ) as u32)
         }
     }
     #[inline]
     pub unsafe fn set_bLowLatencyBoost_raw(this: *mut Self, val: u32) {
         unsafe {
             let val: u32 = ::std::mem::transmute(val);
-            <__BindgenBitfieldUnit<
-                [u8; 4usize],
-            >>::raw_set(
+            <__BindgenBitfieldUnit<[u8; 4usize]>>::raw_set(
                 ::std::ptr::addr_of_mut!((*this)._bitfield_1),
                 1usize,
                 1u8,
@@ -282,21 +261,18 @@ impl _xell_sleep_params_t {
     #[inline]
     pub unsafe fn reserved_raw(this: *const Self) -> u32 {
         unsafe {
-            ::std::mem::transmute(
-                <__BindgenBitfieldUnit<
-                    [u8; 4usize],
-                >>::raw_get(::std::ptr::addr_of!((*this)._bitfield_1), 2usize, 30u8)
-                    as u32,
-            )
+            ::std::mem::transmute(<__BindgenBitfieldUnit<[u8; 4usize]>>::raw_get(
+                ::std::ptr::addr_of!((*this)._bitfield_1),
+                2usize,
+                30u8,
+            ) as u32)
         }
     }
     #[inline]
     pub unsafe fn set_reserved_raw(this: *mut Self, val: u32) {
         unsafe {
             let val: u32 = ::std::mem::transmute(val);
-            <__BindgenBitfieldUnit<
-                [u8; 4usize],
-            >>::raw_set(
+            <__BindgenBitfieldUnit<[u8; 4usize]>>::raw_set(
                 ::std::ptr::addr_of_mut!((*this)._bitfield_1),
                 2usize,
                 30u8,
@@ -311,37 +287,18 @@ impl _xell_sleep_params_t {
         reserved: u32,
     ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
         let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
-        __bindgen_bitfield_unit
-            .set(
-                0usize,
-                1u8,
-                {
-                    let bLowLatencyMode: u32 = unsafe {
-                        ::std::mem::transmute(bLowLatencyMode)
-                    };
-                    bLowLatencyMode as u64
-                },
-            );
-        __bindgen_bitfield_unit
-            .set(
-                1usize,
-                1u8,
-                {
-                    let bLowLatencyBoost: u32 = unsafe {
-                        ::std::mem::transmute(bLowLatencyBoost)
-                    };
-                    bLowLatencyBoost as u64
-                },
-            );
-        __bindgen_bitfield_unit
-            .set(
-                2usize,
-                30u8,
-                {
-                    let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
-                    reserved as u64
-                },
-            );
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let bLowLatencyMode: u32 = unsafe { ::std::mem::transmute(bLowLatencyMode) };
+            bLowLatencyMode as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let bLowLatencyBoost: u32 = unsafe { ::std::mem::transmute(bLowLatencyBoost) };
+            bLowLatencyBoost as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 30u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
         __bindgen_bitfield_unit
     }
 }
@@ -350,41 +307,31 @@ pub const XELL_LOGGING_LEVEL_DEBUG: _xell_logging_level_t = 0;
 pub const XELL_LOGGING_LEVEL_INFO: _xell_logging_level_t = 1;
 pub const XELL_LOGGING_LEVEL_WARNING: _xell_logging_level_t = 2;
 pub const XELL_LOGGING_LEVEL_ERROR: _xell_logging_level_t = 3;
-/// @brief XeLL logging level
+#[doc = " @brief XeLL logging level"]
 pub type _xell_logging_level_t = ::std::os::raw::c_int;
-/// @brief XeLL logging level
+#[doc = " @brief XeLL logging level"]
 pub use self::_xell_logging_level_t as xell_logging_level_t;
-/** A logging callback provided by the application. This callback can be called from other threads.
- Message pointer are only valid inside function and may be invalid right after return call.
- Message is a null-terminated utf-8 string*/
+#[doc = " A logging callback provided by the application. This callback can be called from other threads.\n Message pointer are only valid inside function and may be invalid right after return call.\n Message is a null-terminated utf-8 string"]
 pub type xell_app_log_callback_t = ::std::option::Option<
     unsafe extern "C" fn(
         message: *const ::std::os::raw::c_char,
         loggingLevel: xell_logging_level_t,
     ),
 >;
-/** @brief XeLL version.
-
- XeLL uses major.minor.patch version format and Numeric 90+ scheme for development stage builds.*/
+#[doc = " @brief XeLL version.\n\n XeLL uses major.minor.patch version format and Numeric 90+ scheme for development stage builds."]
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xell_version_t {
-    /** A major version increment indicates a new API and potentially a
- break in functionality.*/
+    #[doc = " A major version increment indicates a new API and potentially a\n break in functionality."]
     pub major: u16,
-    /** A minor version increment indicates incremental changes such as
- optional inputs or flags. This does not break existing functionality.*/
+    #[doc = " A minor version increment indicates incremental changes such as\n optional inputs or flags. This does not break existing functionality."]
     pub minor: u16,
-    /** A patch version increment may include performance or quality tweaks or fixes for known issues.
- There's no change in the interfaces.
- Versions beyond 90 used for development builds to change the interface for the next release.*/
+    #[doc = " A patch version increment may include performance or quality tweaks or fixes for known issues.\n There's no change in the interfaces.\n Versions beyond 90 used for development builds to change the interface for the next release."]
     pub patch: u16,
-    /// Reserved for future use.
+    #[doc = " Reserved for future use."]
     pub reserved: u16,
 }
-/** @brief XeLL version.
-
- XeLL uses major.minor.patch version format and Numeric 90+ scheme for development stage builds.*/
+#[doc = " @brief XeLL version.\n\n XeLL uses major.minor.patch version format and Numeric 90+ scheme for development stage builds."]
 pub type xell_version_t = _xell_version_t;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -392,9 +339,7 @@ pub struct _xell_context_handle_t {
     _unused: [u8; 0],
 }
 pub type xell_context_handle_t = *mut _xell_context_handle_t;
-/** @brief XeLL frame stats.
-
- XeLL frame timestamps.*/
+#[doc = " @brief XeLL frame stats.\n\n XeLL frame timestamps."]
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xell_frame_report_t {
@@ -405,22 +350,18 @@ pub struct _xell_frame_report_t {
     pub m_render_submit_end_ts: u64,
     pub m_present_start_ts: u64,
     pub m_present_end_ts: u64,
-    /// Reserved for future use.
+    #[doc = " Reserved for future use."]
     pub reserved1: u64,
     pub reserved2: u64,
     pub reserved3: u64,
     pub reserved4: u64,
     pub reserved5: u64,
 }
-/** @brief XeLL frame stats.
-
- XeLL frame timestamps.*/
+#[doc = " @brief XeLL frame stats.\n\n XeLL frame timestamps."]
 pub type xell_frame_report_t = _xell_frame_report_t;
 pub struct XessLoaded {
     __library: ::libloading::Library,
-    pub xellDestroyContext: unsafe extern "C" fn(
-        context: xell_context_handle_t,
-    ) -> xell_result_t,
+    pub xellDestroyContext: unsafe extern "C" fn(context: xell_context_handle_t) -> xell_result_t,
     pub xellSetSleepMode: unsafe extern "C" fn(
         context: xell_context_handle_t,
         param: *const xell_sleep_params_t,
@@ -429,18 +370,14 @@ pub struct XessLoaded {
         context: xell_context_handle_t,
         param: *mut xell_sleep_params_t,
     ) -> xell_result_t,
-    pub xellSleep: unsafe extern "C" fn(
-        context: xell_context_handle_t,
-        frame_id: u32,
-    ) -> xell_result_t,
+    pub xellSleep:
+        unsafe extern "C" fn(context: xell_context_handle_t, frame_id: u32) -> xell_result_t,
     pub xellAddMarkerData: unsafe extern "C" fn(
         context: xell_context_handle_t,
         frame_id: u32,
         marker: xell_latency_marker_type_t,
     ) -> xell_result_t,
-    pub xellGetVersion: unsafe extern "C" fn(
-        pVersion: *mut xell_version_t,
-    ) -> xell_result_t,
+    pub xellGetVersion: unsafe extern "C" fn(pVersion: *mut xell_version_t) -> xell_result_t,
     pub xellSetLoggingCallback: unsafe extern "C" fn(
         hContext: xell_context_handle_t,
         loggingLevel: xell_logging_level_t,
@@ -470,12 +407,8 @@ impl XessLoaded {
         let xellSleep = __library.get(b"xellSleep\0").map(|sym| *sym)?;
         let xellAddMarkerData = __library.get(b"xellAddMarkerData\0").map(|sym| *sym)?;
         let xellGetVersion = __library.get(b"xellGetVersion\0").map(|sym| *sym)?;
-        let xellSetLoggingCallback = __library
-            .get(b"xellSetLoggingCallback\0")
-            .map(|sym| *sym)?;
-        let xellGetFramesReports = __library
-            .get(b"xellGetFramesReports\0")
-            .map(|sym| *sym)?;
+        let xellSetLoggingCallback = __library.get(b"xellSetLoggingCallback\0").map(|sym| *sym)?;
+        let xellGetFramesReports = __library.get(b"xellGetFramesReports\0").map(|sym| *sym)?;
         Ok(XessLoaded {
             __library,
             xellDestroyContext,
@@ -488,19 +421,11 @@ impl XessLoaded {
             xellGetFramesReports,
         })
     }
-    /** @brief Destroy the XeLL context.
- @param context: The XeLL context handle.
- @return XeLL return status code.*/
-    pub unsafe fn xellDestroyContext(
-        &self,
-        context: xell_context_handle_t,
-    ) -> xell_result_t {
+    #[doc = " @brief Destroy the XeLL context.\n @param context: The XeLL context handle.\n @return XeLL return status code."]
+    pub unsafe fn xellDestroyContext(&self, context: xell_context_handle_t) -> xell_result_t {
         (self.xellDestroyContext)(context)
     }
-    /** @brief Setup how XeLL operate.
- @param context: The XeLL context handle.
- @param param: Initialization parameters.
- @return XeLL return status code.*/
+    #[doc = " @brief Setup how XeLL operate.\n @param context: The XeLL context handle.\n @param param: Initialization parameters.\n @return XeLL return status code."]
     pub unsafe fn xellSetSleepMode(
         &self,
         context: xell_context_handle_t,
@@ -508,10 +433,7 @@ impl XessLoaded {
     ) -> xell_result_t {
         (self.xellSetSleepMode)(context, param)
     }
-    /** @brief Get current XeLL parameters.
- @param context: The XeLL context handle.
- @param param: Returned parameters.
- @return XeLL return status code.*/
+    #[doc = " @brief Get current XeLL parameters.\n @param context: The XeLL context handle.\n @param param: Returned parameters.\n @return XeLL return status code."]
     pub unsafe fn xellGetSleepMode(
         &self,
         context: xell_context_handle_t,
@@ -519,22 +441,11 @@ impl XessLoaded {
     ) -> xell_result_t {
         (self.xellGetSleepMode)(context, param)
     }
-    /** @brief XeLL will sleep here for the simulation start.
- @param context: The XeLL context handle.
- @param frame_id: The incremental frame counter from the game.
- @return XeLL return status code.*/
-    pub unsafe fn xellSleep(
-        &self,
-        context: xell_context_handle_t,
-        frame_id: u32,
-    ) -> xell_result_t {
+    #[doc = " @brief XeLL will sleep here for the simulation start.\n @param context: The XeLL context handle.\n @param frame_id: The incremental frame counter from the game.\n @return XeLL return status code."]
+    pub unsafe fn xellSleep(&self, context: xell_context_handle_t, frame_id: u32) -> xell_result_t {
         (self.xellSleep)(context, frame_id)
     }
-    /** @brief Pass markers to inform XeLL how long the game simulation, render and present time are.
- @param context: The XeLL context handle.
- @param frame_id: The incremental frame counter from the game.
- @param marker: Marker type.
- @return XeLL return status code.*/
+    #[doc = " @brief Pass markers to inform XeLL how long the game simulation, render and present time are.\n @param context: The XeLL context handle.\n @param frame_id: The incremental frame counter from the game.\n @param marker: Marker type.\n @return XeLL return status code."]
     pub unsafe fn xellAddMarkerData(
         &self,
         context: xell_context_handle_t,
@@ -543,18 +454,11 @@ impl XessLoaded {
     ) -> xell_result_t {
         (self.xellAddMarkerData)(context, frame_id, marker)
     }
-    /** @brief Gets the XeLL version. This is baked into the XeLL SDK release.
- @param[out] pVersion Returned XeLL version.
- @return XeLL return status code.*/
+    #[doc = " @brief Gets the XeLL version. This is baked into the XeLL SDK release.\n @param[out] pVersion Returned XeLL version.\n @return XeLL return status code."]
     pub unsafe fn xellGetVersion(&self, pVersion: *mut xell_version_t) -> xell_result_t {
         (self.xellGetVersion)(pVersion)
     }
-    /** @brief Sets logging callback
-
- @param hContext The XeLL context handle.
- @param loggingLevel Minimum logging level for logging callback.
- @param loggingCallback Logging callback
- @return XeLL return status code.*/
+    #[doc = " @brief Sets logging callback\n\n @param hContext The XeLL context handle.\n @param loggingLevel Minimum logging level for logging callback.\n @param loggingCallback Logging callback\n @return XeLL return status code."]
     pub unsafe fn xellSetLoggingCallback(
         &self,
         hContext: xell_context_handle_t,
@@ -563,10 +467,7 @@ impl XessLoaded {
     ) -> xell_result_t {
         (self.xellSetLoggingCallback)(hContext, loggingLevel, loggingCallback)
     }
-    /** @brief Get frame stats for debugging purpose.
- @param context: The XeLL context handle.
- @param[out] outdata: Last 64 frames reports.
- @return XeLL return status code.*/
+    #[doc = " @brief Get frame stats for debugging purpose.\n @param context: The XeLL context handle.\n @param[out] outdata: Last 64 frames reports.\n @return XeLL return status code."]
     pub unsafe fn xellGetFramesReports(
         &self,
         context: xell_context_handle_t,

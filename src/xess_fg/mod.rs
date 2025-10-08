@@ -1,7 +1,7 @@
-include!("xefg_swapchain.rs");
+include!("swapchain.rs");
 
 #[cfg(feature = "dx12")]
-pub mod xess_fg_d3d12 {
+pub mod dx12 {
     use super::*;
     use windows::{
         core::GUID,
@@ -20,5 +20,5 @@ pub mod xess_fg_d3d12 {
         },
     };
     type IID = GUID;
-    include!("xefg_swapchain_d3d12.rs");
+    include!("dx12.rs");
 }

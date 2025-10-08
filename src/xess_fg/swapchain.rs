@@ -6,39 +6,33 @@ pub struct _xefg_swapchain_handle_t {
     _unused: [u8; 0],
 }
 pub type xefg_swapchain_handle_t = *mut _xefg_swapchain_handle_t;
-/// Resource is valid until the next present.
+#[doc = " Resource is valid until the next present."]
 pub const XEFG_SWAPCHAIN_RV_UNTIL_NEXT_PRESENT: _xefg_swapchain_resource_validity_t = 0;
-/// Resource is only valid now.
+#[doc = " Resource is only valid now."]
 pub const XEFG_SWAPCHAIN_RV_ONLY_NOW: _xefg_swapchain_resource_validity_t = 1;
-/// Resource is only valid now.
+#[doc = " Resource is only valid now."]
 pub const XEFG_SWAPCHAIN_RV_COUNT: _xefg_swapchain_resource_validity_t = 2;
-/** @brief Informs the library about the lifetime of the
-  resource being provided. The library will take appropriate action based
-  on this value to either make a copy of the resource or store a reference
-  to it.*/
+#[doc = " @brief Informs the library about the lifetime of the\n  resource being provided. The library will take appropriate action based\n  on this value to either make a copy of the resource or store a reference\n  to it."]
 pub type _xefg_swapchain_resource_validity_t = ::std::os::raw::c_int;
-/** @brief Informs the library about the lifetime of the
-  resource being provided. The library will take appropriate action based
-  on this value to either make a copy of the resource or store a reference
-  to it.*/
+#[doc = " @brief Informs the library about the lifetime of the\n  resource being provided. The library will take appropriate action based\n  on this value to either make a copy of the resource or store a reference\n  to it."]
 pub use self::_xefg_swapchain_resource_validity_t as xefg_swapchain_resource_validity_t;
-/// No flags are enabled.
+#[doc = " No flags are enabled."]
 pub const XEFG_SWAPCHAIN_INIT_FLAG_NONE: _xefg_swapchain_init_flags_t = 0;
-/// Use inverted (increased precision) depth encoding.
+#[doc = " Use inverted (increased precision) depth encoding."]
 pub const XEFG_SWAPCHAIN_INIT_FLAG_INVERTED_DEPTH: _xefg_swapchain_init_flags_t = 1;
-/// Use external descriptor heap.
+#[doc = " Use external descriptor heap."]
 pub const XEFG_SWAPCHAIN_INIT_FLAG_EXTERNAL_DESCRIPTOR_HEAP: _xefg_swapchain_init_flags_t = 2;
-/// Deprecated. Setting this flag has no effect.
+#[doc = " Deprecated. Setting this flag has no effect."]
 pub const XEFG_SWAPCHAIN_INIT_FLAG_HIGH_RES_MV: _xefg_swapchain_init_flags_t = 4;
-/// Use velocity in normalized device coordinates (NDC).
+#[doc = " Use velocity in normalized device coordinates (NDC)."]
 pub const XEFG_SWAPCHAIN_INIT_FLAG_USE_NDC_VELOCITY: _xefg_swapchain_init_flags_t = 8;
-/// Remove jitter from input velocity.
+#[doc = " Remove jitter from input velocity."]
 pub const XEFG_SWAPCHAIN_INIT_FLAG_JITTERED_MV: _xefg_swapchain_init_flags_t = 16;
-/// UI texture rgb values are not premultiplied by its alpha value
+#[doc = " UI texture rgb values are not premultiplied by its alpha value"]
 pub const XEFG_SWAPCHAIN_INIT_FLAG_UITEXTURE_NOT_PREMUL_ALPHA: _xefg_swapchain_init_flags_t = 32;
-/// @brief XeSS-FG Swap Chain initialization flags.
+#[doc = " @brief XeSS-FG Swap Chain initialization flags."]
 pub type _xefg_swapchain_init_flags_t = ::std::os::raw::c_int;
-/// @brief XeSS-FG Swap Chain initialization flags.
+#[doc = " @brief XeSS-FG Swap Chain initialization flags."]
 pub use self::_xefg_swapchain_init_flags_t as xefg_swapchain_init_flags_t;
 pub const XEFG_SWAPCHAIN_RES_HUDLESS_COLOR: _xefg_swapchain_resource_type_t = 0;
 pub const XEFG_SWAPCHAIN_RES_DEPTH: _xefg_swapchain_resource_type_t = 1;
@@ -46,176 +40,168 @@ pub const XEFG_SWAPCHAIN_RES_MOTION_VECTOR: _xefg_swapchain_resource_type_t = 2;
 pub const XEFG_SWAPCHAIN_RES_UI: _xefg_swapchain_resource_type_t = 3;
 pub const XEFG_SWAPCHAIN_RES_BACKBUFFER: _xefg_swapchain_resource_type_t = 4;
 pub const XEFG_SWAPCHAIN_RES_COUNT: _xefg_swapchain_resource_type_t = 5;
-/// @brief XeSS-FG Swap Chain resources type.
+#[doc = " @brief XeSS-FG Swap Chain resources type."]
 pub type _xefg_swapchain_resource_type_t = ::std::os::raw::c_int;
-/// @brief XeSS-FG Swap Chain resources type.
+#[doc = " @brief XeSS-FG Swap Chain resources type."]
 pub use self::_xefg_swapchain_resource_type_t as xefg_swapchain_resource_type_t;
-/** @brief XeSS-FG Swap Chain version.
-
- XeSS-FG Swap Chain uses major.minor.patch version format and Numeric 90+ scheme for development stage builds.*/
+#[doc = " @brief XeSS-FG Swap Chain version.\n\n XeSS-FG Swap Chain uses major.minor.patch version format and Numeric 90+ scheme for development stage builds."]
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xefg_swapchain_version_t {
-    /** A major version increment indicates a new API and potentially a
- break in functionality.*/
+    #[doc = " A major version increment indicates a new API and potentially a\n break in functionality."]
     pub major: u16,
-    /** A minor version increment indicates incremental changes such as
- optional inputs or flags. This does not break existing functionality.*/
+    #[doc = " A minor version increment indicates incremental changes such as\n optional inputs or flags. This does not break existing functionality."]
     pub minor: u16,
-    /** A patch version increment may include performance or quality tweaks or fixes for known issues.
- There's no change in the interfaces.
- Versions beyond 90 are used for development builds to change the interface for the next release.*/
+    #[doc = " A patch version increment may include performance or quality tweaks or fixes for known issues.\n There's no change in the interfaces.\n Versions beyond 90 are used for development builds to change the interface for the next release."]
     pub patch: u16,
-    /// Reserved for future use.
+    #[doc = " Reserved for future use."]
     pub reserved: u16,
 }
-/** @brief XeSS-FG Swap Chain version.
-
- XeSS-FG Swap Chain uses major.minor.patch version format and Numeric 90+ scheme for development stage builds.*/
+#[doc = " @brief XeSS-FG Swap Chain version.\n\n XeSS-FG Swap Chain uses major.minor.patch version format and Numeric 90+ scheme for development stage builds."]
 pub type xefg_swapchain_version_t = _xefg_swapchain_version_t;
-/// @brief 2D variable.
+#[doc = " @brief 2D variable."]
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xefg_swapchain_2d_t {
     pub x: u32,
     pub y: u32,
 }
-/// @brief 2D variable.
+#[doc = " @brief 2D variable."]
 pub type xefg_swapchain_2d_t = _xefg_swapchain_2d_t;
-/// @brief Contains all constants associated with a frame.
+#[doc = " @brief Contains all constants associated with a frame."]
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xefg_swapchain_frame_constant_data_t {
-    /// float4x4, row-major convention.
+    #[doc = " float4x4, row-major convention."]
     pub viewMatrix: [f32; 16usize],
-    /// float4x4, row-major convention.
+    #[doc = " float4x4, row-major convention."]
     pub projectionMatrix: [f32; 16usize],
-    /// Jitter X coordinate in the range [-0.5, 0.5].
+    #[doc = " Jitter X coordinate in the range [-0.5, 0.5]."]
     pub jitterOffsetX: f32,
-    /// Jitter Y coordinate in the range [-0.5, 0.5].
+    #[doc = " Jitter Y coordinate in the range [-0.5, 0.5]."]
     pub jitterOffsetY: f32,
-    /// Scale for motion vectors for X coordinate.
+    #[doc = " Scale for motion vectors for X coordinate."]
     pub motionVectorScaleX: f32,
-    /// Scale for motion vectors for Y coordinate.
+    #[doc = " Scale for motion vectors for Y coordinate."]
     pub motionVectorScaleY: f32,
-    /// Tells Interpolation library to reset history.
+    #[doc = " Tells Interpolation library to reset history."]
     pub resetHistory: u32,
-    /// Time that was required to render current frame in milliseconds.
+    #[doc = " Time that was required to render current frame in milliseconds."]
     pub frameRenderTime: f32,
 }
-/// @brief Contains all constants associated with a frame.
+#[doc = " @brief Contains all constants associated with a frame."]
 pub type xefg_swapchain_frame_constant_data_t = _xefg_swapchain_frame_constant_data_t;
-/// @brief Properties for internal XeSS-FG Swap Chain resources.
+#[doc = " @brief Properties for internal XeSS-FG Swap Chain resources."]
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _xefg_swapchain_properties_t {
-    /// Required amount of descriptors for XeSS-FG Swap Chain.
+    #[doc = " Required amount of descriptors for XeSS-FG Swap Chain."]
     pub requiredDescriptorCount: u32,
-    /// The heap size required by XeSS-FG Swap Chain for temporary buffer storage.
+    #[doc = " The heap size required by XeSS-FG Swap Chain for temporary buffer storage."]
     pub tempBufferHeapSize: u64,
-    /// The heap size required by XeSS-FG Swap Chain for temporary texture storage.
+    #[doc = " The heap size required by XeSS-FG Swap Chain for temporary texture storage."]
     pub tempTextureHeapSize: u64,
-    /// The size required by XeSS-FG Swap Chain in a constant buffer for temporary storage.
+    #[doc = " The size required by XeSS-FG Swap Chain in a constant buffer for temporary storage."]
     pub constantBufferSize: u64,
-    /// Maximum number of supported interpolations.
+    #[doc = " Maximum number of supported interpolations."]
     pub maxSupportedInterpolations: u32,
 }
-/// @brief Properties for internal XeSS-FG Swap Chain resources.
+#[doc = " @brief Properties for internal XeSS-FG Swap Chain resources."]
 pub type xefg_swapchain_properties_t = _xefg_swapchain_properties_t;
-/// An old or outdated driver.
+#[doc = " An old or outdated driver."]
 pub const XEFG_SWAPCHAIN_RESULT_WARNING_OLD_DRIVER: _xefg_swapchain_result_t = 2;
-/// Warning. Frame ID should be over 0.
+#[doc = " Warning. Frame ID should be over 0."]
 pub const XEFG_SWAPCHAIN_RESULT_WARNING_TOO_FEW_FRAMES: _xefg_swapchain_result_t = 3;
-/// Warning. Data for interpolation came in wrong order.
+#[doc = " Warning. Data for interpolation came in wrong order."]
 pub const XEFG_SWAPCHAIN_RESULT_WARNING_FRAMES_ID_MISMATCH: _xefg_swapchain_result_t = 4;
-/// Warning. There is no present status for last present.
+#[doc = " Warning. There is no present status for last present."]
 pub const XEFG_SWAPCHAIN_RESULT_WARNING_MISSING_PRESENT_STATUS: _xefg_swapchain_result_t = 5;
-/** Warning. Resource sizes for the interpolation doesn't match between previouse and next frames.
-Interpolation skipped.*/
+#[doc = " Warning. Resource sizes for the interpolation doesn't match between previouse and next frames.\nInterpolation skipped."]
 pub const XEFG_SWAPCHAIN_RESULT_WARNING_RESOURCE_SIZES_MISMATCH: _xefg_swapchain_result_t = 6;
-/// Operation was successful.
+#[doc = " Operation was successful."]
 pub const XEFG_SWAPCHAIN_RESULT_SUCCESS: _xefg_swapchain_result_t = 0;
-/// Operation not supported on the GPU.
+#[doc = " Operation not supported on the GPU."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNSUPPORTED_DEVICE: _xefg_swapchain_result_t = -1;
-/// An unsupported driver.
+#[doc = " An unsupported driver."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNSUPPORTED_DRIVER: _xefg_swapchain_result_t = -2;
-/// Execute called without initialization.
+#[doc = " Execute called without initialization."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNINITIALIZED: _xefg_swapchain_result_t = -3;
-/// Invalid argument were provided to the API call.
+#[doc = " Invalid argument were provided to the API call."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_INVALID_ARGUMENT: _xefg_swapchain_result_t = -4;
-/// Not enough available GPU memory.
+#[doc = " Not enough available GPU memory."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_DEVICE_OUT_OF_MEMORY: _xefg_swapchain_result_t = -5;
-/// Device function such as resource or descriptor creation.
+#[doc = " Device function such as resource or descriptor creation."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_DEVICE: _xefg_swapchain_result_t = -6;
-/// The function is not implemented.
+#[doc = " The function is not implemented."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_NOT_IMPLEMENTED: _xefg_swapchain_result_t = -7;
-/// Invalid context.
+#[doc = " Invalid context."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_INVALID_CONTEXT: _xefg_swapchain_result_t = -8;
-/// Operation not finished yet.
+#[doc = " Operation not finished yet."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_OPERATION_IN_PROGRESS: _xefg_swapchain_result_t = -9;
-/// Operation not supported in current configuration.
+#[doc = " Operation not supported in current configuration."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNSUPPORTED: _xefg_swapchain_result_t = -10;
-/// The library cannot be loaded.
+#[doc = " The library cannot be loaded."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_CANT_LOAD_LIBRARY: _xefg_swapchain_result_t = -11;
-/// Input resources does not meet requirements based on UI Mode.
+#[doc = " Input resources does not meet requirements based on UI Mode."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_MISMATCH_INPUT_RESOURCES: _xefg_swapchain_result_t = -12;
-/// Output resources does not meet requirements.
+#[doc = " Output resources does not meet requirements."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_INCORRECT_OUTPUT_RESOURCES: _xefg_swapchain_result_t = -13;
-/// Input is insufficient to evaluate interpolation.
+#[doc = " Input is insufficient to evaluate interpolation."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_INCORRECT_INPUT_RESOURCES: _xefg_swapchain_result_t = -14;
-/// Requirements regarding XeLL Latency Reduction are not met.
+#[doc = " Requirements regarding XeLL Latency Reduction are not met."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_LATENCY_REDUCTION_UNSUPPORTED: _xefg_swapchain_result_t = -15;
-/// XeLL library does not contains required functions.
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_LATENCY_REDUCTION_FUNCTION_MISSING: _xefg_swapchain_result_t = -16;
-/// One of the Windows functions has failed. For details, see the logs or debug layer.
+#[doc = " XeLL library does not contains required functions."]
+pub const XEFG_SWAPCHAIN_RESULT_ERROR_LATENCY_REDUCTION_FUNCTION_MISSING: _xefg_swapchain_result_t =
+    -16;
+#[doc = " One of the Windows functions has failed. For details, see the logs or debug layer."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_HRESULT_FAILURE: _xefg_swapchain_result_t = -17;
-/// DXGI call failed with invalid call error.
+#[doc = " DXGI call failed with invalid call error."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_DXGI_INVALID_CALL: _xefg_swapchain_result_t = -18;
-/// XeFG SwapChain pointer is still in use during destroy.
+#[doc = " XeFG SwapChain pointer is still in use during destroy."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_POINTER_STILL_IN_USE: _xefg_swapchain_result_t = -19;
-/// Invalid or missing descriptor heap.
+#[doc = " Invalid or missing descriptor heap."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_INVALID_DESCRIPTOR_HEAP: _xefg_swapchain_result_t = -20;
-/// Call to function done in invalid order.
+#[doc = " Call to function done in invalid order."]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_WRONG_CALL_ORDER: _xefg_swapchain_result_t = -21;
-/// Unknown internal failure
+#[doc = " Unknown internal failure"]
 pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNKNOWN: _xefg_swapchain_result_t = -1000;
-/// @brief XeSS-FG Swap Chain return codes.
+#[doc = " @brief XeSS-FG Swap Chain return codes."]
 pub type _xefg_swapchain_result_t = ::std::os::raw::c_int;
-/// @brief XeSS-FG Swap Chain return codes.
+#[doc = " @brief XeSS-FG Swap Chain return codes."]
 pub use self::_xefg_swapchain_result_t as xefg_swapchain_result_t;
 pub const XEFG_SWAPCHAIN_LOGGING_LEVEL_DEBUG: _xefg_swapchain_logging_level_t = 0;
 pub const XEFG_SWAPCHAIN_LOGGING_LEVEL_INFO: _xefg_swapchain_logging_level_t = 1;
 pub const XEFG_SWAPCHAIN_LOGGING_LEVEL_WARNING: _xefg_swapchain_logging_level_t = 2;
 pub const XEFG_SWAPCHAIN_LOGGING_LEVEL_ERROR: _xefg_swapchain_logging_level_t = 3;
-/// @brief XeSS-FG Swap Chain logging level.
+#[doc = " @brief XeSS-FG Swap Chain logging level."]
 pub type _xefg_swapchain_logging_level_t = ::std::os::raw::c_int;
-/// @brief XeSS-FG Swap Chain logging level.
+#[doc = " @brief XeSS-FG Swap Chain logging level."]
 pub use self::_xefg_swapchain_logging_level_t as xefg_swapchain_logging_level_t;
-/// Determine UI handling mode automatically, based on provided inputs: hudless color and UI texture.
+#[doc = " Determine UI handling mode automatically, based on provided inputs: hudless color and UI texture."]
 pub const XEFG_SWAPCHAIN_UI_MODE_AUTO: _xefg_swapchain_ui_mode_t = 0;
-/// Interpolate on backbuffer, without any UI handling.
+#[doc = " Interpolate on backbuffer, without any UI handling."]
 pub const XEFG_SWAPCHAIN_UI_MODE_NONE: _xefg_swapchain_ui_mode_t = 1;
-/// Interpolate on backbuffer, refine UI using UI texture + alpha.
+#[doc = " Interpolate on backbuffer, refine UI using UI texture + alpha."]
 pub const XEFG_SWAPCHAIN_UI_MODE_BACKBUFFER_UITEXTURE: _xefg_swapchain_ui_mode_t = 2;
-/// Interpolate on hudless color, blend UI from UI texture + alpha.
+#[doc = " Interpolate on hudless color, blend UI from UI texture + alpha."]
 pub const XEFG_SWAPCHAIN_UI_MODE_HUDLESS_UITEXTURE: _xefg_swapchain_ui_mode_t = 3;
-/// Interpolate on hudless color, extract UI from backbuffer.
+#[doc = " Interpolate on hudless color, extract UI from backbuffer."]
 pub const XEFG_SWAPCHAIN_UI_MODE_BACKBUFFER_HUDLESS: _xefg_swapchain_ui_mode_t = 4;
-/// Interpolate on hudless color, blend UI from UI texture + alpha and refine it by extracting from backbuffer.
+#[doc = " Interpolate on hudless color, blend UI from UI texture + alpha and refine it by extracting from backbuffer."]
 pub const XEFG_SWAPCHAIN_UI_MODE_BACKBUFFER_HUDLESS_UITEXTURE: _xefg_swapchain_ui_mode_t = 5;
-/// @brief XeSS-FG Swap Chain UI handling mode.
+#[doc = " @brief XeSS-FG Swap Chain UI handling mode."]
 pub type _xefg_swapchain_ui_mode_t = ::std::os::raw::c_int;
-/// @brief XeSS-FG Swap Chain UI handling mode.
+#[doc = " @brief XeSS-FG Swap Chain UI handling mode."]
 pub use self::_xefg_swapchain_ui_mode_t as xefg_swapchain_ui_mode_t;
-/// @brief Contains status data for the present.
+#[doc = " @brief Contains status data for the present."]
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _xefg_swapchain_present_status_t {
-    /// Number of frames sent to be presented during the last call.
+    #[doc = " Number of frames sent to be presented during the last call."]
     pub framesPresented: u32,
-    /// Result of the interpolation.
+    #[doc = " Result of the interpolation."]
     pub frameGenResult: xefg_swapchain_result_t,
-    /// Specifies if frame generation was enabled.
+    #[doc = " Specifies if frame generation was enabled."]
     pub isFrameGenEnabled: u32,
 }
 impl Default for _xefg_swapchain_present_status_t {
@@ -227,12 +213,9 @@ impl Default for _xefg_swapchain_present_status_t {
         }
     }
 }
-/// @brief Contains status data for the present.
+#[doc = " @brief Contains status data for the present."]
 pub type xefg_swapchain_present_status_t = _xefg_swapchain_present_status_t;
-/** A logging callback provided by the application. This callback can be called from other threads.
- Message pointer is only valid inside the function and may be invalid right after the return call.
- Message is a null-terminated utf-8 string. Pointer to @p userData must remain valid until the call
- to @ref xefgSwapChainDestroy returns.*/
+#[doc = " A logging callback provided by the application. This callback can be called from other threads.\n Message pointer is only valid inside the function and may be invalid right after the return call.\n Message is a null-terminated utf-8 string. Pointer to @p userData must remain valid until the call\n to @ref xefgSwapChainDestroy returns."]
 pub type xefg_swapchain_app_log_callback_t = ::std::option::Option<
     unsafe extern "C" fn(
         message: *const ::std::os::raw::c_char,
@@ -240,23 +223,23 @@ pub type xefg_swapchain_app_log_callback_t = ::std::option::Option<
         userData: *mut ::std::os::raw::c_void,
     ),
 >;
-/// Present only interpolated frames. If interpolation fails, current back buffer will be presented.
+#[doc = " Present only interpolated frames. If interpolation fails, current back buffer will be presented."]
 pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_SHOW_ONLY_INTERPOLATION: _xefg_swapchain_debug_feature_t = 0;
-/// Adds a quads in the corners of interpolated frame.
+#[doc = " Adds a quads in the corners of interpolated frame."]
 pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_TAG_INTERPOLATED_FRAMES: _xefg_swapchain_debug_feature_t = 1;
-/// Present black image instead of skipping failed interpolation.
-pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_PRESENT_FAILED_INTERPOLATION: _xefg_swapchain_debug_feature_t = 2;
-/// Present black image instead of skipping failed interpolation.
+#[doc = " Present black image instead of skipping failed interpolation."]
+pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_PRESENT_FAILED_INTERPOLATION:
+    _xefg_swapchain_debug_feature_t = 2;
+#[doc = " Present black image instead of skipping failed interpolation."]
 pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_RES_COUNT: _xefg_swapchain_debug_feature_t = 3;
-/// @brief XeSS-FG Swap Chain debug features list.
+#[doc = " @brief XeSS-FG Swap Chain debug features list."]
 pub type _xefg_swapchain_debug_feature_t = ::std::os::raw::c_int;
-/// @brief XeSS-FG Swap Chain debug features list.
+#[doc = " @brief XeSS-FG Swap Chain debug features list."]
 pub use self::_xefg_swapchain_debug_feature_t as xefg_swapchain_debug_feature_t;
 pub struct XessLoaded {
     __library: ::libloading::Library,
-    pub xefgSwapChainGetVersion: unsafe extern "C" fn(
-        pVersion: *mut xefg_swapchain_version_t,
-    ) -> xefg_swapchain_result_t,
+    pub xefgSwapChainGetVersion:
+        unsafe extern "C" fn(pVersion: *mut xefg_swapchain_version_t) -> xefg_swapchain_result_t,
     pub xefgSwapChainGetProperties: unsafe extern "C" fn(
         hSwapChain: xefg_swapchain_handle_t,
         pProperties: *mut xefg_swapchain_properties_t,
@@ -284,9 +267,8 @@ pub struct XessLoaded {
         loggingCallback: xefg_swapchain_app_log_callback_t,
         userData: *mut ::std::os::raw::c_void,
     ) -> xefg_swapchain_result_t,
-    pub xefgSwapChainDestroy: unsafe extern "C" fn(
-        hSwapChain: xefg_swapchain_handle_t,
-    ) -> xefg_swapchain_result_t,
+    pub xefgSwapChainDestroy:
+        unsafe extern "C" fn(hSwapChain: xefg_swapchain_handle_t) -> xefg_swapchain_result_t,
     pub xefgSwapChainSetLatencyReduction: unsafe extern "C" fn(
         hSwapChain: xefg_swapchain_handle_t,
         hXeLLContext: *mut ::std::os::raw::c_void,
@@ -295,9 +277,8 @@ pub struct XessLoaded {
         hSwapChain: xefg_swapchain_handle_t,
         threshold: f32,
     ) -> xefg_swapchain_result_t,
-    pub xefgSwapChainGetPipelineBuildStatus: unsafe extern "C" fn(
-        hSwapChain: xefg_swapchain_handle_t,
-    ) -> xefg_swapchain_result_t,
+    pub xefgSwapChainGetPipelineBuildStatus:
+        unsafe extern "C" fn(hSwapChain: xefg_swapchain_handle_t) -> xefg_swapchain_result_t,
     pub xefgSwapChainEnableDebugFeature: unsafe extern "C" fn(
         hSwapChain: xefg_swapchain_handle_t,
         featureId: xefg_swapchain_debug_feature_t,
@@ -339,9 +320,7 @@ impl XessLoaded {
         let xefgSwapChainSetLoggingCallback = __library
             .get(b"xefgSwapChainSetLoggingCallback\0")
             .map(|sym| *sym)?;
-        let xefgSwapChainDestroy = __library
-            .get(b"xefgSwapChainDestroy\0")
-            .map(|sym| *sym)?;
+        let xefgSwapChainDestroy = __library.get(b"xefgSwapChainDestroy\0").map(|sym| *sym)?;
         let xefgSwapChainSetLatencyReduction = __library
             .get(b"xefgSwapChainSetLatencyReduction\0")
             .map(|sym| *sym)?;
@@ -370,22 +349,14 @@ impl XessLoaded {
             xefgSwapChainEnableDebugFeature,
         })
     }
-    /** @brief Gets the XeSS-FG Swap Chain version. This is baked into the XeSS-FG Swap Chain SDK release.
- @param[out] pVersion Returned XeSS-FG Swap Chain version.
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Gets the XeSS-FG Swap Chain version. This is baked into the XeSS-FG Swap Chain SDK release.\n @param[out] pVersion Returned XeSS-FG Swap Chain version.\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainGetVersion(
         &self,
         pVersion: *mut xefg_swapchain_version_t,
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainGetVersion)(pVersion)
     }
-    /** @brief Gets XeSS-FG Swap Chain internal resources properties.
-
- @param hSwapChain The XeSS-FG Swap Chain context handle.
-
- @param[out] pProperties A pointer to the @ref xefg_swapchain_properties_t structure where the values should be returned.
-
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Gets XeSS-FG Swap Chain internal resources properties.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param[out] pProperties A pointer to the @ref xefg_swapchain_properties_t structure where the values should be returned.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainGetProperties(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -393,16 +364,7 @@ impl XessLoaded {
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainGetProperties)(hSwapChain, pProperties)
     }
-    /** @brief Informs the XeSS-FG swap chain library of the frame constants used to generate a frame
- that will be presented.
-
- @param hSwapChain The XeSS-FG Swap Chain context handle.
-
- @param presentId The unique frame identifier.
-
- @param pConstants A pointer to the memory location where the values for the constants are located.
-
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Informs the XeSS-FG swap chain library of the frame constants used to generate a frame\n that will be presented.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param presentId The unique frame identifier.\n\n @param pConstants A pointer to the memory location where the values for the constants are located.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainTagFrameConstants(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -411,13 +373,7 @@ impl XessLoaded {
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainTagFrameConstants)(hSwapChain, presentId, pConstants)
     }
-    /** @brief Enables or disables the generation and presentation of interpolated frames by the XeSS-FG swap chain library.
-
- @param hSwapChain The XeSS-FG Swap Chain context handle.
-
- @param enable Non-zero to enable interpolation, zero to disable it.
-
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Enables or disables the generation and presentation of interpolated frames by the XeSS-FG swap chain library.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param enable Non-zero to enable interpolation, zero to disable it.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainSetEnabled(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -425,15 +381,7 @@ impl XessLoaded {
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainSetEnabled)(hSwapChain, enable)
     }
-    /** @brief Informs the XeSS-FG swap chain library of the unique identifier of the next frame
- to be presented. This allows the application to provide to the swap chain library frames data
- out-of-order with regard to the presentation.
-
- @param hSwapChain The XeSS-FG Swap Chain context handle.
-
- @param presentId The unique identifier of the frame to be presented by the next IDXGISwapChain::Present call.
-
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Informs the XeSS-FG swap chain library of the unique identifier of the next frame\n to be presented. This allows the application to provide to the swap chain library frames data\n out-of-order with regard to the presentation.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param presentId The unique identifier of the frame to be presented by the next IDXGISwapChain::Present call.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainSetPresentId(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -441,13 +389,7 @@ impl XessLoaded {
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainSetPresentId)(hSwapChain, presentId)
     }
-    /** @brief This function allows you to retrieve status information from the last present.
-
- @param hSwapChain The XeSS-FG Swap Chain context handle.
-
- @param[out] pPresentStatus A pointer to the @ref xefg_swapchain_present_status_t structure where the values should be returned.
-
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief This function allows you to retrieve status information from the last present.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param[out] pPresentStatus A pointer to the @ref xefg_swapchain_present_status_t structure where the values should be returned.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainGetLastPresentStatus(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -455,13 +397,7 @@ impl XessLoaded {
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainGetLastPresentStatus)(hSwapChain, pPresentStatus)
     }
-    /** @brief Sets logging callback.
-
- @param hSwapChain The XeSS-FG Swap Chain context handle.
- @param loggingLevel Minimum logging level for logging callback.
- @param loggingCallback Logging callback.
- @param userData User data that will be passed unchanged to the callback when invoked. Can be set to NULL.
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Sets logging callback.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n @param loggingLevel Minimum logging level for logging callback.\n @param loggingCallback Logging callback.\n @param userData User data that will be passed unchanged to the callback when invoked. Can be set to NULL.\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainSetLoggingCallback(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -469,30 +405,16 @@ impl XessLoaded {
         loggingCallback: xefg_swapchain_app_log_callback_t,
         userData: *mut ::std::os::raw::c_void,
     ) -> xefg_swapchain_result_t {
-        (self
-            .xefgSwapChainSetLoggingCallback)(
-            hSwapChain,
-            loggingLevel,
-            loggingCallback,
-            userData,
-        )
+        (self.xefgSwapChainSetLoggingCallback)(hSwapChain, loggingLevel, loggingCallback, userData)
     }
-    /** @brief Destroys a XeSS-FG Swap Chain context data. DXGI swap chain object will be released as soon as reference count reaches 0,
- so it's recommended to release all outstanding references before calling this function.
- @param hSwapChain: The XeSS-FG Swap Chain context handle.
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Destroys a XeSS-FG Swap Chain context data. DXGI swap chain object will be released as soon as reference count reaches 0,\n so it's recommended to release all outstanding references before calling this function.\n @param hSwapChain: The XeSS-FG Swap Chain context handle.\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainDestroy(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainDestroy)(hSwapChain)
     }
-    /** @brief Sets XeLL context for latency reduction.
-
- @param hSwapChain: The XeSS-FG Swap Chain context handle.
- @param hXeLLContext: The Xe Low Latency context.
-
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Sets XeLL context for latency reduction.\n\n @param hSwapChain: The XeSS-FG Swap Chain context handle.\n @param hXeLLContext: The Xe Low Latency context.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainSetLatencyReduction(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -500,17 +422,7 @@ impl XessLoaded {
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainSetLatencyReduction)(hSwapChain, hXeLLContext)
     }
-    /** @brief Sets scene change detection threshold.
-
- A higher threshold value increases the algorithm's sensitivity, causing it to more readily identify
- scene changes and disable interpolation. A lower threshold value decreases sensitivity, making the algorithm
- less likely to respond to minor changes. The threshold value range is from 0 to 1, where 0 represents the least
- sensitivity to scene changes, and 1 represents the highest sensitivity.
-
- @param hSwapChain: The XeSS-FG Swap Chain context handle.
- @param threshold: Scene change detection threshold value. Default value is 0.7.
-
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Sets scene change detection threshold.\n\n A higher threshold value increases the algorithm's sensitivity, causing it to more readily identify\n scene changes and disable interpolation. A lower threshold value decreases sensitivity, making the algorithm\n less likely to respond to minor changes. The threshold value range is from 0 to 1, where 0 represents the least\n sensitivity to scene changes, and 1 represents the highest sensitivity.\n\n @param hSwapChain: The XeSS-FG Swap Chain context handle.\n @param threshold: Scene change detection threshold value. Default value is 0.7.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainSetSceneChangeThreshold(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -518,33 +430,14 @@ impl XessLoaded {
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainSetSceneChangeThreshold)(hSwapChain, threshold)
     }
-    /** @brief Returns current state of the pipeline build
-
- This function can only be called after @ref xefgSwapChainD3D12BuildPipelines but
- before XeSS-FG swap chain initialization (@ref xefgSwapChainD3D12InitFromSwapChain
- or @ref xefgSwapChainD3D12InitFromSwapChainDesc).
-
- @param hSwapChain The XeSS-FG Swap Chain context handle.
- @return XEFG_SWAPCHAIN_RESULT_SUCCESS if pipelines are already built.
-         XEFG_SWAPCHAIN_RESULT_ERROR_OPERATION_IN_PROGRESS if pipeline build are in progress.
-         XEFG_SWAPCHAIN_RESULT_ERROR_WRONG_CALL_ORDER if the function is called out of order.*/
+    #[doc = " @brief Returns current state of the pipeline build\n\n This function can only be called after @ref xefgSwapChainD3D12BuildPipelines but\n before XeSS-FG swap chain initialization (@ref xefgSwapChainD3D12InitFromSwapChain\n or @ref xefgSwapChainD3D12InitFromSwapChainDesc).\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n @return XEFG_SWAPCHAIN_RESULT_SUCCESS if pipelines are already built.\n         XEFG_SWAPCHAIN_RESULT_ERROR_OPERATION_IN_PROGRESS if pipeline build are in progress.\n         XEFG_SWAPCHAIN_RESULT_ERROR_WRONG_CALL_ORDER if the function is called out of order."]
     pub unsafe fn xefgSwapChainGetPipelineBuildStatus(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainGetPipelineBuildStatus)(hSwapChain)
     }
-    /** @brief Controls for debug features of XeSS-FG Swap Chain API library.
-
- @param hSwapChain The XeSS-FG Swap Chain context handle.
-
- @param featureId The debug feature to enable or disable.
-
- @param enable Non-zero to enable the feature, zero to disable it.
-
- @param pArgument Feature-defined arguments. Please refer to the debug feature documentation.
-
- @return XeSS-FG Swap Chain return status code.*/
+    #[doc = " @brief Controls for debug features of XeSS-FG Swap Chain API library.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param featureId The debug feature to enable or disable.\n\n @param enable Non-zero to enable the feature, zero to disable it.\n\n @param pArgument Feature-defined arguments. Please refer to the debug feature documentation.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainEnableDebugFeature(
         &self,
         hSwapChain: xefg_swapchain_handle_t,

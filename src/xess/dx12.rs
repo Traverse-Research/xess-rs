@@ -3,11 +3,11 @@
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _xess_resources_to_dump_t {
-    /// Total resource count. In case it equal to zero content of other structure members is undefined.
+    #[doc = " Total resource count. In case it equal to zero content of other structure members is undefined."]
     pub resource_count: u32,
-    /// Pointer to an internal array of D3D12 resources. Array length is `resource_count`.
+    #[doc = " Pointer to an internal array of D3D12 resources. Array length is `resource_count`."]
     pub resources: *const *mut ID3D12Resource,
-    /// Pointer to an internal array of D3D12 resource names. Array length is `resource_count`.
+    #[doc = " Pointer to an internal array of D3D12 resource names. Array length is `resource_count`."]
     pub resource_names: *const *const ::std::os::raw::c_char,
     pub as_tensor: *const u32,
     pub border_pixels_to_skip_count: *const u32,
@@ -25,51 +25,48 @@ impl Default for _xess_resources_to_dump_t {
     }
 }
 pub type xess_resources_to_dump_t = _xess_resources_to_dump_t;
-/// @brief Execution parameters for XeSS D3D12.
+#[doc = " @brief Execution parameters for XeSS D3D12."]
 #[repr(C)]
 pub struct _xess_d3d12_execute_params_t {
-    /// Input color texture. Must be in NON_PIXEL_SHADER_RESOURCE state.
+    #[doc = " Input color texture. Must be in NON_PIXEL_SHADER_RESOURCE state."]
     pub pColorTexture: *mut ID3D12Resource,
-    /// Input motion vector texture. Must be in NON_PIXEL_SHADER_RESOURCE state.
+    #[doc = " Input motion vector texture. Must be in NON_PIXEL_SHADER_RESOURCE state."]
     pub pVelocityTexture: *mut ID3D12Resource,
-    /** Optional depth texture. Required if XESS_INIT_FLAG_HIGH_RES_MV has not been specified.
- Must be in NON_PIXEL_SHADER_RESOURCE state.*/
+    #[doc = " Optional depth texture. Required if XESS_INIT_FLAG_HIGH_RES_MV has not been specified.\n Must be in NON_PIXEL_SHADER_RESOURCE state."]
     pub pDepthTexture: *mut ID3D12Resource,
-    /** Optional 1x1 exposure scale texture. Required if XESS_INIT_FLAG_EXPOSURE_TEXTURE has been
- specified. Must be in NON_PIXEL_SHADER_RESOURCE state*/
+    #[doc = " Optional 1x1 exposure scale texture. Required if XESS_INIT_FLAG_EXPOSURE_TEXTURE has been\n specified. Must be in NON_PIXEL_SHADER_RESOURCE state"]
     pub pExposureScaleTexture: *mut ID3D12Resource,
-    /** Optional responsive pixel mask texture. Required if XESS_INIT_FLAG_RESPONSIVE_PIXEL_MASK
- has been specified. Must be in NON_PIXEL_SHADER_RESOURCE state*/
+    #[doc = " Optional responsive pixel mask texture. Required if XESS_INIT_FLAG_RESPONSIVE_PIXEL_MASK\n has been specified. Must be in NON_PIXEL_SHADER_RESOURCE state"]
     pub pResponsivePixelMaskTexture: *mut ID3D12Resource,
-    /// Output texture in target resolution. Must be in UNORDERED_ACCESS state.
+    #[doc = " Output texture in target resolution. Must be in UNORDERED_ACCESS state."]
     pub pOutputTexture: *mut ID3D12Resource,
-    /// Jitter X coordinate in the range [-0.5, 0.5].
+    #[doc = " Jitter X coordinate in the range [-0.5, 0.5]."]
     pub jitterOffsetX: f32,
-    /// Jitter Y coordinate in the range [-0.5, 0.5].
+    #[doc = " Jitter Y coordinate in the range [-0.5, 0.5]."]
     pub jitterOffsetY: f32,
-    /// Optional input color scaling. Default is 1.
+    #[doc = " Optional input color scaling. Default is 1."]
     pub exposureScale: f32,
-    /// Resets the history accumulation in this frame.
+    #[doc = " Resets the history accumulation in this frame."]
     pub resetHistory: u32,
-    /// Input color width.
+    #[doc = " Input color width."]
     pub inputWidth: u32,
-    /// Input color height.
+    #[doc = " Input color height."]
     pub inputHeight: u32,
-    /// Base coordinate for the input color in the texture. Default is (0,0).
+    #[doc = " Base coordinate for the input color in the texture. Default is (0,0)."]
     pub inputColorBase: xess_coord_t,
-    /// Base coordinate for the input motion vector in the texture.  Default is (0,0).
+    #[doc = " Base coordinate for the input motion vector in the texture.  Default is (0,0)."]
     pub inputMotionVectorBase: xess_coord_t,
-    /// Base coordinate for the input depth in the texture. Default is (0,0).
+    #[doc = " Base coordinate for the input depth in the texture. Default is (0,0)."]
     pub inputDepthBase: xess_coord_t,
-    /// Base coordinate for the input responsive pixel mask in the texture. Default is (0,0).
+    #[doc = " Base coordinate for the input responsive pixel mask in the texture. Default is (0,0)."]
     pub inputResponsiveMaskBase: xess_coord_t,
-    /// Reserved parameter.
+    #[doc = " Reserved parameter."]
     pub reserved0: xess_coord_t,
-    /// Base coordinate for the output color.  Default is (0,0).
+    #[doc = " Base coordinate for the output color.  Default is (0,0)."]
     pub outputColorBase: xess_coord_t,
-    /// Optional external descriptor heap.
+    #[doc = " Optional external descriptor heap."]
     pub pDescriptorHeap: *mut ID3D12DescriptorHeap,
-    /// Offset in external descriptor heap in bytes.
+    #[doc = " Offset in external descriptor heap in bytes."]
     pub descriptorHeapOffset: u32,
 }
 impl Default for _xess_d3d12_execute_params_t {
@@ -81,36 +78,30 @@ impl Default for _xess_d3d12_execute_params_t {
         }
     }
 }
-/// @brief Execution parameters for XeSS D3D12.
+#[doc = " @brief Execution parameters for XeSS D3D12."]
 pub type xess_d3d12_execute_params_t = _xess_d3d12_execute_params_t;
-/// @brief Initialization parameters for XeSS D3D12.
+#[doc = " @brief Initialization parameters for XeSS D3D12."]
 #[repr(C)]
 pub struct _xess_d3d12_init_params_t {
-    /// Output width and height.
+    #[doc = " Output width and height."]
     pub outputResolution: xess_2d_t,
-    /// Quality setting
+    #[doc = " Quality setting"]
     pub qualitySetting: xess_quality_settings_t,
-    /// Initialization flags.
+    #[doc = " Initialization flags."]
     pub initFlags: u32,
-    /** Specifies the node mask for internally created resources on
- multi-adapter systems.*/
+    #[doc = " Specifies the node mask for internally created resources on\n multi-adapter systems."]
     pub creationNodeMask: u32,
-    /** Specifies the node visibility mask for internally created resources
- on multi-adapter systems.*/
+    #[doc = " Specifies the node visibility mask for internally created resources\n on multi-adapter systems."]
     pub visibleNodeMask: u32,
-    /** Optional externally allocated buffer storage for XeSS. If NULL the
- storage is allocated internally. If allocated, the heap type must be
- D3D12_HEAP_TYPE_DEFAULT. This heap is not accessed by the CPU.*/
+    #[doc = " Optional externally allocated buffer storage for XeSS. If NULL the\n storage is allocated internally. If allocated, the heap type must be\n D3D12_HEAP_TYPE_DEFAULT. This heap is not accessed by the CPU."]
     pub pTempBufferHeap: *mut ID3D12Heap,
-    /// Offset in the externally allocated heap for temporary buffer storage.
+    #[doc = " Offset in the externally allocated heap for temporary buffer storage."]
     pub bufferHeapOffset: u64,
-    /** Optional externally allocated texture storage for XeSS. If NULL the
- storage is allocated internally. If allocated, the heap type must be
- D3D12_HEAP_TYPE_DEFAULT. This heap is not accessed by the CPU.*/
+    #[doc = " Optional externally allocated texture storage for XeSS. If NULL the\n storage is allocated internally. If allocated, the heap type must be\n D3D12_HEAP_TYPE_DEFAULT. This heap is not accessed by the CPU."]
     pub pTempTextureHeap: *mut ID3D12Heap,
-    /// Offset in the externally allocated heap for temporary texture storage.
+    #[doc = " Offset in the externally allocated heap for temporary texture storage."]
     pub textureHeapOffset: u64,
-    /// Pointer to pipeline library. If not NULL will be used for pipeline caching.
+    #[doc = " Pointer to pipeline library. If not NULL will be used for pipeline caching."]
     pub pPipelineLibrary: *mut ID3D12PipelineLibrary,
 }
 impl Default for _xess_d3d12_init_params_t {
@@ -122,7 +113,7 @@ impl Default for _xess_d3d12_init_params_t {
         }
     }
 }
-/// @brief Initialization parameters for XeSS D3D12.
+#[doc = " @brief Initialization parameters for XeSS D3D12."]
 pub type xess_d3d12_init_params_t = _xess_d3d12_init_params_t;
 pub struct XessLoaded {
     __library: ::libloading::Library,
@@ -177,16 +168,12 @@ impl XessLoaded {
         let xessD3D12GetProfilingData = __library
             .get(b"xessD3D12GetProfilingData\0")
             .map(|sym| *sym)?;
-        let xessD3D12CreateContext = __library
-            .get(b"xessD3D12CreateContext\0")
-            .map(|sym| *sym)?;
+        let xessD3D12CreateContext = __library.get(b"xessD3D12CreateContext\0").map(|sym| *sym)?;
         let xessD3D12BuildPipelines = __library
             .get(b"xessD3D12BuildPipelines\0")
             .map(|sym| *sym)?;
         let xessD3D12Init = __library.get(b"xessD3D12Init\0").map(|sym| *sym)?;
-        let xessD3D12GetInitParams = __library
-            .get(b"xessD3D12GetInitParams\0")
-            .map(|sym| *sym)?;
+        let xessD3D12GetInitParams = __library.get(b"xessD3D12GetInitParams\0").map(|sym| *sym)?;
         let xessD3D12Execute = __library.get(b"xessD3D12Execute\0").map(|sym| *sym)?;
         Ok(XessLoaded {
             __library,
@@ -207,21 +194,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessD3D12GetResourcesToDump)(hContext, pResourcesToDump)
     }
-    /** @brief Query XeSS model performance data for past executions.
- This function is provided for backwards compatibility with previous XeSS versions and
- and it's currently deprecated. Same functionality is provided by xessGetProfilingData
- function from xess_debug.h. To enable performance collection,
- context must be initialized with XESS_DEBUG_ENABLE_PROFILING flag added to xess_d3d12_init_params_t::initFlags.
- If profiling is enabled, user must poll for profiling data after executing one or more command lists, otherwise
- implementation will keep growing internal CPU buffers to accommodate all profiling data available.
- Due to async nature of execution on GPU, data may not be available after submitting command lists to device queue.
- It is advised to check `any_profiling_data_in_flight` flag in case all workloads has been submitted, but profiling
- data for some frames is still not available.
- Data pointed to by pProfilingData item(s) belongs to context instance and
- is valid until next call to xessD3D12GetProfilingData or xessGetProfilingData for owning context.
- @param hContext: The XeSS context handle.
- @param pProfilingData: pointer to profiling data structure to be filled by implementation.
- @return XeSS return status code.*/
+    #[doc = " @brief Query XeSS model performance data for past executions.\n This function is provided for backwards compatibility with previous XeSS versions and\n and it's currently deprecated. Same functionality is provided by xessGetProfilingData\n function from xess_debug.h. To enable performance collection,\n context must be initialized with XESS_DEBUG_ENABLE_PROFILING flag added to xess_d3d12_init_params_t::initFlags.\n If profiling is enabled, user must poll for profiling data after executing one or more command lists, otherwise\n implementation will keep growing internal CPU buffers to accommodate all profiling data available.\n Due to async nature of execution on GPU, data may not be available after submitting command lists to device queue.\n It is advised to check `any_profiling_data_in_flight` flag in case all workloads has been submitted, but profiling\n data for some frames is still not available.\n Data pointed to by pProfilingData item(s) belongs to context instance and\n is valid until next call to xessD3D12GetProfilingData or xessGetProfilingData for owning context.\n @param hContext: The XeSS context handle.\n @param pProfilingData: pointer to profiling data structure to be filled by implementation.\n @return XeSS return status code."]
     pub unsafe fn xessD3D12GetProfilingData(
         &self,
         hContext: xess_context_handle_t,
@@ -237,20 +210,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessD3D12CreateContext)(pDevice, phContext)
     }
-    /** @brief Initiates pipeline build process
- This function can only be called between @ref xessD3D12CreateContext and
- @ref xessD3D12Init
- This call initiates build of DX12 pipelines and kernel compilation
- This call can be blocking (if @p blocking set to true) or non-blocking.
- In case of non-blocking call library will wait for pipeline build on call to
- @ref xessD3D12Init
- If @p pPipelineLibrary passed to this call - same pipeline library must be passed
- to @ref xessD3D12Init
-
- @param hContext The XeSS context handle.
- @param pPipelineLibrary Optional pointer to pipeline library for pipeline caching.
- @param blocking Wait for kernel compilation and pipeline creation to finish or not
- @param initFlags Initialization flags. *Must* be identical to flags passed to @ref xessD3D12Init*/
+    #[doc = " @brief Initiates pipeline build process\n This function can only be called between @ref xessD3D12CreateContext and\n @ref xessD3D12Init\n This call initiates build of DX12 pipelines and kernel compilation\n This call can be blocking (if @p blocking set to true) or non-blocking.\n In case of non-blocking call library will wait for pipeline build on call to\n @ref xessD3D12Init\n If @p pPipelineLibrary passed to this call - same pipeline library must be passed\n to @ref xessD3D12Init\n\n @param hContext The XeSS context handle.\n @param pPipelineLibrary Optional pointer to pipeline library for pipeline caching.\n @param blocking Wait for kernel compilation and pipeline creation to finish or not\n @param initFlags Initialization flags. *Must* be identical to flags passed to @ref xessD3D12Init"]
     pub unsafe fn xessD3D12BuildPipelines(
         &self,
         hContext: xess_context_handle_t,
@@ -260,19 +220,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessD3D12BuildPipelines)(hContext, pPipelineLibrary, blocking, initFlags)
     }
-    /** @brief Initialize XeSS D3D12.
- This is a blocking call that initializes XeSS and triggers internal
- resources allocation and JIT for the XeSS kernels. The user must ensure that
- any pending command lists are completed before re-initialization. When
- During initialization, XeSS can create staging buffers and copy queues to
- upload internal data. These will be destroyed at the end of initialization.
-
- @note XeSS supports devices starting from D3D12_RESOURCE_HEAP_TIER_1, which means
- that buffers and textures can not live in the same resource heap.
-
- @param hContext: The XeSS context handle.
- @param pInitParams: Initialization parameters.
- @return XeSS return status code.*/
+    #[doc = " @brief Initialize XeSS D3D12.\n This is a blocking call that initializes XeSS and triggers internal\n resources allocation and JIT for the XeSS kernels. The user must ensure that\n any pending command lists are completed before re-initialization. When\n During initialization, XeSS can create staging buffers and copy queues to\n upload internal data. These will be destroyed at the end of initialization.\n\n @note XeSS supports devices starting from D3D12_RESOURCE_HEAP_TIER_1, which means\n that buffers and textures can not live in the same resource heap.\n\n @param hContext: The XeSS context handle.\n @param pInitParams: Initialization parameters.\n @return XeSS return status code."]
     pub unsafe fn xessD3D12Init(
         &self,
         hContext: xess_context_handle_t,
@@ -280,13 +228,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessD3D12Init)(hContext, pInitParams)
     }
-    /** @brief Get XeSS D3D12 initialization parameters.
-
- @note This function will return @ref XESS_RESULT_ERROR_UNINITIALIZED if @ref xessD3D12Init has not been called.
-
- @param hContext: The XeSS context handle.
- @param[out] pInitParams: Returned initialization parameters.
- @return XeSS return status code.*/
+    #[doc = " @brief Get XeSS D3D12 initialization parameters.\n\n @note This function will return @ref XESS_RESULT_ERROR_UNINITIALIZED if @ref xessD3D12Init has not been called.\n\n @param hContext: The XeSS context handle.\n @param[out] pInitParams: Returned initialization parameters.\n @return XeSS return status code."]
     pub unsafe fn xessD3D12GetInitParams(
         &self,
         hContext: xess_context_handle_t,
@@ -294,11 +236,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessD3D12GetInitParams)(hContext, pInitParams)
     }
-    /** @brief Record XeSS upscaling commands into the command list.
- @param hContext: The XeSS context handle.
- @param pCommandList: The command list for XeSS commands.
- @param pExecParams: Execution parameters.
- @return XeSS return status code.*/
+    #[doc = " @brief Record XeSS upscaling commands into the command list.\n @param hContext: The XeSS context handle.\n @param pCommandList: The command list for XeSS commands.\n @param pExecParams: Execution parameters.\n @return XeSS return status code."]
     pub unsafe fn xessD3D12Execute(
         &self,
         hContext: xess_context_handle_t,

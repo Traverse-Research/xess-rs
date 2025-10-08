@@ -19,47 +19,44 @@ impl Default for _xess_vk_image_view_info {
     }
 }
 pub type xess_vk_image_view_info = _xess_vk_image_view_info;
-/// @brief Execution parameters for XeSS Vulkan.
+#[doc = " @brief Execution parameters for XeSS Vulkan."]
 #[repr(C)]
 pub struct _xess_vk_execute_params_t {
-    /// Input color texture. Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state.
+    #[doc = " Input color texture. Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state."]
     pub colorTexture: xess_vk_image_view_info,
-    /// Input motion vector texture. Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state.
+    #[doc = " Input motion vector texture. Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state."]
     pub velocityTexture: xess_vk_image_view_info,
-    /** Optional depth texture. Required if XESS_INIT_FLAG_HIGH_RES_MV has not been specified.
- Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state.*/
+    #[doc = " Optional depth texture. Required if XESS_INIT_FLAG_HIGH_RES_MV has not been specified.\n Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state."]
     pub depthTexture: xess_vk_image_view_info,
-    /** Optional 1x1 exposure scale texture. Required if XESS_INIT_FLAG_EXPOSURE_TEXTURE has been
- specified. Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state*/
+    #[doc = " Optional 1x1 exposure scale texture. Required if XESS_INIT_FLAG_EXPOSURE_TEXTURE has been\n specified. Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state"]
     pub exposureScaleTexture: xess_vk_image_view_info,
-    /** Optional responsive pixel mask texture. Required if XESS_INIT_FLAG_RESPONSIVE_PIXEL_MASK
- has been specified. Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state*/
+    #[doc = " Optional responsive pixel mask texture. Required if XESS_INIT_FLAG_RESPONSIVE_PIXEL_MASK\n has been specified. Must be in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL state"]
     pub responsivePixelMaskTexture: xess_vk_image_view_info,
-    /// Output texture in target resolution. Must be in VK_IMAGE_LAYOUT_GENERAL state.
+    #[doc = " Output texture in target resolution. Must be in VK_IMAGE_LAYOUT_GENERAL state."]
     pub outputTexture: xess_vk_image_view_info,
-    /// Jitter X coordinate in the range [-0.5, 0.5].
+    #[doc = " Jitter X coordinate in the range [-0.5, 0.5]."]
     pub jitterOffsetX: f32,
-    /// Jitter Y coordinate in the range [-0.5, 0.5].
+    #[doc = " Jitter Y coordinate in the range [-0.5, 0.5]."]
     pub jitterOffsetY: f32,
-    /// Optional input color scaling. Default is 1.
+    #[doc = " Optional input color scaling. Default is 1."]
     pub exposureScale: f32,
-    /// Resets the history accumulation in this frame.
+    #[doc = " Resets the history accumulation in this frame."]
     pub resetHistory: u32,
-    /// Input color width.
+    #[doc = " Input color width."]
     pub inputWidth: u32,
-    /// Input color height.
+    #[doc = " Input color height."]
     pub inputHeight: u32,
-    /// Base coordinate for the input color in the texture. Default is (0,0).
+    #[doc = " Base coordinate for the input color in the texture. Default is (0,0)."]
     pub inputColorBase: xess_coord_t,
-    /// Base coordinate for the input motion vector in the texture.  Default is (0,0).
+    #[doc = " Base coordinate for the input motion vector in the texture.  Default is (0,0)."]
     pub inputMotionVectorBase: xess_coord_t,
-    /// Base coordinate for the input depth in the texture. Default is (0,0).
+    #[doc = " Base coordinate for the input depth in the texture. Default is (0,0)."]
     pub inputDepthBase: xess_coord_t,
-    /// Base coordinate for the input responsive pixel mask in the texture. Default is (0,0).
+    #[doc = " Base coordinate for the input responsive pixel mask in the texture. Default is (0,0)."]
     pub inputResponsiveMaskBase: xess_coord_t,
-    /// Reserved parameter.
+    #[doc = " Reserved parameter."]
     pub reserved0: xess_coord_t,
-    /// Base coordinate for the output color.  Default is (0,0).
+    #[doc = " Base coordinate for the output color.  Default is (0,0)."]
     pub outputColorBase: xess_coord_t,
 }
 impl Default for _xess_vk_execute_params_t {
@@ -71,38 +68,30 @@ impl Default for _xess_vk_execute_params_t {
         }
     }
 }
-/// @brief Execution parameters for XeSS Vulkan.
+#[doc = " @brief Execution parameters for XeSS Vulkan."]
 pub type xess_vk_execute_params_t = _xess_vk_execute_params_t;
-/// @brief Initialization parameters for XeSS VK.
+#[doc = " @brief Initialization parameters for XeSS VK."]
 #[repr(C)]
 pub struct _xess_vk_init_params_t {
-    /// Output width and height.
+    #[doc = " Output width and height."]
     pub outputResolution: xess_2d_t,
-    /// Quality setting
+    #[doc = " Quality setting"]
     pub qualitySetting: xess_quality_settings_t,
-    /// Initialization flags.
+    #[doc = " Initialization flags."]
     pub initFlags: u32,
-    /** Specifies the node mask for internally created resources on
- multi-adapter systems.*/
+    #[doc = " Specifies the node mask for internally created resources on\n multi-adapter systems."]
     pub creationNodeMask: u32,
-    /** Specifies the node visibility mask for internally created resources
- on multi-adapter systems.*/
+    #[doc = " Specifies the node visibility mask for internally created resources\n on multi-adapter systems."]
     pub visibleNodeMask: u32,
-    /** Optional externally allocated buffer memory for XeSS. If VK_NULL_HANDLE the
- memory is allocated internally. If provided, the memory must be allocated from
- memory type that supports allocating buffers. The memory type should be DEVICE_LOCAL.
- This memory is not accessed by the CPU.*/
+    #[doc = " Optional externally allocated buffer memory for XeSS. If VK_NULL_HANDLE the\n memory is allocated internally. If provided, the memory must be allocated from\n memory type that supports allocating buffers. The memory type should be DEVICE_LOCAL.\n This memory is not accessed by the CPU."]
     pub tempBufferHeap: VkDeviceMemory,
-    /// Offset in the externally allocated memory for temporary buffer storage.
+    #[doc = " Offset in the externally allocated memory for temporary buffer storage."]
     pub bufferHeapOffset: u64,
-    /** Optional externally allocated texture memory for XeSS. If VK_NULL_HANDLE the
- memory is allocated internally. If provided, the memory must be allocated from
- memory type that supports allocating textures. The memory type should be DEVICE_LOCAL.
- This memory is not accessed by the CPU.*/
+    #[doc = " Optional externally allocated texture memory for XeSS. If VK_NULL_HANDLE the\n memory is allocated internally. If provided, the memory must be allocated from\n memory type that supports allocating textures. The memory type should be DEVICE_LOCAL.\n This memory is not accessed by the CPU."]
     pub tempTextureHeap: VkDeviceMemory,
-    /// Offset in the externally allocated memory for temporary texture storage.
+    #[doc = " Offset in the externally allocated memory for temporary texture storage."]
     pub textureHeapOffset: u64,
-    /// Optional pipeline cache. If not VK_NULL_HANDLE will be used for pipeline creation.
+    #[doc = " Optional pipeline cache. If not VK_NULL_HANDLE will be used for pipeline creation."]
     pub pipelineCache: VkPipelineCache,
 }
 impl Default for _xess_vk_init_params_t {
@@ -114,7 +103,7 @@ impl Default for _xess_vk_init_params_t {
         }
     }
 }
-/// @brief Initialization parameters for XeSS VK.
+#[doc = " @brief Initialization parameters for XeSS VK."]
 pub type xess_vk_init_params_t = _xess_vk_init_params_t;
 #[repr(C)]
 pub struct _xess_vk_resource_to_dump_desc_t {
@@ -140,11 +129,11 @@ pub type xess_vk_resource_to_dump_desc_t = _xess_vk_resource_to_dump_desc_t;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _xess_vk_resources_to_dump_t {
-    /// Total resource count. In case it equal to zero content of other structure members is undefined.
+    #[doc = " Total resource count. In case it equal to zero content of other structure members is undefined."]
     pub resource_count: u32,
-    /// Pointer to an internal array of Vulkan resource descriptions (VkImage or VkBuffer). Array length is `resource_count`.
+    #[doc = " Pointer to an internal array of Vulkan resource descriptions (VkImage or VkBuffer). Array length is `resource_count`."]
     pub resources: *const _xess_vk_resource_to_dump_desc_t,
-    /// Pointer to an internal array of Vulkan resource names. Array length is `resource_count`.
+    #[doc = " Pointer to an internal array of Vulkan resource names. Array length is `resource_count`."]
     pub resource_names: *const *const ::std::os::raw::c_char,
     pub as_tensor: *const u32,
     pub border_pixels_to_skip_count: *const u32,
@@ -232,16 +221,10 @@ impl XessLoaded {
         let xessVKGetRequiredDeviceFeatures = __library
             .get(b"xessVKGetRequiredDeviceFeatures\0")
             .map(|sym| *sym)?;
-        let xessVKCreateContext = __library
-            .get(b"xessVKCreateContext\0")
-            .map(|sym| *sym)?;
-        let xessVKBuildPipelines = __library
-            .get(b"xessVKBuildPipelines\0")
-            .map(|sym| *sym)?;
+        let xessVKCreateContext = __library.get(b"xessVKCreateContext\0").map(|sym| *sym)?;
+        let xessVKBuildPipelines = __library.get(b"xessVKBuildPipelines\0").map(|sym| *sym)?;
         let xessVKInit = __library.get(b"xessVKInit\0").map(|sym| *sym)?;
-        let xessVKGetInitParams = __library
-            .get(b"xessVKGetInitParams\0")
-            .map(|sym| *sym)?;
+        let xessVKGetInitParams = __library.get(b"xessVKGetInitParams\0").map(|sym| *sym)?;
         let xessVKExecute = __library.get(b"xessVKExecute\0").map(|sym| *sym)?;
         let xessVKGetResourcesToDump = __library
             .get(b"xessVKGetResourcesToDump\0")
@@ -266,23 +249,13 @@ impl XessLoaded {
         instanceExtensions: *mut *const *const ::std::os::raw::c_char,
         minVkApiVersion: *mut u32,
     ) -> xess_result_t {
-        (self
-            .xessVKGetRequiredInstanceExtensions)(
+        (self.xessVKGetRequiredInstanceExtensions)(
             instanceExtensionsCount,
             instanceExtensions,
             minVkApiVersion,
         )
     }
-    /** @brief Get required extensions for Vulkan device that would run XeSS.
- This function must be called to get device extensions need by XeSS. These
- extensions must be enabled in subsequent vkCreateDevice call, that would create a VkDevice
- object to be passed to @ref xessVKCreateContext
- @param instance A VkInstance object created by the user
- @param physicalDevice A VkPhysicalDevice selected by the user from instance
- @param[out] deviceExtensionsCount returns a count of device extensions to be enabled in Vulkan device
- @param[out] deviceExtensions returns a pointer to an array of \p deviceExtensionsCount required extension names
-            The memory used by the array is owned by the XeSS library and should not be freed by the application.
- @return XeSS return status code.*/
+    #[doc = " @brief Get required extensions for Vulkan device that would run XeSS.\n This function must be called to get device extensions need by XeSS. These\n extensions must be enabled in subsequent vkCreateDevice call, that would create a VkDevice\n object to be passed to @ref xessVKCreateContext\n @param instance A VkInstance object created by the user\n @param physicalDevice A VkPhysicalDevice selected by the user from instance\n @param[out] deviceExtensionsCount returns a count of device extensions to be enabled in Vulkan device\n @param[out] deviceExtensions returns a pointer to an array of \\p deviceExtensionsCount required extension names\n            The memory used by the array is owned by the XeSS library and should not be freed by the application.\n @return XeSS return status code."]
     pub unsafe fn xessVKGetRequiredDeviceExtensions(
         &self,
         instance: VkInstance,
@@ -290,33 +263,14 @@ impl XessLoaded {
         deviceExtensionsCount: *mut u32,
         deviceExtensions: *mut *const *const ::std::os::raw::c_char,
     ) -> xess_result_t {
-        (self
-            .xessVKGetRequiredDeviceExtensions)(
+        (self.xessVKGetRequiredDeviceExtensions)(
             instance,
             physicalDevice,
             deviceExtensionsCount,
             deviceExtensions,
         )
     }
-    /** @brief Get required features for Vulkan device that would run XeSS.
- This function must be called to get device features need by XeSS. These
- features must be enabled in subsequent vkCreateDevice call, that would create a VkDevice
- object to be passed to @ref xessVKCreateContext.
- @param instance A VkInstance object created by the user
- @param physicalDevice A VkPhysicalDevice selected by the user from instance
- @param[out] features a pointer to writable chain of feature structures, that this function would patch
-             with required features, by filling required fields and attaching new structures to the chain if needed.
-             The returned pointer should be passed to vkCreateDevice as pNext chain of VkDeviceCreateInfo structure.
-             If null is passed, than the function constructs a new structure chain that should be merged
-             into the chain that application would use with VkDeviceCreateInfo, with application responsibility to
-             avoid any duplicates with its own structures.
-
-             It is an error to chain VkDeviceCreateInfo structure with not null pEnabledFeatures field, as this field is const
-             and cannot be patched by this function. VkPhysicalDeviceFeatures2 structure should be used instead.
-
-             The memory used by the structures added by this funtion to the chain is owned by the XeSS library and
-             should not be freed by the application.
- @return XeSS return status code.*/
+    #[doc = " @brief Get required features for Vulkan device that would run XeSS.\n This function must be called to get device features need by XeSS. These\n features must be enabled in subsequent vkCreateDevice call, that would create a VkDevice\n object to be passed to @ref xessVKCreateContext.\n @param instance A VkInstance object created by the user\n @param physicalDevice A VkPhysicalDevice selected by the user from instance\n @param[out] features a pointer to writable chain of feature structures, that this function would patch\n             with required features, by filling required fields and attaching new structures to the chain if needed.\n             The returned pointer should be passed to vkCreateDevice as pNext chain of VkDeviceCreateInfo structure.\n             If null is passed, than the function constructs a new structure chain that should be merged\n             into the chain that application would use with VkDeviceCreateInfo, with application responsibility to\n             avoid any duplicates with its own structures.\n\n             It is an error to chain VkDeviceCreateInfo structure with not null pEnabledFeatures field, as this field is const\n             and cannot be patched by this function. VkPhysicalDeviceFeatures2 structure should be used instead.\n\n             The memory used by the structures added by this funtion to the chain is owned by the XeSS library and\n             should not be freed by the application.\n @return XeSS return status code."]
     pub unsafe fn xessVKGetRequiredDeviceFeatures(
         &self,
         instance: VkInstance,
@@ -325,12 +279,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessVKGetRequiredDeviceFeatures)(instance, physicalDevice, features)
     }
-    /** @brief Create an XeSS VK context.
- @param instance A VkInstance object created by the user
- @param physicalDevice A VkPhysicalDevice selected by the user from instance
- @param device A VK device created by the user from physicalDevice
- @param[out] phContext Returned xess context handle.
- @return XeSS return status code.*/
+    #[doc = " @brief Create an XeSS VK context.\n @param instance A VkInstance object created by the user\n @param physicalDevice A VkPhysicalDevice selected by the user from instance\n @param device A VK device created by the user from physicalDevice\n @param[out] phContext Returned xess context handle.\n @return XeSS return status code."]
     pub unsafe fn xessVKCreateContext(
         &self,
         instance: VkInstance,
@@ -340,20 +289,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessVKCreateContext)(instance, physicalDevice, device, phContext)
     }
-    /** @brief Initiates pipeline build process
- This function can only be called between @ref xessVKCreateContext and
- @ref xessVKInit
- This call initiates build of Vulkan pipelines and kernel compilation
- This call can be blocking (if @p blocking set to true) or non-blocking.
- In case of non-blocking call library will wait for pipeline build on call to
- @ref xessVKInit
- If @p pipelineCache passed to this call - same pipeline library must be passed
- to @ref xessVKInit
-
- @param hContext The XeSS context handle.
- @param pipelineCache Optional pointer to pipeline library for pipeline caching.
- @param blocking Wait for kernel compilation and pipeline creation to finish or not
- @param initFlags Initialization flags. *Must* be identical to flags passed to @ref xessVKInit*/
+    #[doc = " @brief Initiates pipeline build process\n This function can only be called between @ref xessVKCreateContext and\n @ref xessVKInit\n This call initiates build of Vulkan pipelines and kernel compilation\n This call can be blocking (if @p blocking set to true) or non-blocking.\n In case of non-blocking call library will wait for pipeline build on call to\n @ref xessVKInit\n If @p pipelineCache passed to this call - same pipeline library must be passed\n to @ref xessVKInit\n\n @param hContext The XeSS context handle.\n @param pipelineCache Optional pointer to pipeline library for pipeline caching.\n @param blocking Wait for kernel compilation and pipeline creation to finish or not\n @param initFlags Initialization flags. *Must* be identical to flags passed to @ref xessVKInit"]
     pub unsafe fn xessVKBuildPipelines(
         &self,
         hContext: xess_context_handle_t,
@@ -363,19 +299,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessVKBuildPipelines)(hContext, pipelineCache, blocking, initFlags)
     }
-    /** @brief Initialize XeSS VK.
- This is a blocking call that initializes XeSS and triggers internal
- resources allocation and JIT for the XeSS kernels. The user must ensure that
- any pending command lists are completed before re-initialization. When
- During initialization, XeSS can create staging buffers and copy queues to
- upload internal data. These will be destroyed at the end of initialization.
-
- @note XeSS supports devices starting from VK_RESOURCE_HEAP_TIER_1, which means
- that buffers and textures can not live in the same resource heap.
-
- @param hContext: The XeSS context handle.
- @param pInitParams: Initialization parameters.
- @return XeSS return status code.*/
+    #[doc = " @brief Initialize XeSS VK.\n This is a blocking call that initializes XeSS and triggers internal\n resources allocation and JIT for the XeSS kernels. The user must ensure that\n any pending command lists are completed before re-initialization. When\n During initialization, XeSS can create staging buffers and copy queues to\n upload internal data. These will be destroyed at the end of initialization.\n\n @note XeSS supports devices starting from VK_RESOURCE_HEAP_TIER_1, which means\n that buffers and textures can not live in the same resource heap.\n\n @param hContext: The XeSS context handle.\n @param pInitParams: Initialization parameters.\n @return XeSS return status code."]
     pub unsafe fn xessVKInit(
         &self,
         hContext: xess_context_handle_t,
@@ -383,13 +307,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessVKInit)(hContext, pInitParams)
     }
-    /** @brief Get XeSS VK initialization parameters.
-
- @note This function will return @ref XESS_RESULT_ERROR_UNINITIALIZED if @ref xessVKInit has not been called.
-
- @param hContext: The XeSS context handle.
- @param[out] pInitParams: Returned initialization parameters.
- @return XeSS return status code.*/
+    #[doc = " @brief Get XeSS VK initialization parameters.\n\n @note This function will return @ref XESS_RESULT_ERROR_UNINITIALIZED if @ref xessVKInit has not been called.\n\n @param hContext: The XeSS context handle.\n @param[out] pInitParams: Returned initialization parameters.\n @return XeSS return status code."]
     pub unsafe fn xessVKGetInitParams(
         &self,
         hContext: xess_context_handle_t,
@@ -397,11 +315,7 @@ impl XessLoaded {
     ) -> xess_result_t {
         (self.xessVKGetInitParams)(hContext, pInitParams)
     }
-    /** @brief Record XeSS upscaling commands into the command list.
- @param hContext: The XeSS context handle.
- @param commandBuffer: The command bufgfer for XeSS commands.
- @param pExecParams: Execution parameters.
- @return XeSS return status code.*/
+    #[doc = " @brief Record XeSS upscaling commands into the command list.\n @param hContext: The XeSS context handle.\n @param commandBuffer: The command bufgfer for XeSS commands.\n @param pExecParams: Execution parameters.\n @return XeSS return status code."]
     pub unsafe fn xessVKExecute(
         &self,
         hContext: xess_context_handle_t,
