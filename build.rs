@@ -98,15 +98,13 @@ fn generate_bindings() {
         ".*xefg_swapchain_d3d12.*",
     );
 
-    // Same here, xefg_swapchain_debug.h includes xefg_swapchain.h
+    // Same here, xefg_swapchain_debug.h includes xefg_swapchain.h.
     compile(
         "./xess/inc/xess_fg/xefg_swapchain_debug.h",
         "./src/xess_fg/swapchain.rs",
         ".*xefgSwapChain.*",
         ".*xefg_swapchain.*",
     );
-
-    println!("cargo:rerun-if-changed=build.rs");
 }
 
 fn main() {
