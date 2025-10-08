@@ -1,6 +1,6 @@
 include!("swapchain.rs");
 
-#[cfg(feature = "dx12")]
+#[cfg(all(windows, feature = "dx12"))]
 pub mod dx12 {
     use super::*;
     use windows::{

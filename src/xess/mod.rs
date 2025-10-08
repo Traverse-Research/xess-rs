@@ -1,12 +1,12 @@
 include!("xess.rs");
 
-#[cfg(feature = "dx11")]
+#[cfg(all(windows, feature = "dx11"))]
 pub mod d3d11 {
     use super::*;
     use windows::Win32::Graphics::Direct3D11::{ID3D11Device, ID3D11Resource};
     include!("dx11.rs");
 }
-#[cfg(feature = "dx12")]
+#[cfg(all(windows, feature = "dx12"))]
 pub mod d3d12 {
     use super::*;
     use windows::Win32::Graphics::Direct3D12::{
