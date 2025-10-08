@@ -4,7 +4,7 @@
 #![allow(non_snake_case)]
 #![allow(clippy::missing_safety_doc)]
 
-#[cfg(feature = "xess_fg")]
+#[cfg(feature = "xefg_swapchain")]
 pub mod xefg_swapchain;
 #[cfg(feature = "xell")]
 pub mod xell;
