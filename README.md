@@ -1,4 +1,4 @@
-# Xess-rs
+# XeSS-rs
 
 [![Actions Status](https://github.com/Traverse-Research/xess-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/Traverse-Research/xess-rs/actions)
 [![Latest version](https://img.shields.io/crates/v/xess-sys.svg?logo=rust)](https://crates.io/crates/xess-sys)
@@ -10,7 +10,7 @@
 
 [![Banner](banner.png)](https://traverseresearch.nl)
 
-Xess bindings for rust.
+XeSS bindings for rust.
 
 ## Usage
 
