@@ -8,7 +8,7 @@ homepage = "https://traverseresearch.nl"
 repository = "https://github.com/Traverse-Research/xess-rs"
 description = "Raw bindings to XeSS"
 include = ["src", "LICENSE"]
-categories = [] # https://crates.io/category_slugs
+categories = []                                               # https://crates.io/category_slugs
 keywords = []
 rust-version = "1.74"
 
@@ -18,10 +18,12 @@ doctest = false
 
 [dependencies]
 ash = { version = "0.38", default-features = false, optional = true }
-libloading = {version = "0.8", default-features = false}
+libloading = { version = "0.8", default-features = false }
 
 [target.'cfg(windows)'.dependencies]
-windows = { version = "0.62", default-features = false, features = ["Win32_Graphics_Dxgi_Common"], optional = true }
+windows = { version = "0.62", default-features = false, features = [
+    "Win32_Graphics_Dxgi_Common",
+], optional = true }
 
 [build-dependencies]
 bindgen = { version = "0.72", optional = true }
