@@ -65,9 +65,10 @@ fn generate_bindings() {
         "./src/xess/dx12_include.h",
         "./src/xess/dx12.rs",
         ".*xessD3D12.*",
-        "(.*xess_d3d12.*|.*xess_resources_to_dump_t.*)", // Inconsistent naming yuck
+        ".*xess_(d3d12|resources_to_dump_t).*", // Inconsistent naming yuck
     );
 
+    // xess_debug.h includes xess.h, so we simply use the debug version and get all bindings in one go.
     compile(
         "./xess/inc/xess/xess_debug.h",
         "./src/xess/xess.rs",
@@ -75,6 +76,7 @@ fn generate_bindings() {
         ".*xess.*",
     );
 
+    // Same here, xess_vk_debug.h includes xess_vk.h.
     compile(
         "./xess/inc/xess/xess_vk_debug.h",
         "./src/xess/vk.rs",
@@ -89,6 +91,7 @@ fn generate_bindings() {
         ".*xefg_swapchain_d3d12.*",
     );
 
+    // Same here, xefg_swapchain_debug.h includes xefg_swapchain.h
     compile(
         "./xess/inc/xess_fg/xefg_swapchain_debug.h",
         "./src/xess_fg/swapchain.rs",
