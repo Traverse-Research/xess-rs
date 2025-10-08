@@ -1,7 +1,7 @@
 include!("xess.rs");
 
 #[cfg(all(windows, feature = "dx11"))]
-pub mod d3d11 {
+pub mod dx11 {
     use super::*;
     use std::ffi::c_void;
     type ID3D11Device = c_void;
@@ -9,7 +9,7 @@ pub mod d3d11 {
     include!("dx11.rs");
 }
 #[cfg(all(windows, feature = "dx12"))]
-pub mod d3d12 {
+pub mod dx12 {
     use super::*;
     use std::ffi::c_void;
     type ID3D12DescriptorHeap = c_void;
