@@ -136,40 +136,46 @@ where
         }
     }
 }
-#[doc = " XeLL operation was successful."]
-pub const XELL_RESULT_SUCCESS: _xell_result_t = 0;
-#[doc = " XeLL not supported on the GPU."]
-pub const XELL_RESULT_ERROR_UNSUPPORTED_DEVICE: _xell_result_t = -1;
-#[doc = " An unsupported driver."]
-pub const XELL_RESULT_ERROR_UNSUPPORTED_DRIVER: _xell_result_t = -2;
-#[doc = " Execute called without initialization."]
-pub const XELL_RESULT_ERROR_UNINITIALIZED: _xell_result_t = -3;
-#[doc = " Invalid argument."]
-pub const XELL_RESULT_ERROR_INVALID_ARGUMENT: _xell_result_t = -4;
-#[doc = " Device function."]
-pub const XELL_RESULT_ERROR_DEVICE: _xell_result_t = -6;
-#[doc = " The function is not implemented."]
-pub const XELL_RESULT_ERROR_NOT_IMPLEMENTED: _xell_result_t = -7;
-#[doc = " Invalid context."]
-pub const XELL_RESULT_ERROR_INVALID_CONTEXT: _xell_result_t = -8;
-#[doc = " Operation not supported in current configuration."]
-pub const XELL_RESULT_ERROR_UNSUPPORTED: _xell_result_t = -10;
-#[doc = " Unknown internal failure."]
-pub const XELL_RESULT_ERROR_UNKNOWN: _xell_result_t = -1000;
+#[repr(i32)]
 #[doc = " @brief  XeLL return codes."]
-pub type _xell_result_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xell_result_t {
+    #[doc = " XeLL operation was successful."]
+    RESULT_SUCCESS = 0,
+    #[doc = " XeLL not supported on the GPU."]
+    RESULT_ERROR_UNSUPPORTED_DEVICE = -1,
+    #[doc = " An unsupported driver."]
+    RESULT_ERROR_UNSUPPORTED_DRIVER = -2,
+    #[doc = " Execute called without initialization."]
+    RESULT_ERROR_UNINITIALIZED = -3,
+    #[doc = " Invalid argument."]
+    RESULT_ERROR_INVALID_ARGUMENT = -4,
+    #[doc = " Device function."]
+    RESULT_ERROR_DEVICE = -6,
+    #[doc = " The function is not implemented."]
+    RESULT_ERROR_NOT_IMPLEMENTED = -7,
+    #[doc = " Invalid context."]
+    RESULT_ERROR_INVALID_CONTEXT = -8,
+    #[doc = " Operation not supported in current configuration."]
+    RESULT_ERROR_UNSUPPORTED = -10,
+    #[doc = " Unknown internal failure."]
+    RESULT_ERROR_UNKNOWN = -1000,
+}
 #[doc = " @brief  XeLL return codes."]
 pub use self::_xell_result_t as xell_result_t;
-pub const XELL_SIMULATION_START: _xell_latency_marker_type_t = 0;
-pub const XELL_SIMULATION_END: _xell_latency_marker_type_t = 1;
-pub const XELL_RENDERSUBMIT_START: _xell_latency_marker_type_t = 2;
-pub const XELL_RENDERSUBMIT_END: _xell_latency_marker_type_t = 3;
-pub const XELL_PRESENT_START: _xell_latency_marker_type_t = 4;
-pub const XELL_PRESENT_END: _xell_latency_marker_type_t = 5;
-pub const XELL_INPUT_SAMPLE: _xell_latency_marker_type_t = 6;
-pub const XELL_MARKER_COUNT: _xell_latency_marker_type_t = 7;
+#[repr(i32)]
 #[doc = " @brief XeLL markers.\n\n XeLL markers for game instrumentation."]
-pub type _xell_latency_marker_type_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xell_latency_marker_type_t {
+    SIMULATION_START = 0,
+    SIMULATION_END = 1,
+    RENDERSUBMIT_START = 2,
+    RENDERSUBMIT_END = 3,
+    PRESENT_START = 4,
+    PRESENT_END = 5,
+    INPUT_SAMPLE = 6,
+    MARKER_COUNT = 7,
+}
 #[doc = " @brief XeLL markers.\n\n XeLL markers for game instrumentation."]
 pub use self::_xell_latency_marker_type_t as xell_latency_marker_type_t;
 #[repr(C)]
@@ -303,12 +309,15 @@ impl _xell_sleep_params_t {
     }
 }
 pub type xell_sleep_params_t = _xell_sleep_params_t;
-pub const XELL_LOGGING_LEVEL_DEBUG: _xell_logging_level_t = 0;
-pub const XELL_LOGGING_LEVEL_INFO: _xell_logging_level_t = 1;
-pub const XELL_LOGGING_LEVEL_WARNING: _xell_logging_level_t = 2;
-pub const XELL_LOGGING_LEVEL_ERROR: _xell_logging_level_t = 3;
+#[repr(i32)]
 #[doc = " @brief XeLL logging level"]
-pub type _xell_logging_level_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xell_logging_level_t {
+    LOGGING_LEVEL_DEBUG = 0,
+    LOGGING_LEVEL_INFO = 1,
+    LOGGING_LEVEL_WARNING = 2,
+    LOGGING_LEVEL_ERROR = 3,
+}
 #[doc = " @brief XeLL logging level"]
 pub use self::_xell_logging_level_t as xell_logging_level_t;
 #[doc = " A logging callback provided by the application. This callback can be called from other threads.\n Message pointer are only valid inside function and may be invalid right after return call.\n Message is a null-terminated utf-8 string"]
