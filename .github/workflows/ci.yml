@@ -53,4 +53,4 @@ jobs:
           name: crate-source
           path: src/
       - name: Diff generated Rust code
-        run: test -z "$(git status --porcelain -- '!.windows')" || (echo "::error::Generated files are different, please regenerate with cargo b -Fgenerate-bindings!"; git status; false)
+        run: test -z "$(git status --porcelain)" || (echo "::error::Generated files are different, please regenerate with cargo b -Fgenerate-bindings!"; git status; false)
