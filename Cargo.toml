@@ -21,9 +21,7 @@ ash = { version = "0.38", default-features = false, optional = true }
 libloading = { version = "0.8", default-features = false }
 
 [target.'cfg(windows)'.dependencies]
-windows = { version = "0.62", default-features = false, features = [
-    "Win32_Graphics_Dxgi_Common",
-], optional = true }
+windows = { version = "0.62", default-features = false, optional = true }
 
 [build-dependencies]
 bindgen = { version = "0.72", optional = true }
@@ -31,9 +29,9 @@ bindgen = { version = "0.72", optional = true }
 [features]
 default = ["vk", "dx12", "xess"]
 generate-bindings = ["dep:bindgen"]
-dx11 = ["windows/Win32_Graphics_Direct3D11"]
-dx12 = ["windows/Win32_Graphics_Direct3D12"]
+dx11 = []
+dx12 = []
 vk = ["dep:ash"]
 xell = []
 xess = []
-xefg_swapchain = []
+xefg_swapchain = ["windows/Win32_Graphics_Dxgi_Common", "windows/Win32_Graphics_Direct3D12"]
