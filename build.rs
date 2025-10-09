@@ -112,8 +112,11 @@ fn generate_bindings() {
     );
 }
 
+#[cfg(feature = "generate-bindings")]
 #[derive(Debug)]
 struct RenameCallback;
+
+#[cfg(feature = "generate-bindings")]
 impl bindgen::callbacks::ParseCallbacks for RenameCallback {
     fn enum_variant_name(
         &self,
