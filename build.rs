@@ -93,7 +93,7 @@ fn generate_bindings() {
 
     compile(
         "./xess/inc/xess_fg/xefg_swapchain_d3d12.h",
-        "./src/xess_fg/dx12.rs",
+        "./src/xefg_swapchain/dx12.rs",
         ".*xefgSwapChainD3D12.*",
         ".*xefg_swapchain_d3d12.*",
     );
@@ -101,7 +101,7 @@ fn generate_bindings() {
     // Same here, xefg_swapchain_debug.h includes xefg_swapchain.h.
     compile(
         "./xess/inc/xess_fg/xefg_swapchain_debug.h",
-        "./src/xess_fg/swapchain.rs",
+        "./src/xefg_swapchain/swapchain.rs",
         ".*xefgSwapChain.*",
         ".*xefg_swapchain.*",
     );
