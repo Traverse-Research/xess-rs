@@ -41,15 +41,16 @@ jobs:
       - name: Make VULKAN_SDK environment variable available
         run: echo "VULKAN_SDK=C:\VulkanSDK" >> $env:GITHUB_ENV
       - name: Clean
+        shell: bash
         run: >
           rm
-          src/xefg_swapchain/dx12.rs,
-          src/xefg_swapchain/swapchain.rs,
-          src/xell/dx12.rs,
-          src/xell/xell.rs,
-          src/xess/dx11.rs,
-          src/xess/dx12.rs,
-          src/xess/vk.rs,
+          src/xefg_swapchain/dx12.rs
+          src/xefg_swapchain/swapchain.rs
+          src/xell/dx12.rs
+          src/xell/xell.rs
+          src/xess/dx11.rs
+          src/xess/dx12.rs
+          src/xess/vk.rs
           src/xess/xess.rs
       - name: Generate
         run: cargo b -Fgenerate-bindings
@@ -59,4 +60,5 @@ jobs:
           name: crate-source
           path: src/
       - name: Diff generated Rust code
+        shell: bash
         run: test -z "$(git status --porcelain)" || (echo "::error::Generated files are different, please regenerate with cargo b -Fgenerate-bindings!"; git status; false)
