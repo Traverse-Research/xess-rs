@@ -26,3 +26,39 @@ jobs:
       - uses: dtolnay/rust-toolchain@1.74.0
       - name: Cargo check
         run: cargo check --workspace --all-targets
+  
+  generate-rust:
+    name: Generate Rust crate
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          submodules: true
+      - name: Install Vulkan SDK
+        # Normally the installer sets the VULKAN_SDK system environment variable to the installation location. GitHub Actions does not reimport
+        # this change in variables, requiring us to change it to known location intead and output the location ourselves below.
+        run: winget install --accept-package-agreements --accept-source-agreements -e KhronosGroup.VulkanSDK --location C:\VulkanSDK
+      - name: Make VULKAN_SDK environment variable available
+        run: echo "VULKAN_SDK=C:\VulkanSDK" >> $env:GITHUB_ENV
+      - name: Clean
+        shell: bash
+        run: >
+          rm
+          src/xefg_swapchain/dx12.rs
+          src/xefg_swapchain/swapchain.rs
+          src/xell/dx12.rs
+          src/xell/xell.rs
+          src/xess/dx11.rs
+          src/xess/dx12.rs
+          src/xess/vk.rs
+          src/xess/xess.rs
+      - name: Generate
+        run: cargo b -Fgenerate-bindings
+      - name: Upload crate source
+        uses: actions/upload-artifact@v4
+        with:
+          name: crate-source
+          path: src/
+      - name: Diff generated Rust code
+        shell: bash
+        run: test -z "$(git status --porcelain)" || (echo "::error::Generated files are different, please regenerate with cargo b -Fgenerate-bindings!"; git status; false)
