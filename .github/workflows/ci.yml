@@ -37,13 +37,13 @@ jobs:
       - name: Clean
         run: >
           rm
-          src/xefg_swapchain/dx12.rs
-          src/xefg_swapchain/swapchain.rs
-          src/xell/dx12.rs
-          src/xell/xell.rs
-          src/xess/dx11.rs
-          src/xess/dx12.rs
-          src/xess/vk.rs
+          src/xefg_swapchain/dx12.rs,
+          src/xefg_swapchain/swapchain.rs,
+          src/xell/dx12.rs,
+          src/xell/xell.rs,
+          src/xess/dx11.rs,
+          src/xess/dx12.rs,
+          src/xess/vk.rs,
           src/xess/xess.rs
       - name: Generate
         run: cargo b -Fgenerate-bindings
