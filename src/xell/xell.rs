@@ -138,25 +138,25 @@ where
 }
 impl _xell_result_t {
     #[doc = " XeLL operation was successful."]
-    pub const RESULT_SUCCESS: _xell_result_t = _xell_result_t(0);
+    pub const SUCCESS: _xell_result_t = _xell_result_t(0);
     #[doc = " XeLL not supported on the GPU."]
-    pub const RESULT_ERROR_UNSUPPORTED_DEVICE: _xell_result_t = _xell_result_t(-1);
+    pub const ERROR_UNSUPPORTED_DEVICE: _xell_result_t = _xell_result_t(-1);
     #[doc = " An unsupported driver."]
-    pub const RESULT_ERROR_UNSUPPORTED_DRIVER: _xell_result_t = _xell_result_t(-2);
+    pub const ERROR_UNSUPPORTED_DRIVER: _xell_result_t = _xell_result_t(-2);
     #[doc = " Execute called without initialization."]
-    pub const RESULT_ERROR_UNINITIALIZED: _xell_result_t = _xell_result_t(-3);
+    pub const ERROR_UNINITIALIZED: _xell_result_t = _xell_result_t(-3);
     #[doc = " Invalid argument."]
-    pub const RESULT_ERROR_INVALID_ARGUMENT: _xell_result_t = _xell_result_t(-4);
+    pub const ERROR_INVALID_ARGUMENT: _xell_result_t = _xell_result_t(-4);
     #[doc = " Device function."]
-    pub const RESULT_ERROR_DEVICE: _xell_result_t = _xell_result_t(-6);
+    pub const ERROR_DEVICE: _xell_result_t = _xell_result_t(-6);
     #[doc = " The function is not implemented."]
-    pub const RESULT_ERROR_NOT_IMPLEMENTED: _xell_result_t = _xell_result_t(-7);
+    pub const ERROR_NOT_IMPLEMENTED: _xell_result_t = _xell_result_t(-7);
     #[doc = " Invalid context."]
-    pub const RESULT_ERROR_INVALID_CONTEXT: _xell_result_t = _xell_result_t(-8);
+    pub const ERROR_INVALID_CONTEXT: _xell_result_t = _xell_result_t(-8);
     #[doc = " Operation not supported in current configuration."]
-    pub const RESULT_ERROR_UNSUPPORTED: _xell_result_t = _xell_result_t(-10);
+    pub const ERROR_UNSUPPORTED: _xell_result_t = _xell_result_t(-10);
     #[doc = " Unknown internal failure."]
-    pub const RESULT_ERROR_UNKNOWN: _xell_result_t = _xell_result_t(-1000);
+    pub const ERROR_UNKNOWN: _xell_result_t = _xell_result_t(-1000);
 }
 #[repr(transparent)]
 #[doc = " @brief  XeLL return codes."]
@@ -314,10 +314,10 @@ pub type xell_sleep_params_t = _xell_sleep_params_t;
 #[doc = " @brief XeLL logging level"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _xell_logging_level_t {
-    LOGGING_LEVEL_DEBUG = 0,
-    LOGGING_LEVEL_INFO = 1,
-    LOGGING_LEVEL_WARNING = 2,
-    LOGGING_LEVEL_ERROR = 3,
+    DEBUG = 0,
+    INFO = 1,
+    WARNING = 2,
+    ERROR = 3,
 }
 #[doc = " @brief XeLL logging level"]
 pub use self::_xell_logging_level_t as xell_logging_level_t;
