@@ -149,67 +149,87 @@ pub struct _xefg_swapchain_properties_t {
 }
 #[doc = " @brief Properties for internal XeSS-FG Swap Chain resources."]
 pub type xefg_swapchain_properties_t = _xefg_swapchain_properties_t;
-#[repr(i32)]
+impl _xefg_swapchain_result_t {
+    #[doc = " An old or outdated driver."]
+    pub const RESULT_WARNING_OLD_DRIVER: _xefg_swapchain_result_t = _xefg_swapchain_result_t(2);
+    #[doc = " Warning. Frame ID should be over 0."]
+    pub const RESULT_WARNING_TOO_FEW_FRAMES: _xefg_swapchain_result_t = _xefg_swapchain_result_t(3);
+    #[doc = " Warning. Data for interpolation came in wrong order."]
+    pub const RESULT_WARNING_FRAMES_ID_MISMATCH: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(4);
+    #[doc = " Warning. There is no present status for last present."]
+    pub const RESULT_WARNING_MISSING_PRESENT_STATUS: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(5);
+    #[doc = " Warning. Resource sizes for the interpolation doesn't match between previouse and next frames.\nInterpolation skipped."]
+    pub const RESULT_WARNING_RESOURCE_SIZES_MISMATCH: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(6);
+    #[doc = " Operation was successful."]
+    pub const RESULT_SUCCESS: _xefg_swapchain_result_t = _xefg_swapchain_result_t(0);
+    #[doc = " Operation not supported on the GPU."]
+    pub const RESULT_ERROR_UNSUPPORTED_DEVICE: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-1);
+    #[doc = " An unsupported driver."]
+    pub const RESULT_ERROR_UNSUPPORTED_DRIVER: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-2);
+    #[doc = " Execute called without initialization."]
+    pub const RESULT_ERROR_UNINITIALIZED: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-3);
+    #[doc = " Invalid argument were provided to the API call."]
+    pub const RESULT_ERROR_INVALID_ARGUMENT: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-4);
+    #[doc = " Not enough available GPU memory."]
+    pub const RESULT_ERROR_DEVICE_OUT_OF_MEMORY: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-5);
+    #[doc = " Device function such as resource or descriptor creation."]
+    pub const RESULT_ERROR_DEVICE: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-6);
+    #[doc = " The function is not implemented."]
+    pub const RESULT_ERROR_NOT_IMPLEMENTED: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-7);
+    #[doc = " Invalid context."]
+    pub const RESULT_ERROR_INVALID_CONTEXT: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-8);
+    #[doc = " Operation not finished yet."]
+    pub const RESULT_ERROR_OPERATION_IN_PROGRESS: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-9);
+    #[doc = " Operation not supported in current configuration."]
+    pub const RESULT_ERROR_UNSUPPORTED: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-10);
+    #[doc = " The library cannot be loaded."]
+    pub const RESULT_ERROR_CANT_LOAD_LIBRARY: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-11);
+    #[doc = " Input resources does not meet requirements based on UI Mode."]
+    pub const RESULT_ERROR_MISMATCH_INPUT_RESOURCES: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-12);
+    #[doc = " Output resources does not meet requirements."]
+    pub const RESULT_ERROR_INCORRECT_OUTPUT_RESOURCES: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-13);
+    #[doc = " Input is insufficient to evaluate interpolation."]
+    pub const RESULT_ERROR_INCORRECT_INPUT_RESOURCES: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-14);
+    #[doc = " Requirements regarding XeLL Latency Reduction are not met."]
+    pub const RESULT_ERROR_LATENCY_REDUCTION_UNSUPPORTED: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-15);
+    #[doc = " XeLL library does not contains required functions."]
+    pub const RESULT_ERROR_LATENCY_REDUCTION_FUNCTION_MISSING: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-16);
+    #[doc = " One of the Windows functions has failed. For details, see the logs or debug layer."]
+    pub const RESULT_ERROR_HRESULT_FAILURE: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-17);
+    #[doc = " DXGI call failed with invalid call error."]
+    pub const RESULT_ERROR_DXGI_INVALID_CALL: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-18);
+    #[doc = " XeFG SwapChain pointer is still in use during destroy."]
+    pub const RESULT_ERROR_POINTER_STILL_IN_USE: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-19);
+    #[doc = " Invalid or missing descriptor heap."]
+    pub const RESULT_ERROR_INVALID_DESCRIPTOR_HEAP: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-20);
+    #[doc = " Call to function done in invalid order."]
+    pub const RESULT_ERROR_WRONG_CALL_ORDER: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-21);
+    #[doc = " Unknown internal failure"]
+    pub const RESULT_ERROR_UNKNOWN: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-1000);
+}
+#[repr(transparent)]
 #[doc = " @brief XeSS-FG Swap Chain return codes."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _xefg_swapchain_result_t {
-    #[doc = " An old or outdated driver."]
-    RESULT_WARNING_OLD_DRIVER = 2,
-    #[doc = " Warning. Frame ID should be over 0."]
-    RESULT_WARNING_TOO_FEW_FRAMES = 3,
-    #[doc = " Warning. Data for interpolation came in wrong order."]
-    RESULT_WARNING_FRAMES_ID_MISMATCH = 4,
-    #[doc = " Warning. There is no present status for last present."]
-    RESULT_WARNING_MISSING_PRESENT_STATUS = 5,
-    #[doc = " Warning. Resource sizes for the interpolation doesn't match between previouse and next frames.\nInterpolation skipped."]
-    RESULT_WARNING_RESOURCE_SIZES_MISMATCH = 6,
-    #[doc = " Operation was successful."]
-    RESULT_SUCCESS = 0,
-    #[doc = " Operation not supported on the GPU."]
-    RESULT_ERROR_UNSUPPORTED_DEVICE = -1,
-    #[doc = " An unsupported driver."]
-    RESULT_ERROR_UNSUPPORTED_DRIVER = -2,
-    #[doc = " Execute called without initialization."]
-    RESULT_ERROR_UNINITIALIZED = -3,
-    #[doc = " Invalid argument were provided to the API call."]
-    RESULT_ERROR_INVALID_ARGUMENT = -4,
-    #[doc = " Not enough available GPU memory."]
-    RESULT_ERROR_DEVICE_OUT_OF_MEMORY = -5,
-    #[doc = " Device function such as resource or descriptor creation."]
-    RESULT_ERROR_DEVICE = -6,
-    #[doc = " The function is not implemented."]
-    RESULT_ERROR_NOT_IMPLEMENTED = -7,
-    #[doc = " Invalid context."]
-    RESULT_ERROR_INVALID_CONTEXT = -8,
-    #[doc = " Operation not finished yet."]
-    RESULT_ERROR_OPERATION_IN_PROGRESS = -9,
-    #[doc = " Operation not supported in current configuration."]
-    RESULT_ERROR_UNSUPPORTED = -10,
-    #[doc = " The library cannot be loaded."]
-    RESULT_ERROR_CANT_LOAD_LIBRARY = -11,
-    #[doc = " Input resources does not meet requirements based on UI Mode."]
-    RESULT_ERROR_MISMATCH_INPUT_RESOURCES = -12,
-    #[doc = " Output resources does not meet requirements."]
-    RESULT_ERROR_INCORRECT_OUTPUT_RESOURCES = -13,
-    #[doc = " Input is insufficient to evaluate interpolation."]
-    RESULT_ERROR_INCORRECT_INPUT_RESOURCES = -14,
-    #[doc = " Requirements regarding XeLL Latency Reduction are not met."]
-    RESULT_ERROR_LATENCY_REDUCTION_UNSUPPORTED = -15,
-    #[doc = " XeLL library does not contains required functions."]
-    RESULT_ERROR_LATENCY_REDUCTION_FUNCTION_MISSING = -16,
-    #[doc = " One of the Windows functions has failed. For details, see the logs or debug layer."]
-    RESULT_ERROR_HRESULT_FAILURE = -17,
-    #[doc = " DXGI call failed with invalid call error."]
-    RESULT_ERROR_DXGI_INVALID_CALL = -18,
-    #[doc = " XeFG SwapChain pointer is still in use during destroy."]
-    RESULT_ERROR_POINTER_STILL_IN_USE = -19,
-    #[doc = " Invalid or missing descriptor heap."]
-    RESULT_ERROR_INVALID_DESCRIPTOR_HEAP = -20,
-    #[doc = " Call to function done in invalid order."]
-    RESULT_ERROR_WRONG_CALL_ORDER = -21,
-    #[doc = " Unknown internal failure"]
-    RESULT_ERROR_UNKNOWN = -1000,
-}
+pub struct _xefg_swapchain_result_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeSS-FG Swap Chain return codes."]
 pub use self::_xefg_swapchain_result_t as xefg_swapchain_result_t;
 #[repr(i32)]

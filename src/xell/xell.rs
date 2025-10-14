@@ -136,31 +136,32 @@ where
         }
     }
 }
-#[repr(i32)]
+impl _xell_result_t {
+    #[doc = " XeLL operation was successful."]
+    pub const RESULT_SUCCESS: _xell_result_t = _xell_result_t(0);
+    #[doc = " XeLL not supported on the GPU."]
+    pub const RESULT_ERROR_UNSUPPORTED_DEVICE: _xell_result_t = _xell_result_t(-1);
+    #[doc = " An unsupported driver."]
+    pub const RESULT_ERROR_UNSUPPORTED_DRIVER: _xell_result_t = _xell_result_t(-2);
+    #[doc = " Execute called without initialization."]
+    pub const RESULT_ERROR_UNINITIALIZED: _xell_result_t = _xell_result_t(-3);
+    #[doc = " Invalid argument."]
+    pub const RESULT_ERROR_INVALID_ARGUMENT: _xell_result_t = _xell_result_t(-4);
+    #[doc = " Device function."]
+    pub const RESULT_ERROR_DEVICE: _xell_result_t = _xell_result_t(-6);
+    #[doc = " The function is not implemented."]
+    pub const RESULT_ERROR_NOT_IMPLEMENTED: _xell_result_t = _xell_result_t(-7);
+    #[doc = " Invalid context."]
+    pub const RESULT_ERROR_INVALID_CONTEXT: _xell_result_t = _xell_result_t(-8);
+    #[doc = " Operation not supported in current configuration."]
+    pub const RESULT_ERROR_UNSUPPORTED: _xell_result_t = _xell_result_t(-10);
+    #[doc = " Unknown internal failure."]
+    pub const RESULT_ERROR_UNKNOWN: _xell_result_t = _xell_result_t(-1000);
+}
+#[repr(transparent)]
 #[doc = " @brief  XeLL return codes."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _xell_result_t {
-    #[doc = " XeLL operation was successful."]
-    RESULT_SUCCESS = 0,
-    #[doc = " XeLL not supported on the GPU."]
-    RESULT_ERROR_UNSUPPORTED_DEVICE = -1,
-    #[doc = " An unsupported driver."]
-    RESULT_ERROR_UNSUPPORTED_DRIVER = -2,
-    #[doc = " Execute called without initialization."]
-    RESULT_ERROR_UNINITIALIZED = -3,
-    #[doc = " Invalid argument."]
-    RESULT_ERROR_INVALID_ARGUMENT = -4,
-    #[doc = " Device function."]
-    RESULT_ERROR_DEVICE = -6,
-    #[doc = " The function is not implemented."]
-    RESULT_ERROR_NOT_IMPLEMENTED = -7,
-    #[doc = " Invalid context."]
-    RESULT_ERROR_INVALID_CONTEXT = -8,
-    #[doc = " Operation not supported in current configuration."]
-    RESULT_ERROR_UNSUPPORTED = -10,
-    #[doc = " Unknown internal failure."]
-    RESULT_ERROR_UNKNOWN = -1000,
-}
+pub struct _xell_result_t(pub ::std::os::raw::c_int);
 #[doc = " @brief  XeLL return codes."]
 pub use self::_xell_result_t as xell_result_t;
 #[repr(i32)]

@@ -112,43 +112,44 @@ pub struct _xess_properties_t {
 }
 #[doc = " @brief Properties for internal XeSS resources."]
 pub type xess_properties_t = _xess_properties_t;
-#[repr(i32)]
+impl _xess_result_t {
+    #[doc = " Warning. Folder to store dump data doesn't exist. Write operation skipped."]
+    pub const RESULT_WARNING_NONEXISTING_FOLDER: _xess_result_t = _xess_result_t(1);
+    #[doc = " An old or outdated driver."]
+    pub const RESULT_WARNING_OLD_DRIVER: _xess_result_t = _xess_result_t(2);
+    #[doc = " XeSS operation was successful."]
+    pub const RESULT_SUCCESS: _xess_result_t = _xess_result_t(0);
+    #[doc = " XeSS not supported on the GPU. An SM 6.4 capable GPU is required."]
+    pub const RESULT_ERROR_UNSUPPORTED_DEVICE: _xess_result_t = _xess_result_t(-1);
+    #[doc = " An unsupported driver."]
+    pub const RESULT_ERROR_UNSUPPORTED_DRIVER: _xess_result_t = _xess_result_t(-2);
+    #[doc = " Execute called without initialization."]
+    pub const RESULT_ERROR_UNINITIALIZED: _xess_result_t = _xess_result_t(-3);
+    #[doc = " Invalid argument such as descriptor handles."]
+    pub const RESULT_ERROR_INVALID_ARGUMENT: _xess_result_t = _xess_result_t(-4);
+    #[doc = " Not enough available GPU memory."]
+    pub const RESULT_ERROR_DEVICE_OUT_OF_MEMORY: _xess_result_t = _xess_result_t(-5);
+    #[doc = " Device function such as resource or descriptor creation."]
+    pub const RESULT_ERROR_DEVICE: _xess_result_t = _xess_result_t(-6);
+    #[doc = " The function is not implemented"]
+    pub const RESULT_ERROR_NOT_IMPLEMENTED: _xess_result_t = _xess_result_t(-7);
+    #[doc = " Invalid context."]
+    pub const RESULT_ERROR_INVALID_CONTEXT: _xess_result_t = _xess_result_t(-8);
+    #[doc = " Operation not finished yet."]
+    pub const RESULT_ERROR_OPERATION_IN_PROGRESS: _xess_result_t = _xess_result_t(-9);
+    #[doc = " Operation not supported in current configuration."]
+    pub const RESULT_ERROR_UNSUPPORTED: _xess_result_t = _xess_result_t(-10);
+    #[doc = " The library cannot be loaded."]
+    pub const RESULT_ERROR_CANT_LOAD_LIBRARY: _xess_result_t = _xess_result_t(-11);
+    #[doc = " Call to function done in invalid order."]
+    pub const RESULT_ERROR_WRONG_CALL_ORDER: _xess_result_t = _xess_result_t(-12);
+    #[doc = " Unknown internal failure"]
+    pub const RESULT_ERROR_UNKNOWN: _xess_result_t = _xess_result_t(-1000);
+}
+#[repr(transparent)]
 #[doc = " @brief  XeSS return codes."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _xess_result_t {
-    #[doc = " Warning. Folder to store dump data doesn't exist. Write operation skipped."]
-    RESULT_WARNING_NONEXISTING_FOLDER = 1,
-    #[doc = " An old or outdated driver."]
-    RESULT_WARNING_OLD_DRIVER = 2,
-    #[doc = " XeSS operation was successful."]
-    RESULT_SUCCESS = 0,
-    #[doc = " XeSS not supported on the GPU. An SM 6.4 capable GPU is required."]
-    RESULT_ERROR_UNSUPPORTED_DEVICE = -1,
-    #[doc = " An unsupported driver."]
-    RESULT_ERROR_UNSUPPORTED_DRIVER = -2,
-    #[doc = " Execute called without initialization."]
-    RESULT_ERROR_UNINITIALIZED = -3,
-    #[doc = " Invalid argument such as descriptor handles."]
-    RESULT_ERROR_INVALID_ARGUMENT = -4,
-    #[doc = " Not enough available GPU memory."]
-    RESULT_ERROR_DEVICE_OUT_OF_MEMORY = -5,
-    #[doc = " Device function such as resource or descriptor creation."]
-    RESULT_ERROR_DEVICE = -6,
-    #[doc = " The function is not implemented"]
-    RESULT_ERROR_NOT_IMPLEMENTED = -7,
-    #[doc = " Invalid context."]
-    RESULT_ERROR_INVALID_CONTEXT = -8,
-    #[doc = " Operation not finished yet."]
-    RESULT_ERROR_OPERATION_IN_PROGRESS = -9,
-    #[doc = " Operation not supported in current configuration."]
-    RESULT_ERROR_UNSUPPORTED = -10,
-    #[doc = " The library cannot be loaded."]
-    RESULT_ERROR_CANT_LOAD_LIBRARY = -11,
-    #[doc = " Call to function done in invalid order."]
-    RESULT_ERROR_WRONG_CALL_ORDER = -12,
-    #[doc = " Unknown internal failure"]
-    RESULT_ERROR_UNKNOWN = -1000,
-}
+pub struct _xess_result_t(pub ::std::os::raw::c_int);
 #[doc = " @brief  XeSS return codes."]
 pub use self::_xess_result_t as xess_result_t;
 #[repr(i32)]
