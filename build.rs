@@ -31,6 +31,12 @@ fn generate_bindings() {
             .allowlist_function(allowlist_function)
             .allowlist_type(allowlist_type)
             .allowlist_var(".*xess.*")
+            .bitfield_enum(".*(flags|bits).*")
+            .newtype_enum(".*result_t.*")
+            .default_enum_style(bindgen::EnumVariation::Rust {
+                non_exhaustive: false,
+            })
+            .parse_callbacks(Box::new(RenameCallback))
             .derive_default(true)
             .clang_args(["-x", "c++"])
             .prepend_enum_name(false)
@@ -105,6 +111,39 @@ fn generate_bindings() {
         ".*xefgSwapChain.*",
         ".*xefg_swapchain.*",
     );
+}
+
+#[cfg(feature = "generate-bindings")]
+#[derive(Debug)]
+struct RenameCallback;
+
+#[cfg(feature = "generate-bindings")]
+impl bindgen::callbacks::ParseCallbacks for RenameCallback {
+    fn enum_variant_name(
+        &self,
+        enum_name: Option<&str>,
+        original_variant_name: &str,
+        _variant_value: bindgen::callbacks::EnumVariantValue,
+    ) -> Option<String> {
+        if let Some(enum_name) = enum_name {
+            if enum_name.starts_with("_xess") {
+                return original_variant_name
+                    .strip_prefix("XESS_")
+                    .map(|s| s.to_string());
+            }
+            if enum_name.starts_with("_xell") {
+                return original_variant_name
+                    .strip_prefix("XELL_")
+                    .map(|s| s.to_string());
+            }
+            if enum_name.starts_with("_xefg_swapchain") {
+                return original_variant_name
+                    .strip_prefix("XEFG_SWAPCHAIN_")
+                    .map(|s| s.to_string());
+            }
+        }
+        None
+    }
 }
 
 fn main() {

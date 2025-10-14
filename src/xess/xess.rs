@@ -32,38 +32,71 @@ pub struct _xess_2d_t {
 pub type xess_2d_t = _xess_2d_t;
 #[doc = " @brief 2D coordinates."]
 pub type xess_coord_t = xess_2d_t;
-pub const XESS_QUALITY_SETTING_ULTRA_PERFORMANCE: _xess_quality_settings_t = 100;
-pub const XESS_QUALITY_SETTING_PERFORMANCE: _xess_quality_settings_t = 101;
-pub const XESS_QUALITY_SETTING_BALANCED: _xess_quality_settings_t = 102;
-pub const XESS_QUALITY_SETTING_QUALITY: _xess_quality_settings_t = 103;
-pub const XESS_QUALITY_SETTING_ULTRA_QUALITY: _xess_quality_settings_t = 104;
-pub const XESS_QUALITY_SETTING_ULTRA_QUALITY_PLUS: _xess_quality_settings_t = 105;
-pub const XESS_QUALITY_SETTING_AA: _xess_quality_settings_t = 106;
+#[repr(i32)]
 #[doc = " @brief XeSS quality settings."]
-pub type _xess_quality_settings_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xess_quality_settings_t {
+    QUALITY_SETTING_ULTRA_PERFORMANCE = 100,
+    QUALITY_SETTING_PERFORMANCE = 101,
+    QUALITY_SETTING_BALANCED = 102,
+    QUALITY_SETTING_QUALITY = 103,
+    QUALITY_SETTING_ULTRA_QUALITY = 104,
+    QUALITY_SETTING_ULTRA_QUALITY_PLUS = 105,
+    QUALITY_SETTING_AA = 106,
+}
 #[doc = " @brief XeSS quality settings."]
 pub use self::_xess_quality_settings_t as xess_quality_settings_t;
-pub const XESS_INIT_FLAG_NONE: _xess_init_flags_t = 0;
-#[doc = " Use motion vectors at target resolution."]
-pub const XESS_INIT_FLAG_HIGH_RES_MV: _xess_init_flags_t = 1;
-#[doc = " Use inverted (increased precision) depth encoding"]
-pub const XESS_INIT_FLAG_INVERTED_DEPTH: _xess_init_flags_t = 2;
-#[doc = " Use exposure texture to scale input color."]
-pub const XESS_INIT_FLAG_EXPOSURE_SCALE_TEXTURE: _xess_init_flags_t = 4;
-#[doc = " Use responsive pixel mask texture."]
-pub const XESS_INIT_FLAG_RESPONSIVE_PIXEL_MASK: _xess_init_flags_t = 8;
-#[doc = " Use velocity in NDC"]
-pub const XESS_INIT_FLAG_USE_NDC_VELOCITY: _xess_init_flags_t = 16;
-#[doc = " Use external descriptor heap"]
-pub const XESS_INIT_FLAG_EXTERNAL_DESCRIPTOR_HEAP: _xess_init_flags_t = 32;
-#[doc = " Disable tonemapping for input and output"]
-pub const XESS_INIT_FLAG_LDR_INPUT_COLOR: _xess_init_flags_t = 64;
-#[doc = " Remove jitter from input velocity"]
-pub const XESS_INIT_FLAG_JITTERED_MV: _xess_init_flags_t = 128;
-#[doc = " Enable automatic exposure calculation."]
-pub const XESS_INIT_FLAG_ENABLE_AUTOEXPOSURE: _xess_init_flags_t = 256;
+impl _xess_init_flags_t {
+    pub const INIT_FLAG_NONE: _xess_init_flags_t = _xess_init_flags_t(0);
+    #[doc = " Use motion vectors at target resolution."]
+    pub const INIT_FLAG_HIGH_RES_MV: _xess_init_flags_t = _xess_init_flags_t(1);
+    #[doc = " Use inverted (increased precision) depth encoding"]
+    pub const INIT_FLAG_INVERTED_DEPTH: _xess_init_flags_t = _xess_init_flags_t(2);
+    #[doc = " Use exposure texture to scale input color."]
+    pub const INIT_FLAG_EXPOSURE_SCALE_TEXTURE: _xess_init_flags_t = _xess_init_flags_t(4);
+    #[doc = " Use responsive pixel mask texture."]
+    pub const INIT_FLAG_RESPONSIVE_PIXEL_MASK: _xess_init_flags_t = _xess_init_flags_t(8);
+    #[doc = " Use velocity in NDC"]
+    pub const INIT_FLAG_USE_NDC_VELOCITY: _xess_init_flags_t = _xess_init_flags_t(16);
+    #[doc = " Use external descriptor heap"]
+    pub const INIT_FLAG_EXTERNAL_DESCRIPTOR_HEAP: _xess_init_flags_t = _xess_init_flags_t(32);
+    #[doc = " Disable tonemapping for input and output"]
+    pub const INIT_FLAG_LDR_INPUT_COLOR: _xess_init_flags_t = _xess_init_flags_t(64);
+    #[doc = " Remove jitter from input velocity"]
+    pub const INIT_FLAG_JITTERED_MV: _xess_init_flags_t = _xess_init_flags_t(128);
+    #[doc = " Enable automatic exposure calculation."]
+    pub const INIT_FLAG_ENABLE_AUTOEXPOSURE: _xess_init_flags_t = _xess_init_flags_t(256);
+}
+impl ::std::ops::BitOr<_xess_init_flags_t> for _xess_init_flags_t {
+    type Output = Self;
+    #[inline]
+    fn bitor(self, other: Self) -> Self {
+        _xess_init_flags_t(self.0 | other.0)
+    }
+}
+impl ::std::ops::BitOrAssign for _xess_init_flags_t {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: _xess_init_flags_t) {
+        self.0 |= rhs.0;
+    }
+}
+impl ::std::ops::BitAnd<_xess_init_flags_t> for _xess_init_flags_t {
+    type Output = Self;
+    #[inline]
+    fn bitand(self, other: Self) -> Self {
+        _xess_init_flags_t(self.0 & other.0)
+    }
+}
+impl ::std::ops::BitAndAssign for _xess_init_flags_t {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: _xess_init_flags_t) {
+        self.0 &= rhs.0;
+    }
+}
+#[repr(transparent)]
 #[doc = " @brief XeSS initialization flags."]
-pub type _xess_init_flags_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _xess_init_flags_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeSS initialization flags."]
 pub use self::_xess_init_flags_t as xess_init_flags_t;
 #[doc = " @brief Properties for internal XeSS resources."]
@@ -79,48 +112,55 @@ pub struct _xess_properties_t {
 }
 #[doc = " @brief Properties for internal XeSS resources."]
 pub type xess_properties_t = _xess_properties_t;
-#[doc = " Warning. Folder to store dump data doesn't exist. Write operation skipped."]
-pub const XESS_RESULT_WARNING_NONEXISTING_FOLDER: _xess_result_t = 1;
-#[doc = " An old or outdated driver."]
-pub const XESS_RESULT_WARNING_OLD_DRIVER: _xess_result_t = 2;
-#[doc = " XeSS operation was successful."]
-pub const XESS_RESULT_SUCCESS: _xess_result_t = 0;
-#[doc = " XeSS not supported on the GPU. An SM 6.4 capable GPU is required."]
-pub const XESS_RESULT_ERROR_UNSUPPORTED_DEVICE: _xess_result_t = -1;
-#[doc = " An unsupported driver."]
-pub const XESS_RESULT_ERROR_UNSUPPORTED_DRIVER: _xess_result_t = -2;
-#[doc = " Execute called without initialization."]
-pub const XESS_RESULT_ERROR_UNINITIALIZED: _xess_result_t = -3;
-#[doc = " Invalid argument such as descriptor handles."]
-pub const XESS_RESULT_ERROR_INVALID_ARGUMENT: _xess_result_t = -4;
-#[doc = " Not enough available GPU memory."]
-pub const XESS_RESULT_ERROR_DEVICE_OUT_OF_MEMORY: _xess_result_t = -5;
-#[doc = " Device function such as resource or descriptor creation."]
-pub const XESS_RESULT_ERROR_DEVICE: _xess_result_t = -6;
-#[doc = " The function is not implemented"]
-pub const XESS_RESULT_ERROR_NOT_IMPLEMENTED: _xess_result_t = -7;
-#[doc = " Invalid context."]
-pub const XESS_RESULT_ERROR_INVALID_CONTEXT: _xess_result_t = -8;
-#[doc = " Operation not finished yet."]
-pub const XESS_RESULT_ERROR_OPERATION_IN_PROGRESS: _xess_result_t = -9;
-#[doc = " Operation not supported in current configuration."]
-pub const XESS_RESULT_ERROR_UNSUPPORTED: _xess_result_t = -10;
-#[doc = " The library cannot be loaded."]
-pub const XESS_RESULT_ERROR_CANT_LOAD_LIBRARY: _xess_result_t = -11;
-#[doc = " Call to function done in invalid order."]
-pub const XESS_RESULT_ERROR_WRONG_CALL_ORDER: _xess_result_t = -12;
-#[doc = " Unknown internal failure"]
-pub const XESS_RESULT_ERROR_UNKNOWN: _xess_result_t = -1000;
+impl _xess_result_t {
+    #[doc = " Warning. Folder to store dump data doesn't exist. Write operation skipped."]
+    pub const RESULT_WARNING_NONEXISTING_FOLDER: _xess_result_t = _xess_result_t(1);
+    #[doc = " An old or outdated driver."]
+    pub const RESULT_WARNING_OLD_DRIVER: _xess_result_t = _xess_result_t(2);
+    #[doc = " XeSS operation was successful."]
+    pub const RESULT_SUCCESS: _xess_result_t = _xess_result_t(0);
+    #[doc = " XeSS not supported on the GPU. An SM 6.4 capable GPU is required."]
+    pub const RESULT_ERROR_UNSUPPORTED_DEVICE: _xess_result_t = _xess_result_t(-1);
+    #[doc = " An unsupported driver."]
+    pub const RESULT_ERROR_UNSUPPORTED_DRIVER: _xess_result_t = _xess_result_t(-2);
+    #[doc = " Execute called without initialization."]
+    pub const RESULT_ERROR_UNINITIALIZED: _xess_result_t = _xess_result_t(-3);
+    #[doc = " Invalid argument such as descriptor handles."]
+    pub const RESULT_ERROR_INVALID_ARGUMENT: _xess_result_t = _xess_result_t(-4);
+    #[doc = " Not enough available GPU memory."]
+    pub const RESULT_ERROR_DEVICE_OUT_OF_MEMORY: _xess_result_t = _xess_result_t(-5);
+    #[doc = " Device function such as resource or descriptor creation."]
+    pub const RESULT_ERROR_DEVICE: _xess_result_t = _xess_result_t(-6);
+    #[doc = " The function is not implemented"]
+    pub const RESULT_ERROR_NOT_IMPLEMENTED: _xess_result_t = _xess_result_t(-7);
+    #[doc = " Invalid context."]
+    pub const RESULT_ERROR_INVALID_CONTEXT: _xess_result_t = _xess_result_t(-8);
+    #[doc = " Operation not finished yet."]
+    pub const RESULT_ERROR_OPERATION_IN_PROGRESS: _xess_result_t = _xess_result_t(-9);
+    #[doc = " Operation not supported in current configuration."]
+    pub const RESULT_ERROR_UNSUPPORTED: _xess_result_t = _xess_result_t(-10);
+    #[doc = " The library cannot be loaded."]
+    pub const RESULT_ERROR_CANT_LOAD_LIBRARY: _xess_result_t = _xess_result_t(-11);
+    #[doc = " Call to function done in invalid order."]
+    pub const RESULT_ERROR_WRONG_CALL_ORDER: _xess_result_t = _xess_result_t(-12);
+    #[doc = " Unknown internal failure"]
+    pub const RESULT_ERROR_UNKNOWN: _xess_result_t = _xess_result_t(-1000);
+}
+#[repr(transparent)]
 #[doc = " @brief  XeSS return codes."]
-pub type _xess_result_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _xess_result_t(pub ::std::os::raw::c_int);
 #[doc = " @brief  XeSS return codes."]
 pub use self::_xess_result_t as xess_result_t;
-pub const XESS_LOGGING_LEVEL_DEBUG: _xess_logging_level_t = 0;
-pub const XESS_LOGGING_LEVEL_INFO: _xess_logging_level_t = 1;
-pub const XESS_LOGGING_LEVEL_WARNING: _xess_logging_level_t = 2;
-pub const XESS_LOGGING_LEVEL_ERROR: _xess_logging_level_t = 3;
+#[repr(i32)]
 #[doc = " @brief XeSS logging level"]
-pub type _xess_logging_level_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xess_logging_level_t {
+    LOGGING_LEVEL_DEBUG = 0,
+    LOGGING_LEVEL_INFO = 1,
+    LOGGING_LEVEL_WARNING = 2,
+    LOGGING_LEVEL_ERROR = 3,
+}
 #[doc = " @brief XeSS logging level"]
 pub use self::_xess_logging_level_t as xess_logging_level_t;
 #[doc = " A logging callback provided by the application. This callback can be called from other threads.\n Message pointer are only valid inside function and may be invalid right after return call.\n Message is a null-terminated utf-8 string"]
@@ -130,29 +170,63 @@ pub type xess_app_log_callback_t = ::std::option::Option<
         loggingLevel: xess_logging_level_t,
     ),
 >;
-pub const XESS_NETWORK_MODEL_KPSS: _xess_network_model_t = 0;
-pub const XESS_NETWORK_MODEL_SPLAT: _xess_network_model_t = 1;
-pub const XESS_NETWORK_MODEL_3: _xess_network_model_t = 2;
-pub const XESS_NETWORK_MODEL_4: _xess_network_model_t = 3;
-pub const XESS_NETWORK_MODEL_5: _xess_network_model_t = 4;
-pub const XESS_NETWORK_MODEL_6: _xess_network_model_t = 5;
-pub const XESS_NETWORK_MODEL_UNKNOWN: _xess_network_model_t = 2147483647;
+#[repr(i32)]
 #[doc = " @brief XeSS network type."]
-pub type _xess_network_model_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xess_network_model_t {
+    NETWORK_MODEL_KPSS = 0,
+    NETWORK_MODEL_SPLAT = 1,
+    NETWORK_MODEL_3 = 2,
+    NETWORK_MODEL_4 = 3,
+    NETWORK_MODEL_5 = 4,
+    NETWORK_MODEL_6 = 5,
+    NETWORK_MODEL_UNKNOWN = 2147483647,
+}
 #[doc = " @brief XeSS network type."]
 pub use self::_xess_network_model_t as xess_network_model_t;
-pub const XESS_DUMP_INPUT_COLOR: _xess_dump_element_bits_t = 1;
-pub const XESS_DUMP_INPUT_VELOCITY: _xess_dump_element_bits_t = 2;
-pub const XESS_DUMP_INPUT_DEPTH: _xess_dump_element_bits_t = 4;
-pub const XESS_DUMP_INPUT_EXPOSURE_SCALE: _xess_dump_element_bits_t = 8;
-pub const XESS_DUMP_INPUT_RESPONSIVE_PIXEL_MASK: _xess_dump_element_bits_t = 16;
-pub const XESS_DUMP_OUTPUT: _xess_dump_element_bits_t = 32;
-pub const XESS_DUMP_HISTORY: _xess_dump_element_bits_t = 64;
-#[doc = "< All parameters passed to xessExecute"]
-pub const XESS_DUMP_EXECUTION_PARAMETERS: _xess_dump_element_bits_t = 128;
-pub const XESS_DUMP_ALL_INPUTS: _xess_dump_element_bits_t = 159;
-pub const XESS_DUMP_ALL: _xess_dump_element_bits_t = 2147483647;
-pub type _xess_dump_element_bits_t = ::std::os::raw::c_int;
+impl _xess_dump_element_bits_t {
+    pub const DUMP_INPUT_COLOR: _xess_dump_element_bits_t = _xess_dump_element_bits_t(1);
+    pub const DUMP_INPUT_VELOCITY: _xess_dump_element_bits_t = _xess_dump_element_bits_t(2);
+    pub const DUMP_INPUT_DEPTH: _xess_dump_element_bits_t = _xess_dump_element_bits_t(4);
+    pub const DUMP_INPUT_EXPOSURE_SCALE: _xess_dump_element_bits_t = _xess_dump_element_bits_t(8);
+    pub const DUMP_INPUT_RESPONSIVE_PIXEL_MASK: _xess_dump_element_bits_t =
+        _xess_dump_element_bits_t(16);
+    pub const DUMP_OUTPUT: _xess_dump_element_bits_t = _xess_dump_element_bits_t(32);
+    pub const DUMP_HISTORY: _xess_dump_element_bits_t = _xess_dump_element_bits_t(64);
+    #[doc = "< All parameters passed to xessExecute"]
+    pub const DUMP_EXECUTION_PARAMETERS: _xess_dump_element_bits_t = _xess_dump_element_bits_t(128);
+    pub const DUMP_ALL_INPUTS: _xess_dump_element_bits_t = _xess_dump_element_bits_t(159);
+    pub const DUMP_ALL: _xess_dump_element_bits_t = _xess_dump_element_bits_t(2147483647);
+}
+impl ::std::ops::BitOr<_xess_dump_element_bits_t> for _xess_dump_element_bits_t {
+    type Output = Self;
+    #[inline]
+    fn bitor(self, other: Self) -> Self {
+        _xess_dump_element_bits_t(self.0 | other.0)
+    }
+}
+impl ::std::ops::BitOrAssign for _xess_dump_element_bits_t {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: _xess_dump_element_bits_t) {
+        self.0 |= rhs.0;
+    }
+}
+impl ::std::ops::BitAnd<_xess_dump_element_bits_t> for _xess_dump_element_bits_t {
+    type Output = Self;
+    #[inline]
+    fn bitand(self, other: Self) -> Self {
+        _xess_dump_element_bits_t(self.0 & other.0)
+    }
+}
+impl ::std::ops::BitAndAssign for _xess_dump_element_bits_t {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: _xess_dump_element_bits_t) {
+        self.0 &= rhs.0;
+    }
+}
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _xess_dump_element_bits_t(pub ::std::os::raw::c_int);
 pub use self::_xess_dump_element_bits_t as xess_dump_element_bits_t;
 pub type xess_dump_elements_mask_t = u32;
 #[repr(C)]

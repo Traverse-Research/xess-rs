@@ -6,42 +6,83 @@ pub struct _xefg_swapchain_handle_t {
     _unused: [u8; 0],
 }
 pub type xefg_swapchain_handle_t = *mut _xefg_swapchain_handle_t;
-#[doc = " Resource is valid until the next present."]
-pub const XEFG_SWAPCHAIN_RV_UNTIL_NEXT_PRESENT: _xefg_swapchain_resource_validity_t = 0;
-#[doc = " Resource is only valid now."]
-pub const XEFG_SWAPCHAIN_RV_ONLY_NOW: _xefg_swapchain_resource_validity_t = 1;
-#[doc = " Resource is only valid now."]
-pub const XEFG_SWAPCHAIN_RV_COUNT: _xefg_swapchain_resource_validity_t = 2;
+#[repr(i32)]
 #[doc = " @brief Informs the library about the lifetime of the\n  resource being provided. The library will take appropriate action based\n  on this value to either make a copy of the resource or store a reference\n  to it."]
-pub type _xefg_swapchain_resource_validity_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xefg_swapchain_resource_validity_t {
+    #[doc = " Resource is valid until the next present."]
+    RV_UNTIL_NEXT_PRESENT = 0,
+    #[doc = " Resource is only valid now."]
+    RV_ONLY_NOW = 1,
+    #[doc = " Resource is only valid now."]
+    RV_COUNT = 2,
+}
 #[doc = " @brief Informs the library about the lifetime of the\n  resource being provided. The library will take appropriate action based\n  on this value to either make a copy of the resource or store a reference\n  to it."]
 pub use self::_xefg_swapchain_resource_validity_t as xefg_swapchain_resource_validity_t;
-#[doc = " No flags are enabled."]
-pub const XEFG_SWAPCHAIN_INIT_FLAG_NONE: _xefg_swapchain_init_flags_t = 0;
-#[doc = " Use inverted (increased precision) depth encoding."]
-pub const XEFG_SWAPCHAIN_INIT_FLAG_INVERTED_DEPTH: _xefg_swapchain_init_flags_t = 1;
-#[doc = " Use external descriptor heap."]
-pub const XEFG_SWAPCHAIN_INIT_FLAG_EXTERNAL_DESCRIPTOR_HEAP: _xefg_swapchain_init_flags_t = 2;
-#[doc = " Deprecated. Setting this flag has no effect."]
-pub const XEFG_SWAPCHAIN_INIT_FLAG_HIGH_RES_MV: _xefg_swapchain_init_flags_t = 4;
-#[doc = " Use velocity in normalized device coordinates (NDC)."]
-pub const XEFG_SWAPCHAIN_INIT_FLAG_USE_NDC_VELOCITY: _xefg_swapchain_init_flags_t = 8;
-#[doc = " Remove jitter from input velocity."]
-pub const XEFG_SWAPCHAIN_INIT_FLAG_JITTERED_MV: _xefg_swapchain_init_flags_t = 16;
-#[doc = " UI texture rgb values are not premultiplied by its alpha value"]
-pub const XEFG_SWAPCHAIN_INIT_FLAG_UITEXTURE_NOT_PREMUL_ALPHA: _xefg_swapchain_init_flags_t = 32;
+impl _xefg_swapchain_init_flags_t {
+    #[doc = " No flags are enabled."]
+    pub const INIT_FLAG_NONE: _xefg_swapchain_init_flags_t = _xefg_swapchain_init_flags_t(0);
+    #[doc = " Use inverted (increased precision) depth encoding."]
+    pub const INIT_FLAG_INVERTED_DEPTH: _xefg_swapchain_init_flags_t =
+        _xefg_swapchain_init_flags_t(1);
+    #[doc = " Use external descriptor heap."]
+    pub const INIT_FLAG_EXTERNAL_DESCRIPTOR_HEAP: _xefg_swapchain_init_flags_t =
+        _xefg_swapchain_init_flags_t(2);
+    #[doc = " Deprecated. Setting this flag has no effect."]
+    pub const INIT_FLAG_HIGH_RES_MV: _xefg_swapchain_init_flags_t = _xefg_swapchain_init_flags_t(4);
+    #[doc = " Use velocity in normalized device coordinates (NDC)."]
+    pub const INIT_FLAG_USE_NDC_VELOCITY: _xefg_swapchain_init_flags_t =
+        _xefg_swapchain_init_flags_t(8);
+    #[doc = " Remove jitter from input velocity."]
+    pub const INIT_FLAG_JITTERED_MV: _xefg_swapchain_init_flags_t =
+        _xefg_swapchain_init_flags_t(16);
+    #[doc = " UI texture rgb values are not premultiplied by its alpha value"]
+    pub const INIT_FLAG_UITEXTURE_NOT_PREMUL_ALPHA: _xefg_swapchain_init_flags_t =
+        _xefg_swapchain_init_flags_t(32);
+}
+impl ::std::ops::BitOr<_xefg_swapchain_init_flags_t> for _xefg_swapchain_init_flags_t {
+    type Output = Self;
+    #[inline]
+    fn bitor(self, other: Self) -> Self {
+        _xefg_swapchain_init_flags_t(self.0 | other.0)
+    }
+}
+impl ::std::ops::BitOrAssign for _xefg_swapchain_init_flags_t {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: _xefg_swapchain_init_flags_t) {
+        self.0 |= rhs.0;
+    }
+}
+impl ::std::ops::BitAnd<_xefg_swapchain_init_flags_t> for _xefg_swapchain_init_flags_t {
+    type Output = Self;
+    #[inline]
+    fn bitand(self, other: Self) -> Self {
+        _xefg_swapchain_init_flags_t(self.0 & other.0)
+    }
+}
+impl ::std::ops::BitAndAssign for _xefg_swapchain_init_flags_t {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: _xefg_swapchain_init_flags_t) {
+        self.0 &= rhs.0;
+    }
+}
+#[repr(transparent)]
 #[doc = " @brief XeSS-FG Swap Chain initialization flags."]
-pub type _xefg_swapchain_init_flags_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _xefg_swapchain_init_flags_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeSS-FG Swap Chain initialization flags."]
 pub use self::_xefg_swapchain_init_flags_t as xefg_swapchain_init_flags_t;
-pub const XEFG_SWAPCHAIN_RES_HUDLESS_COLOR: _xefg_swapchain_resource_type_t = 0;
-pub const XEFG_SWAPCHAIN_RES_DEPTH: _xefg_swapchain_resource_type_t = 1;
-pub const XEFG_SWAPCHAIN_RES_MOTION_VECTOR: _xefg_swapchain_resource_type_t = 2;
-pub const XEFG_SWAPCHAIN_RES_UI: _xefg_swapchain_resource_type_t = 3;
-pub const XEFG_SWAPCHAIN_RES_BACKBUFFER: _xefg_swapchain_resource_type_t = 4;
-pub const XEFG_SWAPCHAIN_RES_COUNT: _xefg_swapchain_resource_type_t = 5;
+#[repr(i32)]
 #[doc = " @brief XeSS-FG Swap Chain resources type."]
-pub type _xefg_swapchain_resource_type_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xefg_swapchain_resource_type_t {
+    RES_HUDLESS_COLOR = 0,
+    RES_DEPTH = 1,
+    RES_MOTION_VECTOR = 2,
+    RES_UI = 3,
+    RES_BACKBUFFER = 4,
+    RES_COUNT = 5,
+}
 #[doc = " @brief XeSS-FG Swap Chain resources type."]
 pub use self::_xefg_swapchain_resource_type_t as xefg_swapchain_resource_type_t;
 #[doc = " @brief XeSS-FG Swap Chain version.\n\n XeSS-FG Swap Chain uses major.minor.patch version format and Numeric 90+ scheme for development stage builds."]
@@ -108,89 +149,117 @@ pub struct _xefg_swapchain_properties_t {
 }
 #[doc = " @brief Properties for internal XeSS-FG Swap Chain resources."]
 pub type xefg_swapchain_properties_t = _xefg_swapchain_properties_t;
-#[doc = " An old or outdated driver."]
-pub const XEFG_SWAPCHAIN_RESULT_WARNING_OLD_DRIVER: _xefg_swapchain_result_t = 2;
-#[doc = " Warning. Frame ID should be over 0."]
-pub const XEFG_SWAPCHAIN_RESULT_WARNING_TOO_FEW_FRAMES: _xefg_swapchain_result_t = 3;
-#[doc = " Warning. Data for interpolation came in wrong order."]
-pub const XEFG_SWAPCHAIN_RESULT_WARNING_FRAMES_ID_MISMATCH: _xefg_swapchain_result_t = 4;
-#[doc = " Warning. There is no present status for last present."]
-pub const XEFG_SWAPCHAIN_RESULT_WARNING_MISSING_PRESENT_STATUS: _xefg_swapchain_result_t = 5;
-#[doc = " Warning. Resource sizes for the interpolation doesn't match between previouse and next frames.\nInterpolation skipped."]
-pub const XEFG_SWAPCHAIN_RESULT_WARNING_RESOURCE_SIZES_MISMATCH: _xefg_swapchain_result_t = 6;
-#[doc = " Operation was successful."]
-pub const XEFG_SWAPCHAIN_RESULT_SUCCESS: _xefg_swapchain_result_t = 0;
-#[doc = " Operation not supported on the GPU."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNSUPPORTED_DEVICE: _xefg_swapchain_result_t = -1;
-#[doc = " An unsupported driver."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNSUPPORTED_DRIVER: _xefg_swapchain_result_t = -2;
-#[doc = " Execute called without initialization."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNINITIALIZED: _xefg_swapchain_result_t = -3;
-#[doc = " Invalid argument were provided to the API call."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_INVALID_ARGUMENT: _xefg_swapchain_result_t = -4;
-#[doc = " Not enough available GPU memory."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_DEVICE_OUT_OF_MEMORY: _xefg_swapchain_result_t = -5;
-#[doc = " Device function such as resource or descriptor creation."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_DEVICE: _xefg_swapchain_result_t = -6;
-#[doc = " The function is not implemented."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_NOT_IMPLEMENTED: _xefg_swapchain_result_t = -7;
-#[doc = " Invalid context."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_INVALID_CONTEXT: _xefg_swapchain_result_t = -8;
-#[doc = " Operation not finished yet."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_OPERATION_IN_PROGRESS: _xefg_swapchain_result_t = -9;
-#[doc = " Operation not supported in current configuration."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNSUPPORTED: _xefg_swapchain_result_t = -10;
-#[doc = " The library cannot be loaded."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_CANT_LOAD_LIBRARY: _xefg_swapchain_result_t = -11;
-#[doc = " Input resources does not meet requirements based on UI Mode."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_MISMATCH_INPUT_RESOURCES: _xefg_swapchain_result_t = -12;
-#[doc = " Output resources does not meet requirements."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_INCORRECT_OUTPUT_RESOURCES: _xefg_swapchain_result_t = -13;
-#[doc = " Input is insufficient to evaluate interpolation."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_INCORRECT_INPUT_RESOURCES: _xefg_swapchain_result_t = -14;
-#[doc = " Requirements regarding XeLL Latency Reduction are not met."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_LATENCY_REDUCTION_UNSUPPORTED: _xefg_swapchain_result_t = -15;
-#[doc = " XeLL library does not contains required functions."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_LATENCY_REDUCTION_FUNCTION_MISSING: _xefg_swapchain_result_t =
-    -16;
-#[doc = " One of the Windows functions has failed. For details, see the logs or debug layer."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_HRESULT_FAILURE: _xefg_swapchain_result_t = -17;
-#[doc = " DXGI call failed with invalid call error."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_DXGI_INVALID_CALL: _xefg_swapchain_result_t = -18;
-#[doc = " XeFG SwapChain pointer is still in use during destroy."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_POINTER_STILL_IN_USE: _xefg_swapchain_result_t = -19;
-#[doc = " Invalid or missing descriptor heap."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_INVALID_DESCRIPTOR_HEAP: _xefg_swapchain_result_t = -20;
-#[doc = " Call to function done in invalid order."]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_WRONG_CALL_ORDER: _xefg_swapchain_result_t = -21;
-#[doc = " Unknown internal failure"]
-pub const XEFG_SWAPCHAIN_RESULT_ERROR_UNKNOWN: _xefg_swapchain_result_t = -1000;
+impl _xefg_swapchain_result_t {
+    #[doc = " An old or outdated driver."]
+    pub const RESULT_WARNING_OLD_DRIVER: _xefg_swapchain_result_t = _xefg_swapchain_result_t(2);
+    #[doc = " Warning. Frame ID should be over 0."]
+    pub const RESULT_WARNING_TOO_FEW_FRAMES: _xefg_swapchain_result_t = _xefg_swapchain_result_t(3);
+    #[doc = " Warning. Data for interpolation came in wrong order."]
+    pub const RESULT_WARNING_FRAMES_ID_MISMATCH: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(4);
+    #[doc = " Warning. There is no present status for last present."]
+    pub const RESULT_WARNING_MISSING_PRESENT_STATUS: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(5);
+    #[doc = " Warning. Resource sizes for the interpolation doesn't match between previouse and next frames.\nInterpolation skipped."]
+    pub const RESULT_WARNING_RESOURCE_SIZES_MISMATCH: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(6);
+    #[doc = " Operation was successful."]
+    pub const RESULT_SUCCESS: _xefg_swapchain_result_t = _xefg_swapchain_result_t(0);
+    #[doc = " Operation not supported on the GPU."]
+    pub const RESULT_ERROR_UNSUPPORTED_DEVICE: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-1);
+    #[doc = " An unsupported driver."]
+    pub const RESULT_ERROR_UNSUPPORTED_DRIVER: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-2);
+    #[doc = " Execute called without initialization."]
+    pub const RESULT_ERROR_UNINITIALIZED: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-3);
+    #[doc = " Invalid argument were provided to the API call."]
+    pub const RESULT_ERROR_INVALID_ARGUMENT: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-4);
+    #[doc = " Not enough available GPU memory."]
+    pub const RESULT_ERROR_DEVICE_OUT_OF_MEMORY: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-5);
+    #[doc = " Device function such as resource or descriptor creation."]
+    pub const RESULT_ERROR_DEVICE: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-6);
+    #[doc = " The function is not implemented."]
+    pub const RESULT_ERROR_NOT_IMPLEMENTED: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-7);
+    #[doc = " Invalid context."]
+    pub const RESULT_ERROR_INVALID_CONTEXT: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-8);
+    #[doc = " Operation not finished yet."]
+    pub const RESULT_ERROR_OPERATION_IN_PROGRESS: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-9);
+    #[doc = " Operation not supported in current configuration."]
+    pub const RESULT_ERROR_UNSUPPORTED: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-10);
+    #[doc = " The library cannot be loaded."]
+    pub const RESULT_ERROR_CANT_LOAD_LIBRARY: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-11);
+    #[doc = " Input resources does not meet requirements based on UI Mode."]
+    pub const RESULT_ERROR_MISMATCH_INPUT_RESOURCES: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-12);
+    #[doc = " Output resources does not meet requirements."]
+    pub const RESULT_ERROR_INCORRECT_OUTPUT_RESOURCES: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-13);
+    #[doc = " Input is insufficient to evaluate interpolation."]
+    pub const RESULT_ERROR_INCORRECT_INPUT_RESOURCES: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-14);
+    #[doc = " Requirements regarding XeLL Latency Reduction are not met."]
+    pub const RESULT_ERROR_LATENCY_REDUCTION_UNSUPPORTED: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-15);
+    #[doc = " XeLL library does not contains required functions."]
+    pub const RESULT_ERROR_LATENCY_REDUCTION_FUNCTION_MISSING: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-16);
+    #[doc = " One of the Windows functions has failed. For details, see the logs or debug layer."]
+    pub const RESULT_ERROR_HRESULT_FAILURE: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-17);
+    #[doc = " DXGI call failed with invalid call error."]
+    pub const RESULT_ERROR_DXGI_INVALID_CALL: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-18);
+    #[doc = " XeFG SwapChain pointer is still in use during destroy."]
+    pub const RESULT_ERROR_POINTER_STILL_IN_USE: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-19);
+    #[doc = " Invalid or missing descriptor heap."]
+    pub const RESULT_ERROR_INVALID_DESCRIPTOR_HEAP: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-20);
+    #[doc = " Call to function done in invalid order."]
+    pub const RESULT_ERROR_WRONG_CALL_ORDER: _xefg_swapchain_result_t =
+        _xefg_swapchain_result_t(-21);
+    #[doc = " Unknown internal failure"]
+    pub const RESULT_ERROR_UNKNOWN: _xefg_swapchain_result_t = _xefg_swapchain_result_t(-1000);
+}
+#[repr(transparent)]
 #[doc = " @brief XeSS-FG Swap Chain return codes."]
-pub type _xefg_swapchain_result_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _xefg_swapchain_result_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeSS-FG Swap Chain return codes."]
 pub use self::_xefg_swapchain_result_t as xefg_swapchain_result_t;
-pub const XEFG_SWAPCHAIN_LOGGING_LEVEL_DEBUG: _xefg_swapchain_logging_level_t = 0;
-pub const XEFG_SWAPCHAIN_LOGGING_LEVEL_INFO: _xefg_swapchain_logging_level_t = 1;
-pub const XEFG_SWAPCHAIN_LOGGING_LEVEL_WARNING: _xefg_swapchain_logging_level_t = 2;
-pub const XEFG_SWAPCHAIN_LOGGING_LEVEL_ERROR: _xefg_swapchain_logging_level_t = 3;
+#[repr(i32)]
 #[doc = " @brief XeSS-FG Swap Chain logging level."]
-pub type _xefg_swapchain_logging_level_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xefg_swapchain_logging_level_t {
+    LOGGING_LEVEL_DEBUG = 0,
+    LOGGING_LEVEL_INFO = 1,
+    LOGGING_LEVEL_WARNING = 2,
+    LOGGING_LEVEL_ERROR = 3,
+}
 #[doc = " @brief XeSS-FG Swap Chain logging level."]
 pub use self::_xefg_swapchain_logging_level_t as xefg_swapchain_logging_level_t;
-#[doc = " Determine UI handling mode automatically, based on provided inputs: hudless color and UI texture."]
-pub const XEFG_SWAPCHAIN_UI_MODE_AUTO: _xefg_swapchain_ui_mode_t = 0;
-#[doc = " Interpolate on backbuffer, without any UI handling."]
-pub const XEFG_SWAPCHAIN_UI_MODE_NONE: _xefg_swapchain_ui_mode_t = 1;
-#[doc = " Interpolate on backbuffer, refine UI using UI texture + alpha."]
-pub const XEFG_SWAPCHAIN_UI_MODE_BACKBUFFER_UITEXTURE: _xefg_swapchain_ui_mode_t = 2;
-#[doc = " Interpolate on hudless color, blend UI from UI texture + alpha."]
-pub const XEFG_SWAPCHAIN_UI_MODE_HUDLESS_UITEXTURE: _xefg_swapchain_ui_mode_t = 3;
-#[doc = " Interpolate on hudless color, extract UI from backbuffer."]
-pub const XEFG_SWAPCHAIN_UI_MODE_BACKBUFFER_HUDLESS: _xefg_swapchain_ui_mode_t = 4;
-#[doc = " Interpolate on hudless color, blend UI from UI texture + alpha and refine it by extracting from backbuffer."]
-pub const XEFG_SWAPCHAIN_UI_MODE_BACKBUFFER_HUDLESS_UITEXTURE: _xefg_swapchain_ui_mode_t = 5;
+#[repr(i32)]
 #[doc = " @brief XeSS-FG Swap Chain UI handling mode."]
-pub type _xefg_swapchain_ui_mode_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xefg_swapchain_ui_mode_t {
+    #[doc = " Determine UI handling mode automatically, based on provided inputs: hudless color and UI texture."]
+    UI_MODE_AUTO = 0,
+    #[doc = " Interpolate on backbuffer, without any UI handling."]
+    UI_MODE_NONE = 1,
+    #[doc = " Interpolate on backbuffer, refine UI using UI texture + alpha."]
+    UI_MODE_BACKBUFFER_UITEXTURE = 2,
+    #[doc = " Interpolate on hudless color, blend UI from UI texture + alpha."]
+    UI_MODE_HUDLESS_UITEXTURE = 3,
+    #[doc = " Interpolate on hudless color, extract UI from backbuffer."]
+    UI_MODE_BACKBUFFER_HUDLESS = 4,
+    #[doc = " Interpolate on hudless color, blend UI from UI texture + alpha and refine it by extracting from backbuffer."]
+    UI_MODE_BACKBUFFER_HUDLESS_UITEXTURE = 5,
+}
 #[doc = " @brief XeSS-FG Swap Chain UI handling mode."]
 pub use self::_xefg_swapchain_ui_mode_t as xefg_swapchain_ui_mode_t;
 #[doc = " @brief Contains status data for the present."]
@@ -223,17 +292,19 @@ pub type xefg_swapchain_app_log_callback_t = ::std::option::Option<
         userData: *mut ::std::os::raw::c_void,
     ),
 >;
-#[doc = " Present only interpolated frames. If interpolation fails, current back buffer will be presented."]
-pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_SHOW_ONLY_INTERPOLATION: _xefg_swapchain_debug_feature_t = 0;
-#[doc = " Adds a quads in the corners of interpolated frame."]
-pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_TAG_INTERPOLATED_FRAMES: _xefg_swapchain_debug_feature_t = 1;
-#[doc = " Present black image instead of skipping failed interpolation."]
-pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_PRESENT_FAILED_INTERPOLATION:
-    _xefg_swapchain_debug_feature_t = 2;
-#[doc = " Present black image instead of skipping failed interpolation."]
-pub const XEFG_SWAPCHAIN_DEBUG_FEATURE_RES_COUNT: _xefg_swapchain_debug_feature_t = 3;
+#[repr(i32)]
 #[doc = " @brief XeSS-FG Swap Chain debug features list."]
-pub type _xefg_swapchain_debug_feature_t = ::std::os::raw::c_int;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _xefg_swapchain_debug_feature_t {
+    #[doc = " Present only interpolated frames. If interpolation fails, current back buffer will be presented."]
+    DEBUG_FEATURE_SHOW_ONLY_INTERPOLATION = 0,
+    #[doc = " Adds a quads in the corners of interpolated frame."]
+    DEBUG_FEATURE_TAG_INTERPOLATED_FRAMES = 1,
+    #[doc = " Present black image instead of skipping failed interpolation."]
+    DEBUG_FEATURE_PRESENT_FAILED_INTERPOLATION = 2,
+    #[doc = " Present black image instead of skipping failed interpolation."]
+    DEBUG_FEATURE_RES_COUNT = 3,
+}
 #[doc = " @brief XeSS-FG Swap Chain debug features list."]
 pub use self::_xefg_swapchain_debug_feature_t as xefg_swapchain_debug_feature_t;
 pub struct XessLoaded {
