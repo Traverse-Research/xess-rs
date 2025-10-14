@@ -44,6 +44,7 @@ fn generate_bindings() {
             .dynamic_link_require_all(true)
             .dynamic_library_name("Functions");
         if let Some(vulkan_sdk_include_dir) = vulkan_sdk_include_directory() {
+            assert!(vulkan_sdk_include_dir.is_dir());
             bindings = bindings.clang_arg(format!("-I{}", vulkan_sdk_include_dir.display()))
         }
         bindings
@@ -126,21 +127,41 @@ impl bindgen::callbacks::ParseCallbacks for RenameCallback {
         _variant_value: bindgen::callbacks::EnumVariantValue,
     ) -> Option<String> {
         if let Some(enum_name) = enum_name {
-            if enum_name.starts_with("_xess") {
-                return original_variant_name
-                    .strip_prefix("XESS_")
-                    .map(|s| s.to_string());
+            let enum_name = match enum_name {
+                // Edge-cases that don't follow the pattern below
+                "_xell_latency_marker_type_t" => "XELL_",
+                "_xess_quality_settings_t" => "XESS_QUALITY_SETTING_",
+                "_xess_init_flags_t" => "XESS_INIT_FLAG_",
+                "_xess_dump_element_bits_t" => "XESS_DUMP_",
+                "_xefg_swapchain_resource_validity_t" => "XEFG_SWAPCHAIN_RV_",
+                "_xefg_swapchain_init_flags_t" => "XEFG_SWAPCHAIN_INIT_FLAG_",
+                "_xefg_swapchain_resource_type_t" => "XEFG_SWAPCHAIN_RES_",
+
+                enum_name
+                    if enum_name.starts_with("_xess")
+                        || enum_name.starts_with("_xell")
+                        || enum_name.starts_with("_xefg") =>
+                {
+                    let enum_name = enum_name
+                        .strip_suffix("t")
+                        .expect(enum_name)
+                        .strip_prefix("_")
+                        .expect(enum_name);
+                    assert!(enum_name.ends_with("_"));
+                    enum_name
+                }
+                _ => return None,
+            };
+
+            let new_name = original_variant_name
+                .strip_prefix(&enum_name.to_uppercase())
+                .expect(enum_name);
+
+            if new_name.chars().all(|c| c.is_ascii_digit()) {
+                return Some(format!("_{new_name}"));
             }
-            if enum_name.starts_with("_xell") {
-                return original_variant_name
-                    .strip_prefix("XELL_")
-                    .map(|s| s.to_string());
-            }
-            if enum_name.starts_with("_xefg_swapchain") {
-                return original_variant_name
-                    .strip_prefix("XEFG_SWAPCHAIN_")
-                    .map(|s| s.to_string());
-            }
+
+            return Some(new_name.to_owned());
         }
         None
     }
