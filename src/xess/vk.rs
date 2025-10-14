@@ -151,7 +151,7 @@ impl Default for _xess_vk_resources_to_dump_t {
     }
 }
 pub type xess_vk_resources_to_dump_t = _xess_vk_resources_to_dump_t;
-pub struct XessLoaded {
+pub struct Functions {
     __library: ::libloading::Library,
     pub xessVKGetRequiredInstanceExtensions: unsafe extern "C" fn(
         instanceExtensionsCount: *mut u32,
@@ -199,7 +199,7 @@ pub struct XessLoaded {
         pResourcesToDump: *mut *mut xess_vk_resources_to_dump_t,
     ) -> xess_result_t,
 }
-impl XessLoaded {
+impl Functions {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
     where
         P: AsRef<::std::ffi::OsStr>,
@@ -229,7 +229,7 @@ impl XessLoaded {
         let xessVKGetResourcesToDump = __library
             .get(b"xessVKGetResourcesToDump\0")
             .map(|sym| *sym)?;
-        Ok(XessLoaded {
+        Ok(Functions {
             __library,
             xessVKGetRequiredInstanceExtensions,
             xessVKGetRequiredDeviceExtensions,

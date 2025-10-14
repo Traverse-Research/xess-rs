@@ -64,7 +64,7 @@ impl Default for _xefg_swapchain_d3d12_resource_data_t {
 }
 #[doc = " @brief Contains all fields needed when providing a resource to\n the library, describing its state, lifetime, range and so on."]
 pub type xefg_swapchain_d3d12_resource_data_t = _xefg_swapchain_d3d12_resource_data_t;
-pub struct XessLoaded {
+pub struct Functions {
     __library: ::libloading::Library,
     pub xefgSwapChainD3D12CreateContext: unsafe extern "C" fn(
         pDevice: *mut ID3D12Device,
@@ -108,7 +108,7 @@ pub struct XessLoaded {
         descriptorHeapOffsetInBytes: u32,
     ) -> xefg_swapchain_result_t,
 }
-impl XessLoaded {
+impl Functions {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
     where
         P: AsRef<::std::ffi::OsStr>,
@@ -142,7 +142,7 @@ impl XessLoaded {
         let xefgSwapChainD3D12SetDescriptorHeap = __library
             .get(b"xefgSwapChainD3D12SetDescriptorHeap\0")
             .map(|sym| *sym)?;
-        Ok(XessLoaded {
+        Ok(Functions {
             __library,
             xefgSwapChainD3D12CreateContext,
             xefgSwapChainD3D12BuildPipelines,

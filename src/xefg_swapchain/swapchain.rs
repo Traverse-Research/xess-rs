@@ -307,7 +307,7 @@ pub enum _xefg_swapchain_debug_feature_t {
 }
 #[doc = " @brief XeSS-FG Swap Chain debug features list."]
 pub use self::_xefg_swapchain_debug_feature_t as xefg_swapchain_debug_feature_t;
-pub struct XessLoaded {
+pub struct Functions {
     __library: ::libloading::Library,
     pub xefgSwapChainGetVersion:
         unsafe extern "C" fn(pVersion: *mut xefg_swapchain_version_t) -> xefg_swapchain_result_t,
@@ -357,7 +357,7 @@ pub struct XessLoaded {
         pArgument: *mut ::std::os::raw::c_void,
     ) -> xefg_swapchain_result_t,
 }
-impl XessLoaded {
+impl Functions {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
     where
         P: AsRef<::std::ffi::OsStr>,
@@ -404,7 +404,7 @@ impl XessLoaded {
         let xefgSwapChainEnableDebugFeature = __library
             .get(b"xefgSwapChainEnableDebugFeature\0")
             .map(|sym| *sym)?;
-        Ok(XessLoaded {
+        Ok(Functions {
             __library,
             xefgSwapChainGetVersion,
             xefgSwapChainGetProperties,
