@@ -42,7 +42,7 @@ fn generate_bindings() {
             .prepend_enum_name(false)
             .layout_tests(false)
             .dynamic_link_require_all(true)
-            .dynamic_library_name("XessLoaded");
+            .dynamic_library_name("Functions");
         if let Some(vulkan_sdk_include_dir) = vulkan_sdk_include_directory() {
             bindings = bindings.clang_arg(format!("-I{}", vulkan_sdk_include_dir.display()))
         }

@@ -115,7 +115,7 @@ impl Default for _xess_d3d12_init_params_t {
 }
 #[doc = " @brief Initialization parameters for XeSS D3D12."]
 pub type xess_d3d12_init_params_t = _xess_d3d12_init_params_t;
-pub struct XessLoaded {
+pub struct Functions {
     __library: ::libloading::Library,
     pub xessD3D12GetResourcesToDump: unsafe extern "C" fn(
         hContext: xess_context_handle_t,
@@ -149,7 +149,7 @@ pub struct XessLoaded {
         pExecParams: *const xess_d3d12_execute_params_t,
     ) -> xess_result_t,
 }
-impl XessLoaded {
+impl Functions {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
     where
         P: AsRef<::std::ffi::OsStr>,
@@ -175,7 +175,7 @@ impl XessLoaded {
         let xessD3D12Init = __library.get(b"xessD3D12Init\0").map(|sym| *sym)?;
         let xessD3D12GetInitParams = __library.get(b"xessD3D12GetInitParams\0").map(|sym| *sym)?;
         let xessD3D12Execute = __library.get(b"xessD3D12Execute\0").map(|sym| *sym)?;
-        Ok(XessLoaded {
+        Ok(Functions {
             __library,
             xessD3D12GetResourcesToDump,
             xessD3D12GetProfilingData,

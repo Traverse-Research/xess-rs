@@ -293,7 +293,7 @@ impl Default for _xess_profiling_data_t {
     }
 }
 pub type xess_profiling_data_t = _xess_profiling_data_t;
-pub struct XessLoaded {
+pub struct Functions {
     __library: ::libloading::Library,
     pub xessGetVersion: unsafe extern "C" fn(pVersion: *mut xess_version_t) -> xess_result_t,
     pub xessGetIntelXeFXVersion: unsafe extern "C" fn(
@@ -365,7 +365,7 @@ pub struct XessLoaded {
         pProfilingData: *mut *mut xess_profiling_data_t,
     ) -> xess_result_t,
 }
-impl XessLoaded {
+impl Functions {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
     where
         P: AsRef<::std::ffi::OsStr>,
@@ -415,7 +415,7 @@ impl XessLoaded {
         let xessSelectNetworkModel = __library.get(b"xessSelectNetworkModel\0").map(|sym| *sym)?;
         let xessStartDump = __library.get(b"xessStartDump\0").map(|sym| *sym)?;
         let xessGetProfilingData = __library.get(b"xessGetProfilingData\0").map(|sym| *sym)?;
-        Ok(XessLoaded {
+        Ok(Functions {
             __library,
             xessGetVersion,
             xessGetIntelXeFXVersion,

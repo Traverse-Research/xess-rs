@@ -72,7 +72,7 @@ impl Default for _xess_d3d11_init_params_t {
 }
 #[doc = " @brief Initialization parameters for XeSS VK."]
 pub type xess_d3d11_init_params_t = _xess_d3d11_init_params_t;
-pub struct XessLoaded {
+pub struct Functions {
     __library: ::libloading::Library,
     pub xessD3D11CreateContext: unsafe extern "C" fn(
         device: *mut ID3D11Device,
@@ -91,7 +91,7 @@ pub struct XessLoaded {
         pExecParams: *const xess_d3d11_execute_params_t,
     ) -> xess_result_t,
 }
-impl XessLoaded {
+impl Functions {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
     where
         P: AsRef<::std::ffi::OsStr>,
@@ -108,7 +108,7 @@ impl XessLoaded {
         let xessD3D11Init = __library.get(b"xessD3D11Init\0").map(|sym| *sym)?;
         let xessD3D11GetInitParams = __library.get(b"xessD3D11GetInitParams\0").map(|sym| *sym)?;
         let xessD3D11Execute = __library.get(b"xessD3D11Execute\0").map(|sym| *sym)?;
-        Ok(XessLoaded {
+        Ok(Functions {
             __library,
             xessD3D11CreateContext,
             xessD3D11Init,

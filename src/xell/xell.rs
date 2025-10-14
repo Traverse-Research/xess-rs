@@ -369,7 +369,7 @@ pub struct _xell_frame_report_t {
 }
 #[doc = " @brief XeLL frame stats.\n\n XeLL frame timestamps."]
 pub type xell_frame_report_t = _xell_frame_report_t;
-pub struct XessLoaded {
+pub struct Functions {
     __library: ::libloading::Library,
     pub xellDestroyContext: unsafe extern "C" fn(context: xell_context_handle_t) -> xell_result_t,
     pub xellSetSleepMode: unsafe extern "C" fn(
@@ -398,7 +398,7 @@ pub struct XessLoaded {
         outdata: *mut xell_frame_report_t,
     ) -> xell_result_t,
 }
-impl XessLoaded {
+impl Functions {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
     where
         P: AsRef<::std::ffi::OsStr>,
@@ -419,7 +419,7 @@ impl XessLoaded {
         let xellGetVersion = __library.get(b"xellGetVersion\0").map(|sym| *sym)?;
         let xellSetLoggingCallback = __library.get(b"xellSetLoggingCallback\0").map(|sym| *sym)?;
         let xellGetFramesReports = __library.get(b"xellGetFramesReports\0").map(|sym| *sym)?;
-        Ok(XessLoaded {
+        Ok(Functions {
             __library,
             xellDestroyContext,
             xellSetSleepMode,
