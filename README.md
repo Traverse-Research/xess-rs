@@ -20,3 +20,70 @@ Add this to your Cargo.toml:
 [dependencies]
 xess-sys = "0.1.0"
 ```
+
+Example code:
+
+```rust
+use xess_sys::xess::{self, dx12};
+unsafe {
+    // Init xess context
+    let mut context_handle = xess::xess_context_handle_t::default();
+    let library_handle = xess::Functions::new("libxess").unwrap();
+    let library_dx12_handle = dx12::Functions::new("libxess").unwrap();
+    let result =
+        library_dx12_handle.xessD3D12CreateContext(device.as_raw(), &mut context_handle);
+    if result != xess::xess_result_t::SUCCESS {
+        panic!();
+    }
+    let init_params = dx12::xess_d3d12_init_params_t {
+        outputResolution: output_resolution,
+        qualitySetting: xess::xess_quality_settings_t::ULTRA_QUALITY_PLUS,
+        initFlags: 0,
+        creationNodeMask: 0,
+        visibleNodeMask: 0,
+        pTempBufferHeap: std::ptr::null_mut(),
+        bufferHeapOffset: 0,
+        pTempTextureHeap: std::ptr::null_mut(),
+        textureHeapOffset: 0,
+        pPipelineLibrary: std::ptr::null_mut(),
+    };
+    let result = library_dx12_handle.xessD3D12Init(context_handle, &init_params);
+    if result != xess::xess_result_t::SUCCESS {
+        panic!();
+    }
+
+    // In render loop
+    loop {
+        let exec_params = dx12::xess_d3d12_execute_params_t {
+            pColorTexture: input_texture.as_raw(),
+            pVelocityTexture: motion_texture.as_raw(),
+            pDepthTexture: depth_texture.as_raw(),
+            pOutputTexture: output_texture.as_raw(),
+            jitterOffsetX: jitter[0],
+            jitterOffsetY: jitter[1],
+            inputWidth: input_texture.width,
+            inputHeight: input_texture.height,
+            pExposureScaleTexture: std::ptr::null_mut(),
+            pResponsivePixelMaskTexture: std::ptr::null_mut(),
+            exposureScale: 1.0,
+            resetHistory: 0,
+            inputColorBase: xess::xess_2d_t { x: 0, y: 0 },
+            inputMotionVectorBase: xess::xess_2d_t { x: 0, y: 0 },
+            inputDepthBase: xess::xess_2d_t { x: 0, y: 0 },
+            inputResponsiveMaskBase: xess::xess_2d_t { x: 0, y: 0 },
+            reserved0: xess::xess_2d_t { x: 0, y: 0 },
+            outputColorBase: xess::xess_2d_t { x: 0, y: 0 },
+            pDescriptorHeap: std::ptr::null_mut(),
+            descriptorHeapOffset: 0,
+        };
+        let result =
+            library_dx12_handle.xessD3D12Execute(context_handle, command_list, &exec_params);
+
+        if result != xess::xess_result_t::SUCCESS {
+            panic!();
+        }
+    }
+    // Cleanup
+    library_handle.xessDestroyContext(context_handle);
+}
+```
