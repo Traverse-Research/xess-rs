@@ -12,6 +12,9 @@
 
 Raw unsafe XeSS 2.1.0 bindings for rust. We generate bindings for Vulkan, DirectX12 and DirectX11, for the XeSS-SR (super resolution), XeLL (low latency) and XeSS-FG (frame generation) systems. Further documentation should be found in the XeSS repository https://github.com/intel/xess.
 
+Upscaled render from 720p to 1440p using XeSS in Breda:
+![alt text](sample_render.png)
+
 ## Usage
 
 Add this to your Cargo.toml:
