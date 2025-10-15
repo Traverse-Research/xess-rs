@@ -21,7 +21,7 @@ Add this to your Cargo.toml:
 xess-sys = "0.1.0"
 ```
 
-Example code:
+Example code using the dx12 bindings:
 
 ```rust
 use xess_sys::xess::{self, dx12};
