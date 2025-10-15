@@ -10,7 +10,7 @@
 
 [![Banner](banner.png)](https://traverseresearch.nl)
 
-XeSS bindings for rust.
+Raw unsafe XeSS bindings for rust.
 
 ## Usage
 
