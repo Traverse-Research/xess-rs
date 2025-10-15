@@ -10,7 +10,7 @@
 
 [![Banner](banner.png)](https://traverseresearch.nl)
 
-Raw unsafe XeSS bindings for rust. We generate bindings for Vulkan, DirectX12 and DirectX11, for the XeSS-SR (super sampler), XeLL (low latency) and XeSS-FG (frame generation) systems. Further documentation should be found in the XeSS repository https://github.com/intel/xess.
+Raw unsafe XeSS bindings for rust. We generate bindings for Vulkan, DirectX12 and DirectX11, for the XeSS-SR (super resolution), XeLL (low latency) and XeSS-FG (frame generation) systems. Further documentation should be found in the XeSS repository https://github.com/intel/xess.
 
 ## Usage
 
