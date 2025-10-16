@@ -1,4 +1,4 @@
 [submodule "xess"]
 	path = xess
 	url = https://github.com/intel/xess
-	checkout = false
+	update = none
