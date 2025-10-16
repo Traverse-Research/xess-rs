@@ -32,8 +32,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v5
-        with: 
-          submodules: true
+      - name: Checkout submodule
+        # Manually update submodules with --checkout because they are configured with update=none and will be skipped otherwise
+        run: git submodule update --recursive --init --force --checkout
       - name: Install Vulkan SDK
         # Normally the installer sets the VULKAN_SDK system environment variable to the installation location. GitHub Actions does not reimport
         # this change in variables, requiring us to change it to known location intead and output the location ourselves below.
