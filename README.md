@@ -10,7 +10,7 @@
 
 [![Banner](banner.png)](https://traverseresearch.nl)
 
-Raw unsafe XeSS 2.1.0 bindings for rust. We generate bindings for Vulkan, DirectX12 and DirectX11, for the XeSS-SR (super resolution), XeLL (low latency) and XeSS-FG (frame generation) systems. Further documentation should be found in the XeSS repository https://github.com/intel/xess.
+Raw unsafe XeSS 2.1.0 bindings for rust. We generate bindings for Vulkan, DirectX12 and DirectX11, for the XeSS-SR (super resolution), XeLL (low latency) and XeSS-FG (frame generation) systems. Further documentation should be found in the XeSS repository at <https://github.com/intel/xess>.
 
 Upscaled render from 720p to 1440p using XeSS in Breda:
 ![alt text](sample_render.png)
@@ -28,8 +28,11 @@ Example code using the dx12 bindings:
 
 ```rust
 use xess_sys::xess::{self, dx12};
+
+# let device = todo!();
+
 unsafe {
-    // Init xess context
+    // Init XeSS context
     let mut context_handle = xess::xess_context_handle_t::default();
     let library_handle = xess::Functions::new("libxess").unwrap();
     let library_dx12_handle = dx12::Functions::new("libxess").unwrap();
@@ -38,6 +41,7 @@ unsafe {
     if result != xess::xess_result_t::SUCCESS {
         panic!();
     }
+    # let output_resolution = todo!();
     let init_params = dx12::xess_d3d12_init_params_t {
         outputResolution: output_resolution,
         qualitySetting: xess::xess_quality_settings_t::ULTRA_QUALITY_PLUS,
@@ -57,6 +61,13 @@ unsafe {
 
     // In render loop
     loop {
+        # let input_texture = todo!();
+        # let motion_texture = todo!();
+        # let depth_texture = todo!();
+        # let output_texture = todo!();
+        # let jitter = todo!();
+        # let command_list = todo!();
+
         let exec_params = dx12::xess_d3d12_execute_params_t {
             pColorTexture: input_texture.as_raw(),
             pVelocityTexture: motion_texture.as_raw(),

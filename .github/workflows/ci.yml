@@ -15,6 +15,14 @@ jobs:
       - name: Cargo test
         run: cargo test --workspace
 
+  rust-sample:
+    name: Build documentation sample on Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Cargo test doc
+        run: cargo test --doc
+
   rust-msrv:
     name: Build-test MSRV (1.74) with minimal crate dependencies
     runs-on: ubuntu-latest

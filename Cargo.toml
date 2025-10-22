@@ -1,6 +1,6 @@
 [package]
 name = "xess-sys"
-version = "0.1.0"
+version = "0.1.0+xess-2.1.0"
 authors = ["Traverse Research <support@traverseresearch.nl>"]
 edition = "2021"
 license = "MIT"
