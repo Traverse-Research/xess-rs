@@ -5,7 +5,7 @@ on:
 jobs:
   rust:
     name: Lint Rust code
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
       - name: Cargo fmt
@@ -13,6 +13,9 @@ jobs:
       - name: Cargo clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Cargo test
+        # Warning: this would build-test the documentation except that
+        # it's disabled for the -sys crate globally right now because of
+        # header-inherited documentation being treated as compilable code.
         run: cargo test --workspace
 
   rust-msrv:

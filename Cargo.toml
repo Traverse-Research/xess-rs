@@ -12,7 +12,7 @@ keywords = ["Intel", "XeSS", "XeLL", "frame generation", "upscaling"]
 license = "MIT"
 repository = "https://github.com/Traverse-Research/xess-rs"
 rust-version = "1.74"
-version = "0.1.0"
+version = "0.1.0+v2.1.0"
 
 [package]
 authors.workspace = true
@@ -28,7 +28,9 @@ repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
-# Headers contain a sequence of characters which are incorrectly interpreted as a doctest, these obviously fail
+# Documentation inherited from headers contain indented paragraphs of text
+# which are treated as code blocks and hence doc-tested, but obviously fail
+# to compile.
 [lib]
 doctest = false
 
