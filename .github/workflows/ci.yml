@@ -25,7 +25,7 @@ jobs:
         run: cargo -Zminimal-versions generate-lockfile
       - uses: dtolnay/rust-toolchain@1.74.0
       - name: Cargo check
-        run: cargo check --workspace --all-targets
+        run: cargo check -p xess-sys --all-targets
   
   generate-rust:
     name: Generate Rust crate
@@ -54,7 +54,7 @@ jobs:
           src/xess/vk.rs
           src/xess/xess.rs
       - name: Generate
-        run: cargo b -Fgenerate-bindings
+        run: cargo r -p api_gen
       - name: Upload crate source
         uses: actions/upload-artifact@v6
         with:
@@ -62,4 +62,4 @@ jobs:
           path: src/
       - name: Diff generated Rust code
         shell: bash
-        run: test -z "$(git status --porcelain)" || (echo "::error::Generated files are different, please regenerate with cargo b -Fgenerate-bindings!"; git status; false)
+        run: test -z "$(git status --porcelain)" || (echo "::error::Generated files are different, please regenerate with 'cargo r -p api_gen'!"; git status; false)
