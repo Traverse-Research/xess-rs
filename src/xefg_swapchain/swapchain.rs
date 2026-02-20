@@ -218,15 +218,16 @@ impl _xefg_swapchain_result_t {
 pub struct _xefg_swapchain_result_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeSS-FG Swap Chain return codes."]
 pub use self::_xefg_swapchain_result_t as xefg_swapchain_result_t;
-#[repr(i32)]
+impl _xefg_swapchain_logging_level_t {
+    pub const DEBUG: _xefg_swapchain_logging_level_t = _xefg_swapchain_logging_level_t(0);
+    pub const INFO: _xefg_swapchain_logging_level_t = _xefg_swapchain_logging_level_t(1);
+    pub const WARNING: _xefg_swapchain_logging_level_t = _xefg_swapchain_logging_level_t(2);
+    pub const ERROR: _xefg_swapchain_logging_level_t = _xefg_swapchain_logging_level_t(3);
+}
+#[repr(transparent)]
 #[doc = " @brief XeSS-FG Swap Chain logging level."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _xefg_swapchain_logging_level_t {
-    DEBUG = 0,
-    INFO = 1,
-    WARNING = 2,
-    ERROR = 3,
-}
+pub struct _xefg_swapchain_logging_level_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeSS-FG Swap Chain logging level."]
 pub use self::_xefg_swapchain_logging_level_t as xefg_swapchain_logging_level_t;
 #[repr(i32)]
