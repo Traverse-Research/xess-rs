@@ -1,7 +1,5 @@
-#[cfg(feature = "generate-bindings")]
 fn vulkan_sdk_include_directory() -> Option<std::path::PathBuf> {
-    let target_os = std::env::var("CARGO_CFG_TARGET_OS").unwrap();
-    let is_windows = target_os.as_str() == "windows";
+    let is_windows = cfg!(target_os = "windows");
 
     // Mostly on Windows, the Vulkan headers don't exist in a common location but can be found based
     // on VULKAN_SDK, set by the Vulkan SDK installer.
@@ -22,9 +20,8 @@ fn vulkan_sdk_include_directory() -> Option<std::path::PathBuf> {
     }
 }
 
-#[cfg(feature = "generate-bindings")]
 fn generate_bindings() {
-    let compile = |input_file, output_file, allowlist_function, allowlist_type| {
+    let compile = |input_file: &str, output_file: &str, allowlist_function, allowlist_type| {
         let mut bindings = bindgen::Builder::default()
             .header(input_file)
             .allowlist_recursively(false)
@@ -39,7 +36,9 @@ fn generate_bindings() {
             })
             .parse_callbacks(Box::new(RenameCallback))
             .derive_default(true)
-            .clang_args(["-x", "c++"])
+            // XeSS headers are Windows-only (D3D12, DXGI, etc.), so clang must
+            // always target MSVC even when api_gen itself runs on Linux.
+            .clang_args(["-x", "c++", "--target=x86_64-pc-windows-msvc"])
             .prepend_enum_name(false)
             .layout_tests(false)
             .dynamic_link_require_all(true)
@@ -48,11 +47,14 @@ fn generate_bindings() {
             assert!(vulkan_sdk_include_dir.is_dir());
             bindings = bindings.clang_arg(format!("-I{}", vulkan_sdk_include_dir.display()))
         }
+
         bindings
             .generate()
             .expect("Unable to generate bindings")
             .write_to_file(output_file)
             .expect("Couldn't write bindings");
+
+        println!("Generated {output_file}");
     };
 
     compile(
@@ -115,11 +117,9 @@ fn generate_bindings() {
     );
 }
 
-#[cfg(feature = "generate-bindings")]
 #[derive(Debug)]
 struct RenameCallback;
 
-#[cfg(feature = "generate-bindings")]
 impl bindgen::callbacks::ParseCallbacks for RenameCallback {
     fn enum_variant_name(
         &self,
@@ -169,6 +169,5 @@ impl bindgen::callbacks::ParseCallbacks for RenameCallback {
 }
 
 fn main() {
-    #[cfg(feature = "generate-bindings")]
     generate_bindings();
 }
