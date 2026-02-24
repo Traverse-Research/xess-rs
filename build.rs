@@ -33,6 +33,7 @@ fn generate_bindings() {
             .allowlist_var(".*xess.*")
             .bitfield_enum(".*(flags|bits).*")
             .newtype_enum(".*result_t.*")
+            .newtype_enum(".*logging_level_t.*")
             .default_enum_style(bindgen::EnumVariation::Rust {
                 non_exhaustive: false,
             })

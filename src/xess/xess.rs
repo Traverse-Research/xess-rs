@@ -152,15 +152,16 @@ impl _xess_result_t {
 pub struct _xess_result_t(pub ::std::os::raw::c_int);
 #[doc = " @brief  XeSS return codes."]
 pub use self::_xess_result_t as xess_result_t;
-#[repr(i32)]
+impl _xess_logging_level_t {
+    pub const DEBUG: _xess_logging_level_t = _xess_logging_level_t(0);
+    pub const INFO: _xess_logging_level_t = _xess_logging_level_t(1);
+    pub const WARNING: _xess_logging_level_t = _xess_logging_level_t(2);
+    pub const ERROR: _xess_logging_level_t = _xess_logging_level_t(3);
+}
+#[repr(transparent)]
 #[doc = " @brief XeSS logging level"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _xess_logging_level_t {
-    DEBUG = 0,
-    INFO = 1,
-    WARNING = 2,
-    ERROR = 3,
-}
+pub struct _xess_logging_level_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeSS logging level"]
 pub use self::_xess_logging_level_t as xess_logging_level_t;
 #[doc = " A logging callback provided by the application. This callback can be called from other threads.\n Message pointer are only valid inside function and may be invalid right after return call.\n Message is a null-terminated utf-8 string"]

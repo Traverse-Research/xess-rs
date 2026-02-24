@@ -310,15 +310,16 @@ impl _xell_sleep_params_t {
     }
 }
 pub type xell_sleep_params_t = _xell_sleep_params_t;
-#[repr(i32)]
+impl _xell_logging_level_t {
+    pub const DEBUG: _xell_logging_level_t = _xell_logging_level_t(0);
+    pub const INFO: _xell_logging_level_t = _xell_logging_level_t(1);
+    pub const WARNING: _xell_logging_level_t = _xell_logging_level_t(2);
+    pub const ERROR: _xell_logging_level_t = _xell_logging_level_t(3);
+}
+#[repr(transparent)]
 #[doc = " @brief XeLL logging level"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _xell_logging_level_t {
-    DEBUG = 0,
-    INFO = 1,
-    WARNING = 2,
-    ERROR = 3,
-}
+pub struct _xell_logging_level_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeLL logging level"]
 pub use self::_xell_logging_level_t as xell_logging_level_t;
 #[doc = " A logging callback provided by the application. This callback can be called from other threads.\n Message pointer are only valid inside function and may be invalid right after return call.\n Message is a null-terminated utf-8 string"]
