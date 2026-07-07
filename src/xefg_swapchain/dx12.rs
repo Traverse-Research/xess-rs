@@ -7,7 +7,7 @@ pub struct _xefg_swapchain_d3d12_init_params_t {
     pub pApplicationSwapChain: *mut IDXGISwapChain,
     #[doc = " Initialization flags."]
     pub initFlags: u32,
-    #[doc = " Maximum number of frames to interpolate, it must be 1."]
+    #[doc = " @brief XeSS-FG won't produce more than this number of interpolated frames.\n\n The value must be between one and the maximum supported number of interpolated frames or\n @ref XEFG_SWAPCHAIN_USE_MAX_SUPPORTED_INTERPOLATED_FRAMES.\n\n If the value is set to @ref XEFG_SWAPCHAIN_USE_MAX_SUPPORTED_INTERPOLATED_FRAMES,\n XeSS-FG will automatically pick the maximum supported number.\n\n @see\n - xefgSwapChainGetProperties to query the maximum supported number of interpolated frames,\n works before initialization.\n - xefgSwapChainD3D12GetInitializationParameters to query the value that was applied\n during initialization."]
     pub maxInterpolatedFrames: u32,
     #[doc = " Specifies the node mask for internally created resources on\n multi-adapter systems."]
     pub creationNodeMask: u32,
@@ -23,7 +23,7 @@ pub struct _xefg_swapchain_d3d12_init_params_t {
     pub textureHeapOffset: u64,
     #[doc = " Pointer to pipeline library. If not NULL, then it will be used for pipeline caching."]
     pub pPipelineLibrary: *mut ID3D12PipelineLibrary,
-    #[doc = " Optional UI handling mode. Use XEFG_SWAPCHAIN_UI_MODE_AUTO to determine UI handling mode internally\n based on provided inputs: hudless color and UI texture."]
+    #[doc = " Determines UI composition mode when UI composition is enabled.\n Use @ref XEFG_SWAPCHAIN_UI_MODE_AUTO to determine UI composition mode based on the provided inputs.\n @see xefgSwapChainSetUiCompositionState"]
     pub uiMode: xefg_swapchain_ui_mode_t,
 }
 impl Default for _xefg_swapchain_d3d12_init_params_t {
@@ -73,8 +73,16 @@ pub struct Functions {
     pub xefgSwapChainD3D12BuildPipelines: unsafe extern "C" fn(
         hSwapChain: xefg_swapchain_handle_t,
         pPipelineLibrary: *mut ID3D12PipelineLibrary,
-        blocking: bool,
+        blocking: u8,
         initFlags: u32,
+    ) -> xefg_swapchain_result_t,
+    pub xefgSwapChainD3D12GetProperties: unsafe extern "C" fn(
+        context: xefg_swapchain_handle_t,
+        initParams: *const xefg_swapchain_d3d12_init_params_t,
+        backBufferWidth: u32,
+        backBufferHeight: u32,
+        backBufferFormat: DXGI_FORMAT,
+        properties: *mut xefg_swapchain_properties_t,
     ) -> xefg_swapchain_result_t,
     pub xefgSwapChainD3D12InitFromSwapChain: unsafe extern "C" fn(
         hSwapChain: xefg_swapchain_handle_t,
@@ -107,6 +115,19 @@ pub struct Functions {
         pDescriptorHeap: *mut ID3D12DescriptorHeap,
         descriptorHeapOffsetInBytes: u32,
     ) -> xefg_swapchain_result_t,
+    pub xefgSwapChainD3D12UpdateExternalHeapOnResize:
+        unsafe extern "C" fn(
+            hSwapChain: xefg_swapchain_handle_t,
+            tempBufferHeap: *mut ID3D12Heap,
+            tempBufferHeapOffset: u64,
+            tempTextureHeap: *mut ID3D12Heap,
+            tempTextureHeapOffset: u64,
+        ) -> xefg_swapchain_result_t,
+    pub xefgSwapChainD3D12GetInitializationParameters:
+        unsafe extern "C" fn(
+            hSwapChain: xefg_swapchain_handle_t,
+            pParams: *mut xefg_swapchain_d3d12_init_params_t,
+        ) -> xefg_swapchain_result_t,
 }
 impl Functions {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
@@ -127,6 +148,9 @@ impl Functions {
         let xefgSwapChainD3D12BuildPipelines = __library
             .get(b"xefgSwapChainD3D12BuildPipelines\0")
             .map(|sym| *sym)?;
+        let xefgSwapChainD3D12GetProperties = __library
+            .get(b"xefgSwapChainD3D12GetProperties\0")
+            .map(|sym| *sym)?;
         let xefgSwapChainD3D12InitFromSwapChain = __library
             .get(b"xefgSwapChainD3D12InitFromSwapChain\0")
             .map(|sym| *sym)?;
@@ -142,15 +166,24 @@ impl Functions {
         let xefgSwapChainD3D12SetDescriptorHeap = __library
             .get(b"xefgSwapChainD3D12SetDescriptorHeap\0")
             .map(|sym| *sym)?;
+        let xefgSwapChainD3D12UpdateExternalHeapOnResize = __library
+            .get(b"xefgSwapChainD3D12UpdateExternalHeapOnResize\0")
+            .map(|sym| *sym)?;
+        let xefgSwapChainD3D12GetInitializationParameters = __library
+            .get(b"xefgSwapChainD3D12GetInitializationParameters\0")
+            .map(|sym| *sym)?;
         Ok(Functions {
             __library,
             xefgSwapChainD3D12CreateContext,
             xefgSwapChainD3D12BuildPipelines,
+            xefgSwapChainD3D12GetProperties,
             xefgSwapChainD3D12InitFromSwapChain,
             xefgSwapChainD3D12InitFromSwapChainDesc,
             xefgSwapChainD3D12GetSwapChainPtr,
             xefgSwapChainD3D12TagFrameResource,
             xefgSwapChainD3D12SetDescriptorHeap,
+            xefgSwapChainD3D12UpdateExternalHeapOnResize,
+            xefgSwapChainD3D12GetInitializationParameters,
         })
     }
     #[doc = " @brief Creates a swap chain handle and checks necessary D3D12 features.\n\n @param pDevice A D3D12 device created by the user.\n\n @param[out] phSwapChain Pointer to a XeSS-FG swap chain context handle.\n\n @return XeSS-FG Swap Chain return status code."]
@@ -166,10 +199,29 @@ impl Functions {
         &self,
         hSwapChain: xefg_swapchain_handle_t,
         pPipelineLibrary: *mut ID3D12PipelineLibrary,
-        blocking: bool,
+        blocking: u8,
         initFlags: u32,
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainD3D12BuildPipelines)(hSwapChain, pPipelineLibrary, blocking, initFlags)
+    }
+    #[doc = " @brief Queries properties (including required heap sizes) given desired initialization parameters.\n\n This function can be called before or after the proxy swap chain initialization.\n\n Once the proxy swap chain is initialized, `properties` returned by this function will match\n the properties returned by `xefgSwapChainGetProperties`.\n\n Use this function to determine heap sizes required for successful initialization of the proxy swap chain.\n The heap sizes are valid for any number of interpolated between one and the maximum specified\n via `initParams.maxInterpolatedFrames`.\n\n If you need to query heap sizes required for a resolution change, set `initParams` to `NULL`\n and pass in the new `backBufferWidth` and `backBufferHeight`.\n\n If you don't want to specify the maximum number of interpolated frames, set `initParams.maxInterpolatedFrames`\n to `XEFG_SWAPCHAIN_USE_MAX_SUPPORTED_INTERPOLATED_FRAMES`.\n\n @param context\n @param initParams - pass `NULL` to use the values provided during the proxy swap chain initialization\n @param backBufferWidth - pass 0 to use the value provided during initialization.\n @param backBufferHeight - pass 0 to use the value provided during initialization.\n @param backBufferFormat - pass DXGI_FORMAT_UNKNOWN to use the value provided during initialization.\n @param properties - output, cannot be `NULL`\n @return XEFG_SWAPCHAIN_RESULT_SUCCESS if the operation was successful."]
+    pub unsafe fn xefgSwapChainD3D12GetProperties(
+        &self,
+        context: xefg_swapchain_handle_t,
+        initParams: *const xefg_swapchain_d3d12_init_params_t,
+        backBufferWidth: u32,
+        backBufferHeight: u32,
+        backBufferFormat: DXGI_FORMAT,
+        properties: *mut xefg_swapchain_properties_t,
+    ) -> xefg_swapchain_result_t {
+        (self.xefgSwapChainD3D12GetProperties)(
+            context,
+            initParams,
+            backBufferWidth,
+            backBufferHeight,
+            backBufferFormat,
+            properties,
+        )
     }
     #[doc = " @brief Initializes the XeSS-FG Swap Chain library for the generation\n and presentation of additional frames.\n The application should call @ref xefgSwapChainD3D12GetSwapChainPtr to retrieve the actual IDXGISwapChain handle.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param pCmdQueue Command queue used by the application\n to present frames. This queue must conform to all restrictions of any IDXGISwapChain.\n\n @param pInitParams XeSS-FG Swap Chain API initialization parameters.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainD3D12InitFromSwapChain(
@@ -232,5 +284,30 @@ impl Functions {
             pDescriptorHeap,
             descriptorHeapOffsetInBytes,
         )
+    }
+    #[doc = " @brief Updates external heap pointers during the next call to ResizeBuffers or ResizeBuffers1\n\n XeSS-FG won't reference the provided heap pointers until the application calls ResizeBuffers\n or ResizeBuffers1. Once ResizeBuffers or ResizeBuffers1 return control back to the application,\n XeSS-FG is guaranteed to be using the new heaps.\n\n If ResizeBuffers or ResizeBuffers1 fail, XeSS-FG will release the references to the provided\n heaps.\n\n Use @ref xefgSwapChainD3D12GetProperties to get the required heap sizes.\n\n @param hSwapChain\n @param tempBufferHeap\n @param tempBufferHeapOffset - must be zero if @p tempBufferHeap is null\n @param tempTextureHeap\n @param tempTextureHeapOffset - must be zero if @p tempTextureHeap is null\n @return"]
+    pub unsafe fn xefgSwapChainD3D12UpdateExternalHeapOnResize(
+        &self,
+        hSwapChain: xefg_swapchain_handle_t,
+        tempBufferHeap: *mut ID3D12Heap,
+        tempBufferHeapOffset: u64,
+        tempTextureHeap: *mut ID3D12Heap,
+        tempTextureHeapOffset: u64,
+    ) -> xefg_swapchain_result_t {
+        (self.xefgSwapChainD3D12UpdateExternalHeapOnResize)(
+            hSwapChain,
+            tempBufferHeap,
+            tempBufferHeapOffset,
+            tempTextureHeap,
+            tempTextureHeapOffset,
+        )
+    }
+    #[doc = " @brief Retrieve initialization parameters if the initialization was successful.\n\n This function is not thread-safe with regards to calls to @ref xefgSwapChainD3D12InitFromSwapChain,\n @ref xefgSwapChainD3D12InitFromSwapChainDesc, and @ref xefgSwapChainDestroy. Do not call\n @ref xefgSwapChainD3D12GetInitializationParameters if another thread might be doing initialization of or\n destroying the same context handle.\n\n @param hSwapChain XeSS-FG swap chain context handle.\n\n @param[out] pParams will contain parameters that were used to initialize the provided swap chain.\n\n @note\n  - `pParams->pApplicationSwapChain` will be set to `NULL` to signify that the swap chain was re-created.\n  - `pParams->maxInterpolatedFrames` will be set to the actual value that was used during initialization:\n  the maximum suppored number if the user requested @ref XEFG_SWAPCHAIN_USE_MAX_SUPPORTED_INTERPOLATED_FRAMES\n  or the user-provided value otherwise."]
+    pub unsafe fn xefgSwapChainD3D12GetInitializationParameters(
+        &self,
+        hSwapChain: xefg_swapchain_handle_t,
+        pParams: *mut xefg_swapchain_d3d12_init_params_t,
+    ) -> xefg_swapchain_result_t {
+        (self.xefgSwapChainD3D12GetInitializationParameters)(hSwapChain, pParams)
     }
 }
