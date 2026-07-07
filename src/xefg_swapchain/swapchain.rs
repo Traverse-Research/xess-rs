@@ -156,7 +156,7 @@ impl _xefg_swapchain_result_t {
     #[doc = " Warning. There is no present status for last present."]
     pub const WARNING_MISSING_PRESENT_STATUS: _xefg_swapchain_result_t =
         _xefg_swapchain_result_t(5);
-    #[doc = " Warning. Resource sizes for the interpolation doesn't match between previouse and next frames.\nInterpolation skipped."]
+    #[doc = " Warning. Resource sizes for the interpolation doesn't match between previous and next frames.\nInterpolation skipped."]
     pub const WARNING_RESOURCE_SIZES_MISMATCH: _xefg_swapchain_result_t =
         _xefg_swapchain_result_t(6);
     #[doc = " Operation was successful."]
@@ -231,23 +231,23 @@ pub struct _xefg_swapchain_logging_level_t(pub ::std::os::raw::c_int);
 #[doc = " @brief XeSS-FG Swap Chain logging level."]
 pub use self::_xefg_swapchain_logging_level_t as xefg_swapchain_logging_level_t;
 #[repr(i32)]
-#[doc = " @brief XeSS-FG Swap Chain UI handling mode."]
+#[doc = " @brief XeSS-FG UI composition mode.\n\n XeSS-FG can either interpolate UI (default) or compose a UI texture as-is on top of the interpolated frames.\n The application can provide the UI texture directly or rely on XeSS-FG to extract the texture from\n other available resources.\n\n UI composition can be enabled or disabled by changing the composition state.\n When UI composition is enabled, the UI mode determines which composition method is used.\n\n @see xefgSwapChainSetUiCompositionState for enabling or disabling UI composition."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _xefg_swapchain_ui_mode_t {
-    #[doc = " Determine UI handling mode automatically, based on provided inputs: hudless color and UI texture."]
+    #[doc = " Determine UI composition mode automatically, based on provided inputs: hudless color and UI texture."]
     AUTO = 0,
-    #[doc = " Interpolate on backbuffer, without any UI handling."]
+    #[doc = " Interpolate back buffer, without any UI composition."]
     NONE = 1,
-    #[doc = " Interpolate on backbuffer, refine UI using UI texture + alpha."]
+    #[doc = " Interpolate back buffer, refine UI using UI texture + alpha."]
     BACKBUFFER_UITEXTURE = 2,
-    #[doc = " Interpolate on hudless color, blend UI from UI texture + alpha."]
+    #[doc = " Interpolate hudless color, blend UI from UI texture + alpha."]
     HUDLESS_UITEXTURE = 3,
-    #[doc = " Interpolate on hudless color, extract UI from backbuffer."]
+    #[doc = " Interpolate hudless color, extract UI from backbuffer."]
     BACKBUFFER_HUDLESS = 4,
-    #[doc = " Interpolate on hudless color, blend UI from UI texture + alpha and refine it by extracting from backbuffer."]
+    #[doc = " Interpolate hudless color, blend UI from UI texture + alpha and refine it by extracting from back buffer."]
     BACKBUFFER_HUDLESS_UITEXTURE = 5,
 }
-#[doc = " @brief XeSS-FG Swap Chain UI handling mode."]
+#[doc = " @brief XeSS-FG UI composition mode.\n\n XeSS-FG can either interpolate UI (default) or compose a UI texture as-is on top of the interpolated frames.\n The application can provide the UI texture directly or rely on XeSS-FG to extract the texture from\n other available resources.\n\n UI composition can be enabled or disabled by changing the composition state.\n When UI composition is enabled, the UI mode determines which composition method is used.\n\n @see xefgSwapChainSetUiCompositionState for enabling or disabling UI composition."]
 pub use self::_xefg_swapchain_ui_mode_t as xefg_swapchain_ui_mode_t;
 #[doc = " @brief Contains status data for the present."]
 #[repr(C)]
@@ -279,6 +279,13 @@ pub type xefg_swapchain_app_log_callback_t = ::std::option::Option<
         userData: *mut ::std::os::raw::c_void,
     ),
 >;
+#[repr(i32)]
+#[doc = " @brief Controls whether UI composition is enabled or disabled."]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum xefg_swapchain_ui_composition_state_t {
+    XEFG_SWAPCHAIN_UI_COMPOSITION_STATE_DISABLED = 0,
+    XEFG_SWAPCHAIN_UI_COMPOSITION_STATE_ENABLED = 1,
+}
 #[repr(i32)]
 #[doc = " @brief XeSS-FG Swap Chain debug features list."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
@@ -337,6 +344,14 @@ pub struct Functions {
     ) -> xefg_swapchain_result_t,
     pub xefgSwapChainGetPipelineBuildStatus:
         unsafe extern "C" fn(hSwapChain: xefg_swapchain_handle_t) -> xefg_swapchain_result_t,
+    pub xefgSwapChainSetNumInterpolatedFrames: unsafe extern "C" fn(
+        hSwapChain: xefg_swapchain_handle_t,
+        numInterpolatedFrames: u32,
+    ) -> xefg_swapchain_result_t,
+    pub xefgSwapChainSetUiCompositionState: unsafe extern "C" fn(
+        hSwapChain: xefg_swapchain_handle_t,
+        state: xefg_swapchain_ui_composition_state_t,
+    ) -> xefg_swapchain_result_t,
     pub xefgSwapChainEnableDebugFeature: unsafe extern "C" fn(
         hSwapChain: xefg_swapchain_handle_t,
         featureId: xefg_swapchain_debug_feature_t,
@@ -388,6 +403,12 @@ impl Functions {
         let xefgSwapChainGetPipelineBuildStatus = __library
             .get(b"xefgSwapChainGetPipelineBuildStatus\0")
             .map(|sym| *sym)?;
+        let xefgSwapChainSetNumInterpolatedFrames = __library
+            .get(b"xefgSwapChainSetNumInterpolatedFrames\0")
+            .map(|sym| *sym)?;
+        let xefgSwapChainSetUiCompositionState = __library
+            .get(b"xefgSwapChainSetUiCompositionState\0")
+            .map(|sym| *sym)?;
         let xefgSwapChainEnableDebugFeature = __library
             .get(b"xefgSwapChainEnableDebugFeature\0")
             .map(|sym| *sym)?;
@@ -404,6 +425,8 @@ impl Functions {
             xefgSwapChainSetLatencyReduction,
             xefgSwapChainSetSceneChangeThreshold,
             xefgSwapChainGetPipelineBuildStatus,
+            xefgSwapChainSetNumInterpolatedFrames,
+            xefgSwapChainSetUiCompositionState,
             xefgSwapChainEnableDebugFeature,
         })
     }
@@ -414,7 +437,7 @@ impl Functions {
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainGetVersion)(pVersion)
     }
-    #[doc = " @brief Gets XeSS-FG Swap Chain internal resources properties.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param[out] pProperties A pointer to the @ref xefg_swapchain_properties_t structure where the values should be returned.\n\n @return XeSS-FG Swap Chain return status code."]
+    #[doc = " @brief Retrieves various XeSS-FG Swap Chain properties.\n\n @note When called before the proxy swap chain initialization, this function will only report\n       `pProperties->maxSupportedInterpolations`, all other fields of `pProperties` will be set to zero.\n\n If you need to query the required heap sizes and the descriptor count before the proxy swap chain\n initialization, use @ref xefgSwapChainD3D12GetProperties.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param[out] pProperties A pointer to the @ref xefg_swapchain_properties_t structure where the values should be returned.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainGetProperties(
         &self,
         hSwapChain: xefg_swapchain_handle_t,
@@ -494,6 +517,22 @@ impl Functions {
         hSwapChain: xefg_swapchain_handle_t,
     ) -> xefg_swapchain_result_t {
         (self.xefgSwapChainGetPipelineBuildStatus)(hSwapChain)
+    }
+    #[doc = " @brief Adjust the number of interpolated frames after initialization.\n\n By default, XeSS-FG swap chain will produce the maximum number of interpolated frames\n specified during initialization. Use this function to change the number of interpolated frames\n without reinitializing the swap chain.\n\n The number of interpolated frames must be between 1 and the maximum provided during swap chain\n initialization, otherwise the function returns @ref XEFG_SWAPCHAIN_RESULT_ERROR_INVALID_ARGUMENT.\n\n **Performance Note:** Avoid frequent calls to this function, as changing the number of\n interpolated frames may trigger shader compilation and reallocation of internal resources.\n\n **Error Handling:** If this function fails for any reason other than\n @ref XEFG_SWAPCHAIN_RESULT_ERROR_INVALID_ARGUMENT, reinitialize the swap chain (this is rare).\n Ignoring such errors may lead to unexpected behavior. On non-argument errors, XeSS-FG automatically\n disables frame generation to keep the swap chain operational (e.g., it can still display error messages).\n\n **Thread-Safety:** This function is not thread-safe with regard to calls to\n @ref xefgSwapChainD3D12InitFromSwapChain, @ref xefgSwapChainD3D12InitFromSwapChainDesc, and\n @ref xefgSwapChainDestroy. Do not call @ref xefgSwapChainSetNumInterpolatedFrames if another\n thread might be initializing or destroying the swap chain.\n"]
+    pub unsafe fn xefgSwapChainSetNumInterpolatedFrames(
+        &self,
+        hSwapChain: xefg_swapchain_handle_t,
+        numInterpolatedFrames: u32,
+    ) -> xefg_swapchain_result_t {
+        (self.xefgSwapChainSetNumInterpolatedFrames)(hSwapChain, numInterpolatedFrames)
+    }
+    #[doc = " @brief Enable or disable UI composition.\n\n If UI composition is disabled, UI mode will have no effect.\n\n Setting UI mode to `XEFG_SWAPCHAIN_UI_MODE_NONE` and enabling UI composition is the same\n as disabling UI composition.\n\n @note Try no UI composition first (default), then switch to UI composition if you are not happy\n with the no-composition output."]
+    pub unsafe fn xefgSwapChainSetUiCompositionState(
+        &self,
+        hSwapChain: xefg_swapchain_handle_t,
+        state: xefg_swapchain_ui_composition_state_t,
+    ) -> xefg_swapchain_result_t {
+        (self.xefgSwapChainSetUiCompositionState)(hSwapChain, state)
     }
     #[doc = " @brief Controls for debug features of XeSS-FG Swap Chain API library.\n\n @param hSwapChain The XeSS-FG Swap Chain context handle.\n\n @param featureId The debug feature to enable or disable.\n\n @param enable Non-zero to enable the feature, zero to disable it.\n\n @param pArgument Feature-defined arguments. Please refer to the debug feature documentation.\n\n @return XeSS-FG Swap Chain return status code."]
     pub unsafe fn xefgSwapChainEnableDebugFeature(
