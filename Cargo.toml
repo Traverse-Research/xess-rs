@@ -1,19 +1,32 @@
 [workspace]
-members = ["api_gen"]
+members = [
+  "api_gen",
+  "xess-bin",
+]
 
-[package]
-name = "xess-sys"
-version = "0.1.0"
+[workspace.package]
 authors = ["Traverse Research <support@traverseresearch.nl>"]
 edition = "2021"
-license = "MIT"
 homepage = "https://traverseresearch.nl"
-repository = "https://github.com/Traverse-Research/xess-rs"
-description = "Raw bindings to XeSS"
-include = ["src", "LICENSE"]
-categories = ["external-ffi-bindings", "graphics", "rendering"]
 keywords = ["Intel", "XeSS", "XeLL", "frame generation", "upscaling"]
+license = "MIT"
+repository = "https://github.com/Traverse-Research/xess-rs"
 rust-version = "1.74"
+version = "0.1.0"
+
+[package]
+authors.workspace = true
+categories = ["external-ffi-bindings", "graphics", "rendering"]
+description = "Raw bindings to XeSS"
+edition.workspace = true
+homepage.workspace = true
+include = ["src", "LICENSE"]
+keywords.workspace = true
+license.workspace = true
+name = "xess-sys"
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
 
 # Headers contain a sequence of characters which are incorrectly interpreted as a doctest, these obviously fail
 [lib]

@@ -1,0 +1,11 @@
+[package]
+authors.workspace = true
+description = "Prebuilt XeSS shared libraries"
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+name = "xess-bin"
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
