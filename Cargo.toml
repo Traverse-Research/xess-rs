@@ -12,7 +12,7 @@ keywords = ["Intel", "XeSS", "XeLL", "frame generation", "upscaling"]
 license = "MIT"
 repository = "https://github.com/Traverse-Research/xess-rs"
 rust-version = "1.74"
-version = "0.1.0+v3.0.1"
+version = "0.1.0+v3.0.2"
 
 [package]
 authors.workspace = true
