@@ -11,7 +11,7 @@ jobs:
       - name: Cargo fmt
         run: cargo fmt --all -- --check
       - name: Cargo clippy
-        run: cargo clippy --workspace --all-targets -- -D warnings
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
       - name: Cargo test
         # Warning: this would build-test the documentation except that
         # it's disabled for the -sys crate globally right now because of
