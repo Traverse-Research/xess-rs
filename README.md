@@ -24,6 +24,8 @@ Add this to your Cargo.toml:
 xess-sys = "0.1.0"
 ```
 
+The `xefg_swapchain` feature takes its D3D12/DXGI value types (`DXGI_FORMAT`, `DXGI_SWAP_CHAIN_DESC1`, `HWND`, ...) from [`d3d12-agility`](https://github.com/Traverse-Research/d3d12-agility-rs), which requires Rust 1.95. All other features build on the MSRV listed above.
+
 Example code using the dx12 bindings:
 
 ```rust

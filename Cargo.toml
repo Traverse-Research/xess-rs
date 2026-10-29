@@ -39,7 +39,9 @@ ash = { version = "0.38", default-features = false, optional = true }
 libloading = { version = "0.8", default-features = false }
 
 [target.'cfg(windows)'.dependencies]
-windows = { version = "0.62", default-features = false, optional = true }
+# Only pulled in by the `xefg_swapchain` feature, which raises the MSRV to 1.95.
+d3d12-agility = { git = "https://github.com/Traverse-Research/d3d12-agility-rs", rev = "873651e", optional = true }
+windows-core = { version = "0.100", default-features = false, optional = true }
 
 [features]
 default = ["vk", "dx12", "xess"]
@@ -48,4 +50,5 @@ dx12 = []
 vk = ["dep:ash"]
 xell = ["dx12"]
 xess = []
-xefg_swapchain = ["dx12", "windows/Win32_Graphics_Dxgi_Common", "windows/Win32_Graphics_Direct3D12"]
+# Requires Rust 1.95 (`d3d12-agility` / `windows-core` 0.100)
+xefg_swapchain = ["dx12", "dep:d3d12-agility", "dep:windows-core"]
