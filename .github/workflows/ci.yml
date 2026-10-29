@@ -32,7 +32,10 @@ jobs:
         run: sed -i -e '/^d3d12-agility = /d' -e '/^windows-core = /d' -e 's/^xefg_swapchain = .*/xefg_swapchain = ["dx12"]/' Cargo.toml
       - name: Generate minimal-version dependencies
         run: cargo -Zminimal-versions generate-lockfile
-      - uses: dtolnay/rust-toolchain@1.74.0
+      # Pass the MSRV as an input rather than as the action ref, which Dependabot would "bump".
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.74.0
       - name: Cargo check
         run: cargo check -p xess-sys --all-targets
   
