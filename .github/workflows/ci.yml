@@ -11,7 +11,7 @@ jobs:
       - name: Cargo fmt
         run: cargo fmt --all -- --check
       - name: Cargo clippy
-        run: cargo clippy --workspace --all-targets -- -D warnings
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
       - name: Cargo test
         # Warning: this would build-test the documentation except that
         # it's disabled for the -sys crate globally right now because of
@@ -24,9 +24,18 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@nightly
+      # The optional `xefg_swapchain` dependencies (`d3d12-agility`, `windows-core` 0.100) need
+      # Rust 1.95 and an edition-2024-aware Cargo just to be resolved, which happens for every
+      # optional dependency of a workspace member. Downstream crates that don't enable the feature
+      # never resolve them, so drop them here to keep checking the 1.74 MSRV of all other features.
+      - name: Drop Rust 1.95 `xefg_swapchain` dependencies
+        run: sed -i -e '/^d3d12-agility = /d' -e '/^windows-core = /d' -e 's/^xefg_swapchain = .*/xefg_swapchain = ["dx12"]/' Cargo.toml
       - name: Generate minimal-version dependencies
         run: cargo -Zminimal-versions generate-lockfile
-      - uses: dtolnay/rust-toolchain@1.74.0
+      # Pass the MSRV as an input rather than as the action ref, which Dependabot would "bump".
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.74.0
       - name: Cargo check
         run: cargo check -p xess-sys --all-targets
   
