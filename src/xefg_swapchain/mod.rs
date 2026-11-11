@@ -1,6 +1,7 @@
 include!("swapchain.rs");
 
 #[cfg(all(windows, feature = "dx12"))]
+#[allow(clippy::upper_case_acronyms, clippy::too_many_arguments)]
 pub mod dx12 {
     use super::*;
     use std::ffi::c_void;
@@ -10,7 +11,9 @@ pub mod dx12 {
             Foundation::HWND,
             Graphics::{
                 Direct3D12::D3D12_RESOURCE_STATES,
-                Dxgi::{DXGI_SWAP_CHAIN_DESC1, DXGI_SWAP_CHAIN_FULLSCREEN_DESC},
+                Dxgi::{
+                    Common::DXGI_FORMAT, DXGI_SWAP_CHAIN_DESC1, DXGI_SWAP_CHAIN_FULLSCREEN_DESC,
+                },
             },
         },
     };
