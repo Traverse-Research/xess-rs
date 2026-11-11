@@ -10,7 +10,9 @@ pub mod dx12 {
             Foundation::HWND,
             Graphics::{
                 Direct3D12::D3D12_RESOURCE_STATES,
-                Dxgi::{DXGI_SWAP_CHAIN_DESC1, DXGI_SWAP_CHAIN_FULLSCREEN_DESC},
+                Dxgi::{
+                    Common::DXGI_FORMAT, DXGI_SWAP_CHAIN_DESC1, DXGI_SWAP_CHAIN_FULLSCREEN_DESC,
+                },
             },
         },
     };
